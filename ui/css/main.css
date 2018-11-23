@@ -219,6 +219,16 @@ tr:nth-child(even){background-color: #f2f2f2}
   background-color: #B5625A
 }
 
+/** Report Page Styling**/
+.text-area {
+  height: 100px;
+}
+
+.side-btn {
+  background-color: rgb(184, 129, 48);
+  width: 35%;
+}
+
 .long-form {
   overflow: scroll;
   height: 400px;
