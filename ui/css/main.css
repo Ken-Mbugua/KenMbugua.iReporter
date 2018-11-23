@@ -174,7 +174,7 @@ input[type="submit"]:hover {
 }
 
 .flex-container div {
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   width: 165px;
   margin: 10px;
   text-align: center;
@@ -201,6 +201,23 @@ th, td {
 }
 
 tr:nth-child(even){background-color: #f2f2f2}
+
+/** styling status cards on user profile page **/
+.faded-blue{
+  background-color: #34A2A2
+}
+
+.faded-yellow{
+  background-color: #FCF184
+}
+
+.faded-green{
+  background-color:#899b66
+}
+
+.faded-red{
+  background-color: #B5625A
+}
 
 /*** main footer styling ***/
 .main-footer {
