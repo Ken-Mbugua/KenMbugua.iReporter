@@ -1,14 +1,62 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Report Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
+    <script src="../js/main.js"></script>
 </head>
+
 <body>
-    
+    <header>
+        <div class="header">
+            <a href="../index.html" class="logo">iReporter</a>
+            <div class="header-right">
+                <a class="active" href="./report-page.html">Report</a>
+                <a href="./sign-up.html">Profile</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="sign-up-div shadow long-form">
+            <div>
+                <h3>Report Your Case.</h3>
+            </div>
+            <form action="./user-profile.html">
+
+                <label for="report-case">Choose your case...</label>
+                <select id="report-case_" name="gender">
+                    <option value="red-flag">Red-Flag</option>
+                    <option value="intervention">Intervention</option>
+                </select>
+
+                <label for="description">Description</label>
+                <input class="text-area" type="text-area" required="required" id="description_" name="description"
+                    placeholder="Describe your case.">
+
+                <input type="text" id="geo-location_" name="geo-location" placeholder="Nairobi,Kenya near city hall way"
+                    disabled>
+                <button class="geolocation-btn side-btn"> Choose Geolocation. </button>
+                <br />
+                <label for="media">Upload Image or video.</label>
+                <br />
+                <input class="geolocation-btn side-btn" type="file" />
+
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </main>
+    <footer class="main-footer">
+        <section class="footer-section">
+            <p>lets fight this monster called corruption. &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp; iReporter &copy; 2018 </p>
+        </section>
+    </footer>
+
 </body>
+
 </html>

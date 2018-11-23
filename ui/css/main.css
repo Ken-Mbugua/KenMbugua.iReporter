@@ -219,6 +219,10 @@ tr:nth-child(even){background-color: #f2f2f2}
   background-color: #B5625A
 }
 
+.long-form {
+  overflow: scroll;
+  height: 400px;
+}
 /*** main footer styling ***/
 .main-footer {
   position: fixed;
