@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Admin Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="../img/red_whislte_2.png" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
@@ -17,7 +17,7 @@
 <body>
     <header>
         <div class="header">
-            <a href="../index.html" class="logo">iReporter</a>
+            <a href="../index.html" class="logo">iReporter [Admin]</a>
             <div class="header-right">
                 <a class="active" href="./user-profile.html">Profile</a>
                 <a href="report-page.html">Report</a>
@@ -26,7 +26,87 @@
         </div>
     </header>
     <main>
-        
+        <div class="db-content table bg-thematic-dark">
+            <table class="main-table">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>User_ID</th>
+                        <th>Title</th>
+                        <th>Case</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Media</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>1</td>
+                    <td>USER-9542200</td>
+                    <td>Bribing at Naivasha</td>
+                    <td>Red Flag</td>
+                    <td>A city council officer was taking money from a matatu at kabati stage</td>
+                    <td>Kabati, Naivasha</td>
+                    <td>
+                        <a href="#">Status...</a>
+
+                        <ul>
+                            <li>Rejected</li>
+                            <li>Resolved</li>
+                        </ul>
+
+                    </td>
+                    <td>Witness</td>
+                    <td>
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>USER-9542200</td>
+                    <td>Corruption</td>
+                    <td>Red-Flag</td>
+                    <td>A government officer is asking for bribes to serve. Immigration Office</td>
+                    <td>Immigration Office, Mombasa</td>
+                    <td>Under Investigation</td>
+                    <td>Available</td>
+                    <td>
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>USER-9542200</td>
+                    <td>Organised Crime</td>
+                    <td>Intervention</td>
+                    <td>A group of gang men are going round kikuyu area extorting busineses</td>
+                    <td>Kikuyu, Kiambu</td>
+                    <td>Under Investigation</td>
+                    <td>N/A</td>
+                    <td>
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>USER-9542200</td>
+                    <td>Faulty Building</td>
+                    <td>Intervention</td>
+                    <td>A building in huruma estate has massive cracks about to colapse.</td>
+                    <td>Huruma, Nairobi</td>
+                    <td>Resolved</td>
+                    <td>Available</td>
+                    <td>
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash"></i>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </main>
     <footer class="main-footer">
         <section class="footer-section">
