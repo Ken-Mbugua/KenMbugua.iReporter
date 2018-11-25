@@ -250,8 +250,13 @@ tr:nth-child(even){background-color: #f2f2f2}
 }
 
 /*** Admin Page styling ***/
+.status-dropdown ul {
+  display: none;
+}
 
-
+.status-dropdown ul:hover {
+  display: block;
+}
 /*** main footer styling ***/
 .main-footer {
   position: fixed;
