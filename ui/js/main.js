@@ -1,42 +1,93 @@
 //window.confirm("Now Javascript works");
 
-
-
-var modal = document.getElementById('myModal');
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn3");
-
-var edit_open = document.getElementsByClassName("fa-edit");
-
-
-
-
-
 // When the user clicks on <span> (x), close the modal
 // span.onclick = function () {
 //     modal.style.display = "none";
 // }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+
+
+function resolvedCaseToGreen() {
+
+    $("select.report_case").change(function () {
+        var selectedStatus = $(this).children("option:selected").val();
+
+        // resolved cases
+        if (selectedStatus = 1) {
+            // alert(selectedStatus);
+            // $("tr:hover").css({"background-color": "#b9e5b9", "color": "black"});
+            // $("tr:hover").css({"background-color": "#fc8f8f", "color": "black", "border-bottom": "1px solid #f4f4f4 "});
+            alert(selectedStatus);
+            $(this).parents('.options')
+                .removeClass('rejectedCase')
+                .addClass('resolvedCase');
+
+        }
+        // rejected cases
+        else if (selectedStatus = 0) {
+            alert(selectedStatus);
+            $("tr:hover").css({
+                "background-color": "red",
+                "color": "black"
+            });
+        } else {
+            alert(selectedStatus);
+            $("tr:hover").css({
+                "background-color": "white",
+                "color": "black"
+            });
+        }
+    });
+
 }
 
 function displayEditModal() {
 
-    // Get the modal
-    var modal = document.getElementById('myModal');
-    //display ,modal
-    modal.style.display = "block";
+    $('i.fa-edit').click(function(){
+        $('#editCaseModal').css("display","block");
+    });
 
 }
 
-function hideEditModal() {
+function displayDeleteMsgModal() {
+    $('i.fa-trash').click(function(){
+        // alert("Delete MAssage");
+        $('#deleteCaseModal').css("display","block");
+    });
+}
+
+function hideModal() {
+
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    var modal = document.getElementById('myModal');
-    // hide modal
-    modal.style.display = "none";
+    $('span.close').click(function(){
+        $('#editCaseModal').css("display","none");
+        $('#deleteCaseModal').css("display","none");
+    });
+
 }
+
+function modalCancelBtn() {
+    $(".cancel-btn").click(function(){
+        $('#editCaseModal').css("display","none");
+        $('#deleteCaseModal').css("display","none");
+    });
+}
+
+function dismisModalOutSideClick(){
+
+    
+}
+
+$(document).ready(function (e) {
+    
+    if ($(e.target).is('#editCaseModal, #deleteCaseModal')) {
+        $('#editCaseModal, #deleteCaseModal').fadeOut(500);
+    }
+    // alert("Javascript is working!!");
+    resolvedCaseToGreen();
+    displayEditModal();
+    displayDeleteMsgModal();
+    hideModal();
+    modalCancelBtn();
+});

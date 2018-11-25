@@ -11,7 +11,9 @@
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="../css/modal.css" />
+    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="../js/main.js"></script>
+
 </head>
 
 <body>
@@ -41,27 +43,27 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tr>
+                <tr class="rejectedCase">
                     <td>1</td>
                     <td>USER-9542200</td>
                     <td>Bribing at Naivasha</td>
-                    <td>Red Flag</td>
+                    <td> <i class="fas fa-flag"> </i> Red Flag</td>
                     <td>A city council officer was taking money from a matatu at kabati stage</td>
                     <td>Kabati, Naivasha</td>
                     <td class="status-dropdown">
-                        <select id="country" name="country">
-                            <option value="rejected">Rejected</option>
-                            <option value="resolved">Resolved</option>
+                        <select class="report_case" name="report_case">
+                            <option value="0">Rejected</option>
+                            <option value="1">Resolved</option>
                         </select>
                     </td>
                     <td>Witness</td>
                     <td>
-                        <div>
+                        <div class="actionButtons">
                             <i class="fas fa-edit"> </i> &nbsp; | &nbsp; <i class="fas fa-trash"> </i>
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr class="resolvedCase">
                     <td>2</td>
                     <td>USER-9542200</td>
                     <td>Corruption</td>
@@ -69,21 +71,22 @@
                     <td>A government officer is asking for bribes to serve. Immigration Office</td>
                     <td>Immigration Office, Mombasa</td>
                     <td>
-                        <select id="country" name="country">
-                            <option value="rejected">Rejected</option>
-                            <option value="resolved">Resolved</option>
-                            <option value="resolved">Under Investigation</option>
-                            <option value="resolved">Draft</option>
+                        <select class="report_case" name="report_case">
+                            <option value="0">Rejected</option>
+                            <option value="1">Resolved</option>
+                            <option value="under_inv">Under Investigation</option>
+                            <option value="draft">Draft</option>
                         </select>
                     </td>
                     <td>Available</td>
                     <td>
-                        <i class="fas fa-edit"></i>
-                        &nbsp; | &nbsp;
-                        <i class="fas fa-trash"></i>
+                        <div class="actionButtons">
+                            <i class="fas fa-edit"></i>
+                            &nbsp; | &nbsp;
+                            <i class="fas fa-trash"></i></div>
                     </td>
                 </tr>
-                <tr>
+                <tr class="resolvedCase">
                     <td>3</td>
                     <td>USER-9542200</td>
                     <td>Organised Crime</td>
@@ -91,18 +94,43 @@
                     <td>A group of gang men are going round kikuyu area extorting busineses</td>
                     <td>Kikuyu, Kiambu</td>
                     <td>
-                        <select id="country" name="country">
-                            <option value="rejected">Rejected</option>
-                            <option value="resolved">Resolved</option>
-                            <option value="resolved">Under Investigation</option>
-                            <option value="resolved">Draft</option>
+                        <select class="report_case" name="report_case">
+                            <option value="0">Rejected</option>
+                            <option value="1">Resolved</option>
+                            <option value="under_inv">Under Investigation</option>
+                            <option value="draft">Draft</option>
                         </select>
                     </td>
                     <td>N/A</td>
                     <td>
-                        <i class="fas fa-edit"></i>
-                        &nbsp; | &nbsp;
-                        <i class="fas fa-trash"></i>
+                        <div class="actionButtons">
+                            <i class="fas fa-edit"></i>
+                            &nbsp; | &nbsp;
+                            <i class="fas fa-trash" onclick="get"></i></div>
+                    </td>
+                </tr>
+                <tr class="resolvedCase">
+                    <td>4</td>
+                    <td>USER-9542200</td>
+                    <td>Faulty Building</td>
+                    <td>Intervention</td>
+                    <td>A building in huruma estate has massive cracks about to colapse.</td>
+                    <td>Huruma, Nairobi</td>
+                    <td>
+                        <select class="report_case" name="report_case">
+                            <option value="0">Rejected</option>
+                            <option value="1">Resolved</option>
+                            <option value="under_inv">Under Investigation</option>
+                            <option value="draft">Draft</option>
+                        </select>
+                    </td>
+                    <td>Available</td>
+                    <td>
+                        <div class="actionButtons">
+                            <i class="fas fa-edit" onclick="displayEditModal()"></i>
+                            &nbsp; | &nbsp;
+                            <i class="fas fa-trash"></i>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -113,36 +141,40 @@
                     <td>A building in huruma estate has massive cracks about to colapse.</td>
                     <td>Huruma, Nairobi</td>
                     <td>
-                        <select id="country" name="country">
-                            <option value="rejected">Rejected</option>
-                            <option value="resolved">Resolved</option>
-                            <option value="resolved">Under Investigation</option>
-                            <option value="resolved">Draft</option>
+                        <select class="report_case" name="report_case">
+                            <option value="0">Rejected</option>
+                            <option value="1">Resolved</option>
+                            <option value="under_inv">Under Investigation</option>
+                            <option value="draft">Draft</option>
                         </select>
                     </td>
                     <td>Available</td>
                     <td>
-                        <i class="fas fa-edit" onclick="displayEditModal()"></i>
-                        &nbsp; | &nbsp;
-                        <i class="fas fa-trash"></i>
+                        <div class="actionButtons">
+                            <i class="fas fa-edit"></i>
+                            &nbsp; | &nbsp;
+                            <i class="fas fa-trash"></i>
+                        </div>
                     </td>
                 </tr>
+
+
             </table>
         </div>
     </main>
-    <footer class="main-footer">
+    <footer class="footer-unfixed">
         <section class="footer-section">
             <p>lets fight this monster called corruption. &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp; iReporter &copy; 2018 </p>
         </section>
     </footer>
 
     <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <div id="editCaseModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close" onclick="hideEditModal()">&times;</span>
-                <h2>Modal Header</h2>
+                <span class="close">&times;</span>
+                <h2>Edit Case</h2>
             </div>
             <div class="modal-body">
                 <div class="sign-up-div">
@@ -168,12 +200,12 @@
 
     <!-- Delete confimation Dialogue Modal -->
     <!-- The Modal -->
-    <div id="myModal" class="modal">
+    <div id="deleteCaseModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close" onclick="hideEditModal()">&times;</span>
-                <h2>Confirm Deletion</h2>
+                <span class="close" >&times;</span>
+                <h2>Confirm Deletion?</h2>
             </div>
             <div class="modal-body">
                 <div class="sign-up-div">
@@ -188,7 +220,7 @@
             </div>
             <div class="modal-footer">
                 <div class="modal-footer-btn-container">
-                    <button class="confirm-btn">Cancel</button> <button class="confirm-btn"> Delete </button>
+                    <button class="dialog-btn cancel-btn">Cancel</button> <button class="dialog-btn delete-btn"> Delete </button>
                 </div>
             </div>
         </div>
