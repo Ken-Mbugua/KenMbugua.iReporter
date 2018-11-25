@@ -201,7 +201,21 @@ th, td {
     padding: 8px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(even){
+  background-color: #f2f2f2
+}
+
+tr i:hover:nth-child(2) {
+ color: red
+}
+
+tr i:hover:nth-child(1) {
+  color: blue
+}
+
+tr:hover {
+  background-color: #ffa;
+}
 
 /** styling status cards on user profile page **/
 .faded-blue{
