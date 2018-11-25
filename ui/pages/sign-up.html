@@ -7,14 +7,14 @@
     <title>Sign Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
-    <script src="main.js"></script>
+    <script src="../js/main.js"></script>
 </head>
 
 <body>
 
     <header>
         <div class="header">
-            <a href="#default" class="logo">iReporter</a>
+            <a href="../index.html" class="logo">iReporter</a>
             <div class="header-right">
                 <a href="sign-in.html">Sign in</a>
             </div>
@@ -26,28 +26,28 @@
             <div>
                 <h3>Sign Up Form</h3>
             </div>
-            <form action="/user-profile.html">
-                <label for="fname">Email</label>
-                <input type="text" id="fname" name="firstname" placeholder="Your email">
+            <form action="./user-profile.html">
+                <label for="email">Email</label>
+                <input type="text" id="email_" name="email" required="required" placeholder="Your email">
 
-                <label for="lname">Username</label>
-                <input type="text" id="lname" name="lastname" placeholder="Choose a username">
+                <label for="username">Username</label>
+                <input type="text" id="username_" name="username" required="required" placeholder="Choose a username">
 
                 <label for="lname">Password</label>
-                <input type="password" id="lname" name="lastname" placeholder="Your last name..">
+                <input type="password" id="pass_" name="password" required="required" placeholder="Your Password">
 
-                <label for="country">Gender</label>
-                <select id="country" name="country">
-                    <option value="australia">Male</option>
-                    <option value="canada">Female</option>
-                    <option value="usa">Rather not Say</option>
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="null-sex">Rather not Say</option>
                 </select>
 
                 <input type="submit" value="Submit">
             </form>
         </div>
     </main>
-    <footer class="main-footer">
+    <footer class="footer-unfixed ">
         <section class="footer-section">
             <p>lets fight this monster called corruption. &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp; iReporter &copy; 2018 </p>
         </section>
