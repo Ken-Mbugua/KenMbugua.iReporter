@@ -214,7 +214,7 @@ tr i:hover:nth-child(1) {
 }
 
 tr:hover {
-  background-color: #ffa;
+  background-color: #ffa; 
 }
 
 /** styling status cards on user profile page **/
