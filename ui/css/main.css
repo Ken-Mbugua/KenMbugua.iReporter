@@ -229,9 +229,15 @@ tr {
   background-color: #fc8f8f;
 }
 
-.unresolvedCase {
+.underInvCase {
+  background-color: #ffa;
+}
+
+.draftCase {
   background-color: #f2f2f2;
 }
+
+
 
 .actionButtons {
   display: flex;
