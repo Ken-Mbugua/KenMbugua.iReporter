@@ -19,11 +19,11 @@
 <body>
     <header>
         <div class="header">
-            <a href="../index.html" class="logo">iReporter [Admin]</a>
+            <a href="admin-page.html" class="logo">iReporter [Admin]</a>
             <div class="header-right">
                 <a class="active" href="./user-profile.html">Profile</a>
                 <!-- <a href="report-page.html">Report</a> -->
-                <a class="sign-out " href="index.html">Sign Out</a>
+                <a class="sign-out " href="../index.html">Sign Out</a>
             </div>
         </div>
     </header>
@@ -67,7 +67,7 @@
                 </tr>
                 <tr class="resolvedCase">
                     <td>2</td>
-                    <td>USER-9542200</td>
+                    <td>USER-9542234</td>
                     <td>Corruption</td>
                     <td> <i class="fas fa-flag"> </i> Red Flag</td>
                     <td>A government officer is asking for bribes to serve. Immigration Office</td>
@@ -90,7 +90,7 @@
                 </tr>
                 <tr class="resolvedCase">
                     <td>3</td>
-                    <td>USER-9542200</td>
+                    <td>USER-9942200</td>
                     <td>Organised Crime</td>
                     <td>Intervention</td>
                     <td>A group of gang men are going round kikuyu area extorting busineses</td>
@@ -113,7 +113,7 @@
                 </tr>
                 <tr class="resolvedCase">
                     <td>4</td>
-                    <td>USER-9542200</td>
+                    <td>USER-6542200</td>
                     <td>Faulty Building</td>
                     <td>Intervention</td>
                     <td>A building in huruma estate has massive cracks about to colapse.</td>
@@ -137,11 +137,11 @@
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td>USER-9542200</td>
-                    <td>Faulty Building</td>
+                    <td>USER-5542200</td>
+                    <td> Man Hole Hazard</td>
                     <td>Intervention</td>
-                    <td>A building in huruma estate has massive cracks about to colapse.</td>
-                    <td>Huruma, Nairobi</td>
+                    <td>There is an open manhole -sewer along peak avenue opposite Hurlingam Mall.</td>
+                    <td>Hurlingam Mall, Nairobi</td>
                     <td>
                         <select class="report_case" name="report_case">
                             <option value="0">Rejected</option>
@@ -177,14 +177,14 @@
                 <h2>Edit Case</h2>
             </div>
             <div class="modal-body">
-                <div class="sign-up-div">
-                    <h3> Are you sure you want to delete this record? </h3>
+                <div>
+                    <!-- <h3> Are you sure you want to delete this record? </h3> -->
                     <div class="caseDetails">
                         <div>
                             <p class="bold"> Case Number: <p>3.</p>
                         </div>
                         <div>
-                            <p class="bold"> Title: </p> <input type="text" id="fname" name="firstname" placeholder="Your email">
+                            <p class="bold"> Title: </p> <input type="text" id="title" name=title placeholder="Traffic Corruption">
                         </div>
                         <div>
                             <p class="bold"> Case Type: </p> <select id="report-case_" name="gender">
@@ -193,13 +193,22 @@
                             </select>
                         </div>
                         <div>
-                            <p class="bold"> User: </p> <input type="text" id="fname" name="firstname" placeholder="Your email">
+                            <p class="bold"> Location: </p> <p> Hurlingam, Nairobi </p> <button class="geolocation-btn side-btn"> Change Geolocation. </button>
+                        </div>
+                        <div>
+                            <p class="bold"> Description: </p> <input type="text-area" id="description" name="description" placeholder="Description">
+                        </div>
+                        <div class="media">
+                            <p class="bold"> Media: </p> <p> ufisadi_094.mp4 </p>  <button class="geolocation-btn side-btn"> Upload Media. </button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <h3>Modal Footer</h3>
+                <div class="modal-footer-btn-container">
+                     <button class="dialog-btn close-btn right-float">
+                        Save </button>
+                </div>
             </div>
         </div>
     </div>
@@ -214,7 +223,7 @@
                 <h2>Confirm Deletion?</h2>
             </div>
             <div class="modal-body">
-                <div class="sign-up-div">
+                <div>
                     <h3> Are you sure you want to delete this record? </h3>
                     <div class="caseDetails">
                         <div>

@@ -221,6 +221,10 @@ tr {
   border-bottom: 1px solid #f4f4f4;
 }
 
+.fa-flag {
+  color: red;
+}
+
 .resolvedCase {
   background-color: #b9e5b9;
 }
