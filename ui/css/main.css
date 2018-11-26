@@ -171,7 +171,8 @@ input[type="submit"]:hover {
 .flex-container {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 30px;
+  padding: 10px;
+  /* margin-bottom: 30px; */
   /* flex-wrap: nowrap; */
   /* flex-basis: 100%; */
 }
@@ -269,9 +270,40 @@ tr {
 }
 
 /** profile section styling **/
+.divider {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.profileSection {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-image-section {
+  padding: 10px;
+  width: 50%;
+  /* border: 1px solid #f2f2f2; */
+}
+
+.profileDetails {
+  width: 30%;
+  border-right: 1px solid #f2f2f2; 
+  border-left: 1px solid #f2f2f2;
+}
+
+.profileDetails div {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bold {
+  font-weight: 900;
+}
 
 .profile-add-btn {
-  width: 20%;
+  width: 36%;
   background-color: #4caf50;
   color: white;
   padding: 14px 20px;
