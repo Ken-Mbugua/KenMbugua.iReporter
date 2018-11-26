@@ -68,7 +68,7 @@ main {
 }
 
 .sign-out {
-    color: red;
+  color: red;
 }
 
 .main-container {
@@ -131,7 +131,8 @@ select {
 }
 
 /* Style the submit button */
-input[type="submit"], .geolocation-btn {
+input[type="submit"],
+.geolocation-btn {
   width: 100%;
   background-color: #4caf50;
   color: white;
@@ -165,40 +166,44 @@ input[type="submit"]:hover {
   background-color: #f2f2f2;
   margin: auto;
 }
+
 /** User-Profile Styling**/
 .flex-container {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px; 
+  justify-content: space-around;
+  padding: 10px;
+  /* margin-bottom: 30px; */
   /* flex-wrap: nowrap; */
   /* flex-basis: 100%; */
 }
 
 .flex-container div {
   /* background-color: #f1f1f1; */
-  width: 165px;
+  width: 140px;
   margin: 10px;
   text-align: center;
-  line-height: 30px;
+  line-height: 20px;
   font-size: 20px;
-  
+  border-radius: 70px;
+
 }
 
 /*styling table header*/
 th {
-    background-color: #6495ed;
-    color: white;
+  background-color: #6495ed;
+  color: white;
 }
 
 /*Styling the rest of the table*/
 table {
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
 }
 
-th, td {
-    text-align: left;
-    padding: 8px;
+th,
+td {
+  text-align: left;
+  padding: 8px;
 }
 
 /* tr:nth-child(even){
@@ -206,7 +211,7 @@ th, td {
 } */
 
 tr i:hover:nth-child(2) {
- color: red
+  color: red
 }
 
 tr i:hover:nth-child(1) {
@@ -248,20 +253,64 @@ tr {
 }
 
 /** styling status cards on user profile page **/
-.faded-blue{
+.faded-blue {
   background-color: #34A2A2
 }
 
-.faded-yellow{
+.faded-yellow {
   background-color: #FCF184
 }
 
-.faded-green{
-  background-color:#899b66
+.faded-green {
+  background-color: #899b66
 }
 
-.faded-red{
+.faded-red {
   background-color: #B5625A
+}
+
+/** profile section styling **/
+.divider {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.profileSection {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-image-section {
+  padding: 10px;
+  width: 50%;
+  /* border: 1px solid #f2f2f2; */
+}
+
+.profileDetails {
+  width: 30%;
+  border-right: 1px solid #f2f2f2; 
+  border-left: 1px solid #f2f2f2;
+}
+
+.profileDetails div {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bold {
+  font-weight: 900;
+}
+
+.profile-add-btn {
+  width: 36%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 /*** Report Page Styling ***/
@@ -301,6 +350,7 @@ tr {
 .status-dropdown ul:hover {
   display: block;
 }
+
 /*** main footer styling ***/
 .main-footer {
   position: fixed;

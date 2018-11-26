@@ -6,9 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="../img/red_whislte_2.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/modal.css" />
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/main.js"></script>
 
 </head>
 
@@ -19,13 +23,57 @@
             <div class="header-right">
                 <a class="active" href="./user-profile.html">Profile</a>
                 <a href="report-page.html">Report</a>
-                <a class="sign-out "href="index.html">Sign Out</a>
+                <a class="sign-out " href="../index.html">Sign Out</a>
             </div>
         </div>
     </header>
     <main>
         <div>
-            <div class="flex-container">
+            <div>
+                <div>
+                    <h3>Profile Details.</h3>
+                </div>
+                <div>
+                    <div class="profileSection divider card">
+                        <div class="profileDetails">
+                            <div>
+                                <p class="bold"> ID: </p>
+                                <p> USER-9542200. </p>
+                            </div>
+                            <div>
+                                <p class="bold"> Username: </p>
+                                <p> Corruption_Reporter44. </p>
+                            </div>
+                            <div>
+                                <p class="bold"> Email: </p>
+                                <p> corruption.reporter@vmail.com </p>
+                            </div>
+                            <div>
+                                <p class="bold"> Sign Up Date: </p>
+                                <p> 29th Feb 2019. </p>
+                            </div>
+                            <div>
+                                <p class="bold"> Level: </p>
+                                <p> Chief Detective </p>
+                            </div>
+                        </div>
+                        <div class="profile-image-section">
+                            <h4>Profile Picture</h4>
+                            <div>
+                                <img src="../img/user_silhouette_1.png" alt="profile image" />
+                                <div>
+                                    <button class="profile-add-btn"> <i class="fa fa-plus"></i> Add Image</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3>My Reported Stats.</h3>
+            </div>
+            <div class="flex-container divider">
+
                 <div class="shadow faded-blue">
                     <h3>Drafts</h3>
                     <h1> 4 </h1>
@@ -44,7 +92,10 @@
                 </div>
             </div>
         </div>
-        <div class="db-content table bg-thematic-dark">
+        <div class="db-content table bg-thematic-dark divider">
+            <div>
+                <h3>My Reported Cases</h3>
+            </div>
             <table class="main-table">
                 <thead>
                     <tr>
@@ -55,7 +106,7 @@
                         <th>Location</th>
                         <th>Status</th>
                         <th>Media</th>
-                        <th>Action</th>
+                        <th>Edit/Delete</th>
                     </tr>
                 </thead>
                 <tr>
@@ -66,7 +117,13 @@
                     <td>Kabati, Naivasha</td>
                     <td>Resolved</td>
                     <td>Witness</td>
-                    <td><i class="fas fa-edit"></i></td>
+                    <td>
+                        <div class="actionButtons">
+                            <i class="fas fa-edit"></i>
+                            &nbsp; | &nbsp;
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -76,7 +133,13 @@
                     <td>Immigration Office, Mombasa</td>
                     <td>Under Investigation</td>
                     <td>Available</td>
-                    <td><i class="fas fa-edit"></i></td>
+                    <td>
+                        <div class="actionButtons">
+                            <i class="fas fa-edit"></i>
+                            &nbsp; | &nbsp;
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>3</td>
@@ -86,7 +149,13 @@
                     <td>Kikuyu, Kiambu</td>
                     <td>Under Investigation</td>
                     <td>N/A</td>
-                    <td><i class="fas fa-edit"></i></td>
+                    <td>
+                        <div class="actionButtons">
+                            <i class="fas fa-edit"></i>
+                            &nbsp; | &nbsp;
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>4</td>
@@ -96,16 +165,119 @@
                     <td>Huruma, Nairobi</td>
                     <td>Resolved</td>
                     <td>Available</td>
-                    <td><i class="fas fa-edit"></i></td>
+                    <td>
+                        <div class="actionButtons">
+                            <i class="fas fa-edit"></i>
+                            &nbsp; | &nbsp;
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>
     </main>
-    <footer class="main-footer">
+    <footer class="footer-unfixed">
         <section class="footer-section">
             <p>lets fight this monster called corruption. &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp; iReporter &copy; 2018 </p>
         </section>
     </footer>
+
+
+
+    <!-- The Modal -->
+    <div id="editCaseModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Edit Case</h2>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <!-- <h3> Are you sure you want to delete this record? </h3> -->
+                    <div class="caseDetails">
+                        <div>
+                            <p class="bold"> Case Number: <p>3.</p>
+                        </div>
+                        <div>
+                            <p class="bold"> Title: </p> <input type="text" id="title" name=title placeholder="Traffic Corruption">
+                        </div>
+                        <div>
+                            <p class="bold"> Case Type: </p> <select id="report-case_" name="gender">
+                                <option value="red-flag">Red-Flag</option>
+                                <option value="intervention">Intervention</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p class="bold"> Location: </p>
+                            <p> Hurlingam, Nairobi </p> <button class="geolocation-btn side-btn"> Change Geolocation.
+                            </button>
+                        </div>
+                        <div>
+                            <p class="bold"> Description: </p> <input type="text-area" id="description" name="description"
+                                placeholder="Description">
+                        </div>
+                        <div class="media">
+                            <p class="bold"> Media: </p>
+                            <p> ufisadi_094.mp4 </p> <button class="geolocation-btn side-btn"> Upload Media. </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="modal-footer-btn-container">
+                    <button class="dialog-btn close-btn right-float">
+                        Save </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete confimation Dialogue Modal -->
+    <!-- The Modal -->
+    <div id="deleteCaseModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header-confirm">
+                <span class="close">&times;</span>
+                <h2>Confirm Deletion?</h2>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <h3> Are you sure you want to delete this record? </h3>
+                    <div class="caseDetails">
+                        <div>
+                            <p class="bold"> Case Number: </p>
+                            <p> 3. </p>
+                        </div>
+                        <div>
+                            <p class="bold"> Case Status: </p>
+                            <p> Rejected </p>
+                        </div>
+                        <div>
+                            <p class="bold"> Title: </p>
+                            <p> Traffic Corruption. </p>
+                        </div>
+                        <div>
+                            <p class="bold"> Case Type: </p>
+                            <p> Red-Flag </p>
+                        </div>
+                        <div>
+                            <p class="bold"> User: </p>
+                            <p> USER-9542200. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer-confirm">
+                <div class="modal-footer-btn-container">
+                    <button class="dialog-btn cancel-btn">Cancel</button> <button class="dialog-btn delete-btn close-btn">
+                        Delete </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal content -->
 </body>
 
 </html>
