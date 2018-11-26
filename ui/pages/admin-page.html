@@ -136,7 +136,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>4</td>
+                    <td>5</td>
                     <td>USER-9542200</td>
                     <td>Faulty Building</td>
                     <td>Intervention</td>
@@ -178,18 +178,24 @@
             </div>
             <div class="modal-body">
                 <div class="sign-up-div">
-                    <div>
-                        <h3>Sign in Form</h3>
+                    <h3> Are you sure you want to delete this record? </h3>
+                    <div class="caseDetails">
+                        <div>
+                            <p class="bold"> Case Number: <p>3.</p>
+                        </div>
+                        <div>
+                            <p class="bold"> Title: </p> <input type="text" id="fname" name="firstname" placeholder="Your email">
+                        </div>
+                        <div>
+                            <p class="bold"> Case Type: </p> <select id="report-case_" name="gender">
+                                <option value="red-flag">Red-Flag</option>
+                                <option value="intervention">Intervention</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p class="bold"> User: </p> <input type="text" id="fname" name="firstname" placeholder="Your email">
+                        </div>
                     </div>
-
-                    <label for="fname">Email</label>
-                    <input type="email" required="required" id="email_" name="email" placeholder="Your Email">
-
-                    <label for="lname">Password</label>
-                    <input type="password" required="required" id="password_" name="password" placeholder="Your Password">
-
-                    <input type="submit" value="Submit">
-
                 </div>
             </div>
             <div class="modal-footer">
@@ -203,24 +209,41 @@
     <div id="deleteCaseModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
-            <div class="modal-header">
-                <span class="close" >&times;</span>
+            <div class="modal-header-confirm">
+                <span class="close">&times;</span>
                 <h2>Confirm Deletion?</h2>
             </div>
             <div class="modal-body">
                 <div class="sign-up-div">
-                    <p> Are you sure you want to delete this record? </p>
-                    <div>
-                        <label> ID </label> : <p> 8. </p>
-                        <label> Title </label> : <p> Traffic Corruption. </p>
-                        <label> Case Type </label> : <p> Red-Flag </p>
-                        <label> User_ID </label> : <p> USER-9542200. </p>
+                    <h3> Are you sure you want to delete this record? </h3>
+                    <div class="caseDetails">
+                        <div>
+                            <p class="bold"> Case Number: </p>
+                            <p> 3. </p>
+                        </div>
+                        <div>
+                            <p class="bold"> Case Status: </p>
+                            <p> Rejected </p>
+                        </div>
+                        <div>
+                            <p class="bold"> Title: </p>
+                            <p> Traffic Corruption. </p>
+                        </div>
+                        <div>
+                            <p class="bold"> Case Type: </p>
+                            <p> Red-Flag </p>
+                        </div>
+                        <div>
+                            <p class="bold"> User: </p>
+                            <p> USER-9542200. </p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer-confirm">
                 <div class="modal-footer-btn-container">
-                    <button class="dialog-btn cancel-btn">Cancel</button> <button class="dialog-btn delete-btn"> Delete </button>
+                    <button class="dialog-btn cancel-btn">Cancel</button> <button class="dialog-btn delete-btn close-btn">
+                        Delete </button>
                 </div>
             </div>
         </div>

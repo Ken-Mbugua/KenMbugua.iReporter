@@ -56,7 +56,14 @@
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    /* background-color: #5cb85c; */
+    background-color: #6495ed;
+    color: white;
+}
+
+.modal-header-confirm {
+    padding: 2px 16px;
+    background-color: #ffc107;
     color: white;
 }
 
@@ -64,6 +71,35 @@
 
 .modal-footer {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    /* background-color: #5cb85c; */
+    background-color: #6495ed;
     color: white;
+}
+
+.modal-footer-confirm {
+    padding: 2px 16px;
+    background-color: #ffc107;
+    color: white;
+}
+
+/**Confirm Deletion ModalBox **/
+
+.caseDetails div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffffff;
+}
+
+.confirmDialog {
+    background-color: #ffa;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.dialog-btn {
+    background-color:  #6495ed;
+    padding: 10px;
+    display: inline-flex;
 }
