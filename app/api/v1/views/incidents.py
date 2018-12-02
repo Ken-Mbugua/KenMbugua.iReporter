@@ -71,3 +71,21 @@ class IncidentsId(Resource, IncidentsModel):
                 "error": "incident with id {} "
                 "was not found ".format(incident_id)
             }, 404
+
+    def delete(self, incident_id):
+
+        res = self.db.delete_incident(incident_id)
+
+        if res:
+            return {
+                "status": 204,
+                "data": [{
+                    "id": res["id"],
+                    "message": "incident record has been deleted"
+                }]
+            }, 204
+        else:
+            return {
+                "status": 404,
+                "error": "Not found for id {}".format(incident_id)
+            }, 404
