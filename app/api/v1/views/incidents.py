@@ -48,3 +48,24 @@ class Incidents(Resource, IncidentsModel):
             "status": 200,
             "data": self.incident.get_incidents()
         }, 200
+
+
+class IncidentsId(Resource, IncidentsModel):
+    def __init__(self):
+        self.db = IncidentsModel()
+
+    def get(self, incident_id):
+
+        res = self.db.get_incident(incident_id)
+
+        if res:
+            return {
+                "status": 200,
+                "data": [res]
+            }, 200
+        else:
+            return {
+                "status": 404,
+                "error": "incident with id {} "
+                "was not found ".format(incident_id)
+            }, 404

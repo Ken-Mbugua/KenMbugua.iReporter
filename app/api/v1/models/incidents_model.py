@@ -34,6 +34,14 @@ class IncidentsModel():
         """
         return self.dbase
 
+    def get_incident(self, incident_id):
+        all_incidents = self.dbase         # get all red flags
+        # loop through the incident to find an id match
+        for incident in all_incidents:
+            # id found success return unique incident
+            if (incident_id == incident["id"]):
+                return incident
+
 
 # end of file past line 75 any methods will be ignored by ptyhon
 # interpreter and the entire flask app :-(
