@@ -3,6 +3,7 @@ from flask_restful import Api
 
 # imported Incidents from views
 from .views.incidents import Incidents, IncidentsId
+from .views.incidents import IncidentsUpdateLocation, IncidentsUpdateComment
 
 version_one = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 api = Api(version_one)
