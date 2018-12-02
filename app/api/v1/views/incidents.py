@@ -30,7 +30,7 @@ class Incidents(Resource, IncidentsModel):
                 "status": 201,
                 "data": [{
                     "id": res["id"],
-                    "message": "red-flag record has been created"
+                    "message": "incident record has been created"
                 }]
             }, 201
 
@@ -80,12 +80,12 @@ class IncidentsId(Resource, IncidentsModel):
 
         if res:
             return {
-                "status": 204,
+                "status": 200,
                 "data": [{
                     "id": res["id"],
                     "message": "incident record has been deleted"
                 }]
-            }, 204
+            }, 200
         else:
             return {
                 "status": 404,
