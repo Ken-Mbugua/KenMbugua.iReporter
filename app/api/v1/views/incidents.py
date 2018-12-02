@@ -55,7 +55,9 @@ class IncidentsId(Resource, IncidentsModel):
         self.db = IncidentsModel()
 
     def get(self, incident_id):
-
+        """
+        method to handle GET single incident request
+        """
         res = self.db.get_incident(incident_id)
 
         if res:
