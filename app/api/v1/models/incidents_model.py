@@ -35,8 +35,8 @@ class IncidentsModel():
         return self.dbase
 
     def get_incident(self, incident_id):
-        all_incidents = self.dbase         # get all red flags
-        # loop through the incident to find an id match
+        all_incidents = self.dbase         # get all incidents
+        # loop through the incidents to find an id match
         for incident in all_incidents:
             # id found success return unique incident
             if (incident_id == incident["id"]):
