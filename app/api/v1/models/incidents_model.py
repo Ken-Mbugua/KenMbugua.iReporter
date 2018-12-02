@@ -28,6 +28,12 @@ class IncidentsModel():
         self.dbase.append(incident_data)
         return incident_data
 
+    def get_incidents(self):
+        """
+        method to get all incidences
+        """
+        return self.dbase
+
 
 # end of file past line 75 any methods will be ignored by ptyhon
 # interpreter and the entire flask app :-(
