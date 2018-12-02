@@ -55,5 +55,21 @@ class IncidentsModel():
                 new_incidents.pop(incident_id-1)  # remove item at pop(1d-1)
                 return incident
 
+    def edit_incident(self, incident_id, data):
+        # filter incidents by id
+        incident = self.get_incident(incident_id)
+        if incident:
+            # if found update list
+            incident.update(data)
+            return incident
+
+    @staticmethod
+    def update_incident(incident_id, data):
+        new_incident_instance = IncidentsModel()
+        incident = new_incident_instance.get_incident(incident_id)
+        if incident:
+            incident.update(data)
+            return incident
+
 # end of file past line 75 any methods will be ignored by ptyhon
 # interpreter and the entire flask app :-(
