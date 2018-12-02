@@ -14,7 +14,7 @@ def create_app(config_name):
     app = Flask(__name__)
     app.url_map.strict_slashes = False
     app.config.from_object(app_config[config_name])  # defining config instream
-    app.config.from_pyfile('config.py')
+    # app.config.from_pyfile('instance/config.py')
 
     app.register_blueprint(v1)
     return app
