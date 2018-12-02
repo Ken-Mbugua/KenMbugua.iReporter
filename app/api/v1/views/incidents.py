@@ -73,7 +73,9 @@ class IncidentsId(Resource, IncidentsModel):
             }, 404
 
     def delete(self, incident_id):
-
+        """
+        method to handle DELETE single incident request
+        """
         res = self.db.delete_incident(incident_id)
 
         if res:
