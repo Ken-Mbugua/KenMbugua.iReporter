@@ -6,6 +6,9 @@ from app.api.v1.models.incidents_model import IncidentsModel
 class IncidentsUpdateLocation(Resource, IncidentsModel):
 
     def patch(self, incident_id):
+        """
+        method to handle PATCH location request
+        """
         data = request.get_json()
 
         new_incident_instance = IncidentsModel()
@@ -29,6 +32,9 @@ class IncidentsUpdateLocation(Resource, IncidentsModel):
 class IncidentsUpdateComment(Resource, IncidentsModel):
 
     def patch(self, incident_id):
+        """
+        method to handle PATCH comment request
+        """
         data = request.get_json()
 
         new_incident_instance = IncidentsModel()
