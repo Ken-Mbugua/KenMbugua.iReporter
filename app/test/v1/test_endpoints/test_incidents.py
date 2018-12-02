@@ -3,10 +3,8 @@ from unittest import TestCase
 import json
 
 from app import create_app
-from instance.config import app_config
 
-CONFIG_NAME = app_config['testing']
-app = create_app(CONFIG_NAME)
+app = create_app("testing")
 
 
 class TestIncidents(TestCase):
