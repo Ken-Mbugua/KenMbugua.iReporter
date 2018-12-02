@@ -8,6 +8,9 @@ class Incidents(Resource, IncidentsModel):
         self.incident = IncidentsModel()
 
     def post(self):
+        """
+        method to receive incident data and pass to db model save()
+        """
         data = request.get_json()
         incident_entry = {
             "title": data["title"],
@@ -36,3 +39,12 @@ class Incidents(Resource, IncidentsModel):
                 "status": 400,
                 "error": "Bad Request"
             }, 400
+
+    def get(self):
+        """
+        method to query all incidences from db
+        """
+        return {
+            "status": 200,
+            "data": self.incident.get_incidents()
+        }, 200
