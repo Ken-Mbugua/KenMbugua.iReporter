@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint
+from flask import Flask
 
 # import blueprint from app/api/v1 __init__.py
 from app.api.v1 import version_one as v1
