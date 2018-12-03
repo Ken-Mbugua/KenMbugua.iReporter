@@ -44,6 +44,7 @@ class Incidents(Resource, IncidentsModel):
         """
         method to query all incidences from db
         """
+
         return {
             "status": 200,
             "data": self.incident.get_incidents()

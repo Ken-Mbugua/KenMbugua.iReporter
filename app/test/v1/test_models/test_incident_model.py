@@ -23,10 +23,27 @@ class TestIncidentsModel(unittest.TestCase):
             "type": "RedFlag",
             "status": "Rejected",
             "location": "-34444400, 3444499900",
-            "image":
-            "[{'path':'var/www/uploads/incidents/img/USR-232455.jpeg'}]",
-            "video": "[var/www/uploads/readflags/video/USR-232455]",
-            "comment": "This is fake all news i tell ya"
+            "image": [
+                {
+                      "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
+                      "filesize": "2045kb"
+                },
+                {
+                    "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
+                    "filesize": "2045kb"
+                }
+            ],
+            "video": [
+                {
+                    "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
+                    "filesize": "340098245Kb"
+                }, {
+                    "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
+                    "filesize": "340098245Kb"
+                }
+            ],
+            "comment": "This is fake all news i tell ya",
+            "createdBy": 30
         }
 
     def test_save_incident(self):
@@ -46,7 +63,3 @@ class TestIncidentsModel(unittest.TestCase):
 
     def tearDown(self):
         pass
-
-
-if __name__ == '__main__':
-    unittest.main()
