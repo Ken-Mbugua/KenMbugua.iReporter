@@ -139,7 +139,8 @@ class TestIncidents(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/1/location", data=json.dumps(self.incident1),
+            "api/v1/incidents/1/location",
+            data=json.dumps(self.location_data),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
         result = json.loads(response.data)
@@ -155,7 +156,8 @@ class TestIncidents(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/32/location", data=json.dumps(self.incident1),
+            "api/v1/incidents/32/location",
+            data=json.dumps(self.location_data),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
         result = json.loads(response.data)
@@ -171,7 +173,8 @@ class TestIncidents(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/1/comment", data=json.dumps(self.incident1),
+            "api/v1/incidents/1/comment",
+            data=json.dumps(self.comment_data),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
         result = json.loads(response.data)
@@ -187,7 +190,8 @@ class TestIncidents(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/32/comment", data=json.dumps(self.incident1),
+            "api/v1/incidents/32/comment",
+            data=json.dumps(self.comment_data),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
         result = json.loads(response.data)
@@ -203,7 +207,8 @@ class TestIncidents(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/1/comment", data=json.dumps(self.incident1),
+            "api/v1/incidents/1",
+            data=json.dumps(self.incident1),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
         result = json.loads(response.data)
@@ -219,7 +224,8 @@ class TestIncidents(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/32/comment", data=json.dumps(self.incident1),
+            "api/v1/incidents/32",
+            data=json.dumps(self.incident1),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
         result = json.loads(response.data)

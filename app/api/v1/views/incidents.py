@@ -1,4 +1,5 @@
 from flask_restful import Resource
+import datetime
 from flask import request
 from app.api.v1.models.incidents_model import IncidentsModel
 from .views_validation.validation import ViewsValidation
@@ -36,7 +37,7 @@ class Incidents(Resource, IncidentsModel):
                 "image": data["image"],
                 "video": data["video"],
                 "comment": data["comment"],
-                "createdBy": 34
+                "createdBy": len(['title'])
             }
 
             res = self.incident.save(incident_entry)

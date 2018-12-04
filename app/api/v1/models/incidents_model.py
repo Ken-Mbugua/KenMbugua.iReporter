@@ -25,6 +25,7 @@ class IncidentsModel():
             "createdBy": incident_entry["createdBy"],
             "createdOn": str(datetime.datetime.now())
         }
+
         self.dbase.append(incident_data)
         return incident_data
 
