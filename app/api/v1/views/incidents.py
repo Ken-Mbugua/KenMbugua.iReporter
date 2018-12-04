@@ -98,4 +98,20 @@ class IncidentsId(Resource, IncidentsModel):
         method to handle PATCH sigle incident request
         any field provided can be updated here
         """
-        pass
+        data = request.get_json()
+
+        res = self.db.edit_incident(incident_id, data)
+
+        if res:
+            return {
+                "status": 200,
+                "data": [{
+                    "id": res["id"],
+                    "message": "incident record has been updated"
+                }]
+            }, 200
+        else:
+            return {
+                "status": 404,
+                "error": "Not found for id {}".format(incident_id)
+            }, 404
