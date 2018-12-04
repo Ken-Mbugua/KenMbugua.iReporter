@@ -55,15 +55,15 @@ before your terminal script you should see something like this:
 
 - import enviromental variables
 
-  ```
-  export PROJECT_SETTINGS="development"
-  export FLASK_APP = "run.py"
-  ```
+```
+ export PROJECT_SETTINGS="development"
+ export FLASK_APP = "run.py"
+```
 
 - install required packages
 
 ```
-$ pip install -r requirements.txt
+ pip install -r requirements.txt
 ```
 
 - Run App
@@ -97,18 +97,10 @@ syle test accordeing to Pep 8 standards
 pycodestyle app --count
 ```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 
 - [Flask](http://flask.pocoo.org/docs/1.0/) - The web framework used
 - [Flask-RestFull](https://flask-restful.readthedocs.io/en/latest/) - Api mini framework
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
 
 ## Authors
 
@@ -123,5 +115,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 - Hat tip to anyone whose code was used
-- Inspiration
-- etc
