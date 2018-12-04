@@ -92,3 +92,10 @@ class IncidentsId(Resource, IncidentsModel):
                 "status": 404,
                 "error": "Not found for id {}".format(incident_id)
             }, 404
+
+    def patch(self, incident_id):
+        """
+        method to handle PATCH sigle incident request
+        any field provided can be updated here
+        """
+        pass
