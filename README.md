@@ -21,7 +21,7 @@ Give examples
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+Running Ireporter
 
 Say what the step will be
 
@@ -40,7 +40,9 @@ End with an example of getting some data out of the system or using it for a lit
 ## Running the tests
 
 After all the above installation process is solved `cd` into root then `run`
-`python -m pytest --cov=./app`
+`python -m pytest ./app`
+
+this automates tests throught the project.
 
 ### Break down into end to end tests
 
@@ -52,10 +54,10 @@ python -m pytest --cov=./app
 
 ### And coding style tests
 
-Test for tests covereage using pytest coverage
+syle test accordeing to Pep 8 standards
 
 ```
-python -m pytest --cov=./
+pycodestyle app --count
 ```
 
 ## Deployment
