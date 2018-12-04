@@ -19,15 +19,21 @@ All this while providing some degree of anonimity.
 
 | Method | Endpoint                                                 | Usage                                          |
 | ------ | -------------------------------------------------------- | ---------------------------------------------- |
-| POST   | `[hostname]:5000/api/v1/incident`                        | Create a red-flag or an intervention.          |
-| GET    | `[hostname]:5000/api/v1/incident`                        | Get all red-flags or interventions.            |
-| GET    | `[hostname]:5000/api/v1/incident/<incident_id>`          | Get a red-flad or an intervention.             |
-| PATCH  | `[hostname]:5000/api/v1/incident/<incident_id>/location` | Update Location of a red-flag or intervention. |
-| PATCH  | `[hostname]:5000/api/v1/incident/<incident_id>/comment`  | Update Comment of a red-flag or intervention.  |
-| DELETE | `[hostname]:5000/api/v1/incident/<incident_id>`          | Delete a single red-flag or intervention.      |
-| PATCH  | `[hostname]:5000/api/v1/incident/<incident_id>`          | Update a red-flag or intervention.             |
+| POST   | `[hostname]/api/v1/incident`                        | Create a red-flag or an intervention.          |
+| GET    | `[hostname]/api/v1/incident`                        | Get all red-flags or interventions.            |
+| GET    | `[hostname]/api/v1/incident/<incident_id>`          | Get a red-flad or an intervention.             |
+| PATCH  | `[hostname]/api/v1/incident/<incident_id>/location` | Update Location of a red-flag or intervention. |
+| PATCH  | `[hostname]/api/v1/incident/<incident_id>/comment`  | Update Comment of a red-flag or intervention.  |
+| DELETE | `[hostname]/api/v1/incident/<incident_id>`          | Delete a single red-flag or intervention.      |
+| PATCH  | `[hostname]/api/v1/incident/<incident_id>`          | Update a red-flag or intervention.             |
 
 ## instuctions [installing iReporter]
+
+- To consume this api remotely use the heroku url :
+
+```
+  https://km-ireporter-api.herokuapp.com/api/
+```
 
 - To run on local machine git clone this project :
 
@@ -35,7 +41,7 @@ All this while providing some degree of anonimity.
     git clone https://github.com/Ken-Mbugua/KenMbugua.iReporter.git
 ```
 
-[more-details] https://help.github.com/articles/fork-a-repo/
+`[more-details] https://help.github.com/articles/fork-a-repo/`
 
 ## Prerequisites
 
