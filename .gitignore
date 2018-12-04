@@ -3,4 +3,4 @@ ireporter-env/
 .env
 __pycache__
 instance/
-.covereage
+.coverage
