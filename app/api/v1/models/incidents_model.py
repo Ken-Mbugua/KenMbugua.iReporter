@@ -1,6 +1,5 @@
 
 import datetime
-from flask import json
 
 incidents = []
 
