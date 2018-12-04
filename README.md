@@ -7,9 +7,29 @@ This platform will enable any member of the public to report a corruption incide
 government intervention.
 All this while providing some degree of anonimity.
 
-## Getting Started
+- ## API
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+  This App exposes endpoints that allows `clients/Users` to manage a bucketlist of their choise.
+
+- #### Available Resource Endpoints
+
+| Method | Endpoint                                                 | Usage                                          |
+| ------ | -------------------------------------------------------- | ---------------------------------------------- |
+| POST   | `[hostname]:5000/api/v1/incident`                        | Create a red-flag or an intervention.          |
+| GET    | `[hostname]:5000/api/v1/incident`                        | Get all red-flags or interventions.            |
+| GET    | `[hostname]:5000/api/v1/incident/<incident_id>`          | Get a red-flad or an intervention.             |
+| PATCH  | `[hostname]:5000/api/v1/incident/<incident_id>/location` | Update Location of a red-flag or intervention. |
+| PATCH  | `[hostname]:5000/api/v1/incident/<incident_id>/comment`  | Update Comment of a red-flag or intervention.  |
+| DELETE | `[hostname]:5000/api/v1/incident/<incident_id>`          | Delete a single red-flag or intervention.      |
+| PATCH  | `[hostname]:5000/api/v1/incident/<incident_id>`          | Update a red-flag or intervention.             |
+
+## instuctions [installing iReporter]
+
+- To run on local machine git clone this project :
+
+```
+    git clone https://github.com/Ken-Mbugua/KenMbugua.iReporter.git
+```
 
 ### Prerequisites
 
@@ -66,8 +86,8 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-- [Flask](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-- [Flask-RestFull](https://maven.apache.org/) - Api mini framework
+- [Flask](http://flask.pocoo.org/docs/1.0/) - The web framework used
+- [Flask-RestFull](https://flask-restful.readthedocs.io/en/latest/) - Api mini framework
 
 ## Versioning
 
@@ -75,9 +95,9 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-- **Ken Mbugua** - _Initial work_ - [PurpleBooth](https://github.com/PurpleBooth)
+- **Ken Mbugua** - _Initial work_ - [Ken-Mbugua](https://github.com/Ken-MbuguaiReporter)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/Ken-MbuguaiReporter/KenMbuguaiReporter/contributors) who participated in this project.
 
 ## License
 
