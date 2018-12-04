@@ -49,9 +49,9 @@ python3 -m venv ireporter-env
 
 `source /ireporter-env/bin/activate`
 
-before your terminal script you should see something like this:
+your terminal bash should look something close to this:
 
-`(ireporter-evn) Username@username/.../KenMbugua.iReporter $`
+`(ireporter-env) Username@username/.../KenMbugua.iReporter $`
 
 - import enviromental variables
 
