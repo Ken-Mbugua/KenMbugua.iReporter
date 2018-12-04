@@ -31,31 +31,54 @@ All this while providing some degree of anonimity.
     git clone https://github.com/Ken-Mbugua/KenMbugua.iReporter.git
 ```
 
-### Prerequisites
+[more-details] https://help.github.com/articles/fork-a-repo/
 
-What things you need to install the software and how to install them
+## prerequisites
 
-```
-Give examples
-```
+install and configure `python 3+` in your machine environment
 
-### Installing
+Navigate to the folder you cloned and run:
 
-Running Ireporter
-
-Say what the step will be
+- Creating a virtual environment
 
 ```
-Give the example
+python3 -m venv ireporter-env
 ```
 
-And repeat
+- Switch to the virtual environment
+
+`source /ireporter-env/bin/activate`
+
+before your terminal script you should see something like this:
+
+`(ireporter-evn) Username@username/.../KenMbugua.iReporter $`
+
+- import enviromental variables
+
+  ```
+  export PROJECT_SETTINGS="development"
+  export FLASK_APP = "run.py"
+  ```
 
 ```
-until finished
+$ pip install -r requirements.txt
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+- Configure Environment.
+
+```
+$ export APP_SETTINGS="default"
+$ export DEV_DATABASE="path to your database"
+$ export SECRET="Secret Key Here"
+```
+
+- Run App
+
+```
+flask run
+```
+
+The app should be accessiable via : http://127.0.0.1:5000/
 
 ## Running the tests
 
