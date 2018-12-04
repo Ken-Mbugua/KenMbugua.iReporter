@@ -34,6 +34,26 @@ class IncidentsModel():
         """
         return self.dbase
 
+    def get_incident(self, incident_id):
+        """
+        method to a single incident record
+        """
+        all_incidents = self.dbase         # get all incidents
+        # loop through the incidents to find an id match
+        for incident in all_incidents:
+            # id found success return unique incident
+            if (incident_id == incident["id"]):
+                return incident
+
+    def delete_incident(self, incident_id):
+        """
+        method to delete single incident
+        """
+        new_incidents = self.dbase     # copy incidents dictonary
+        for incident in new_incidents:  # look for incident by id
+            if(incident_id == incident["id"]):  # incident found now remove it
+                new_incidents.pop(incident_id-1)  # remove item at pop(1d-1)
+                return incident
 
 # end of file past line 75 any methods will be ignored by ptyhon
 # interpreter and the entire flask app :-(
