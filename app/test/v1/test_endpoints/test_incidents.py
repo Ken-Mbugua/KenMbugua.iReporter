@@ -13,6 +13,8 @@ class TestIncidents(TestCase):
         # app.testing = True
         self.app_context = app.app_context()
         self.app_context.push()
+
+        # test data
         self.incident1 = {
             'title': 'Traffice Corruption',
             'description': 'Offices taking bribes',
@@ -42,6 +44,7 @@ class TestIncidents(TestCase):
 
 
         }
+        # test data
 
         self.incident2 = {
             "title": "Traffice Corruption",
@@ -69,8 +72,13 @@ class TestIncidents(TestCase):
                 }
             ],
             "comment": "This is fake all news i tell ya"
+        }
 
-
+        self.comment_data = {
+            "comment": "Scintilating"
+        }
+        self.location_data = {
+            "location": "-3455666, 42254555"
         }
 
     def add_incident(self):
@@ -172,6 +180,38 @@ class TestIncidents(TestCase):
                          "incident record has been updated")
 
     def test_update_incident_comment_not_found(self):
+        """
+        method to test UPDATE comment incident endpoint
+        """
+        self.add_incident()
+
+        response = self.app.patch(
+            # dumps converts data into json
+            "api/v1/incidents/32/comment", data=json.dumps(self.incident1),
+            headers={"Content-Type": "application/json"})
+        # content type notifies the data being sent is in json formart
+        result = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(result["error"],
+                         "Not found for id 32")
+
+    def test_update_incident(self):
+        """
+        method to test UPDATE incident endpoint
+        """
+        self.add_incident()
+
+        response = self.app.patch(
+            # dumps converts data into json
+            "api/v1/incidents/1/comment", data=json.dumps(self.incident1),
+            headers={"Content-Type": "application/json"})
+        # content type notifies the data being sent is in json formart
+        result = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(result["data"][0]["message"],
+                         "incident record has been updated")
+
+    def test_update_incident_not_found(self):
         """
         method to test UPDATE incident endpoint
         """

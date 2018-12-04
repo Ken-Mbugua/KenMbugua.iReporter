@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask import request
 from app.api.v1.models.incidents_model import IncidentsModel
+from .views_validation.validation import ViewsValidation
 
 
 class Incidents(Resource, IncidentsModel):
@@ -12,33 +13,53 @@ class Incidents(Resource, IncidentsModel):
         method to receive incident data and pass to db model save()
         """
         data = request.get_json()
-        incident_entry = {
-            "title": data["title"],
-            "description": data["description"],
-            "status": data["status"],
-            "location": data["location"],
-            "type": data["type"],
-            "image": data["image"],
-            "video": data["video"],
-            "comment": data["comment"],
-            "createdBy": 34
-        }
+        # validate received fileds
+        fields_validate = ViewsValidation()
+        fields = [
+            'title',
+            'description',
+            'status',
+            'comment',
+            'video',
+            'image',
+            'location'
+        ]
+        missing_fields = fields_validate.missing_fields(fields, data)
 
-        res = self.incident.save(incident_entry)
-        if res:
-            return {
-                "status": 201,
-                "data": [{
-                    "id": res["id"],
-                    "message": "incident record has been created"
-                }]
-            }, 201
+        if not missing_fields:
+            incident_entry = {
+                "title": data["title"],
+                "description": data["description"],
+                "status": data["status"],
+                "location": data["location"],
+                "type": data["type"],
+                "image": data["image"],
+                "video": data["video"],
+                "comment": data["comment"],
+                "createdBy": 34
+            }
 
+            res = self.incident.save(incident_entry)
+            if res:
+                return {
+                    "status": 201,
+                    "data": [{
+                        "id": res["id"],
+                        "message": "incident record has been created"
+                    }]
+                }, 201
+
+            else:
+                return {
+                    "status": 400,
+                    "error": "Bad Request"
+                }, 400
         else:
             return {
-                "status": 400,
-                "error": "Bad Request"
-            }, 400
+                "status": 403,
+                "error": "Bad request: missing"
+                " fileds {}".format(missing_fields)
+            }, 403
 
     def get(self):
         """
@@ -85,6 +106,30 @@ class IncidentsId(Resource, IncidentsModel):
                 "data": [{
                     "id": res["id"],
                     "message": "incident record has been deleted"
+                }]
+            }, 200
+        else:
+            return {
+                "status": 404,
+                "error": "Not found for id {}".format(incident_id)
+            }, 404
+
+    def patch(self, incident_id):
+        """
+        method to handle PATCH sigle incident request
+        any field provided can be updated here
+        """
+
+        data = request.get_json()
+
+        res = self.db.edit_incident(incident_id, data)
+
+        if res:
+            return {
+                "status": 200,
+                "data": [{
+                    "id": res["id"],
+                    "message": "incident record has been updated"
                 }]
             }, 200
         else:
