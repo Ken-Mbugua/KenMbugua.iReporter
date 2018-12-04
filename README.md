@@ -33,7 +33,7 @@ All this while providing some degree of anonimity.
 
 [more-details] https://help.github.com/articles/fork-a-repo/
 
-## prerequisites
+## Prerequisites
 
 install and configure `python 3+` in your machine environment
 
@@ -60,16 +60,10 @@ before your terminal script you should see something like this:
   export FLASK_APP = "run.py"
   ```
 
+- install required packages
+
 ```
 $ pip install -r requirements.txt
-```
-
-- Configure Environment.
-
-```
-$ export APP_SETTINGS="default"
-$ export DEV_DATABASE="path to your database"
-$ export SECRET="Secret Key Here"
 ```
 
 - Run App
