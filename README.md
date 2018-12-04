@@ -1,9 +1,7 @@
 # iReporter
 
 [![Build Status](https://travis-ci.com/Ken-Mbugua/KenMbugua.iReporter.svg?branch=develop)](https://travis-ci.com/Ken-Mbugua/KenMbugua.iReporter)
-
 [![Test Coverage](https://api.codeclimate.com/v1/badges/447adbdbd24d34155585/test_coverage)](https://codeclimate.com/github/Ken-Mbugua/KenMbugua.iReporter/test_coverage)
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/447adbdbd24d34155585/maintainability)](https://codeclimate.com/github/Ken-Mbugua/KenMbugua.iReporter/maintainability)
 
 **A Corruption watchdogs and incidents reporter application.**
