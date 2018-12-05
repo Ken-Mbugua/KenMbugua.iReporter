@@ -84,6 +84,21 @@ flask run
 
 The app should be accessiable via : http://127.0.0.1:5000/
 
+## Screenshots
+ `creating a new incident:  http://127.0.0.1:5000/api/v1/incidents`
+ 
+ `deleting an incident:    http://127.0.0.1:5000/api/v1/incidents/incident_id`
+ 
+ `get one incident:   http://127.0.0.1:5000/api/v1/incidents/incident_id`
+ 
+ `get all incidents: http://127.0.0.1:5000/api/v1/incidents`
+ 
+ `update an incident's location:   http://127.0.0.1:5000/api/v1/incident_id/location`
+ 
+ `update an incident's comment:   http://127.0.0.1:5000/api/v1/incident_id/comment`
+ 
+ `update any incident field:   http://127.0.0.1:5000/api/v1/incidents/incident_id`
+
 ## Running the tests
 
 After all the above installation process is solved `cd` into root then `run`
