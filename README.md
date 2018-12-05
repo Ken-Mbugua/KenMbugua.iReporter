@@ -88,7 +88,7 @@ The app should be accessiable via : http://127.0.0.1:5000/
 
 > to use heroku replace `http://127.0.0.1:5000` with `https://km-ireporter-api.herokuapp.com`
 
-`creating a new incident: http://127.0.0.1:5000/api/v1/incidents`
+`**creating a new incident:** http://127.0.0.1:5000/api/v1/incidents`
 
 ![post man](Assets/create_incident.png)
 
@@ -126,19 +126,19 @@ The app should be accessiable via : http://127.0.0.1:5000/
 }
 ```
 
-`deleting an incident: http://127.0.0.1:5000/api/v1/incidents/incident_id`
+`deleting an incident:** http://127.0.0.1:5000/api/v1/incidents/incident_id`
 
 ![post man](Assets/delete_incident.png)
 
-`get one incident: http://127.0.0.1:5000/api/v1/incidents/incident_id`
+`**get one incident:** http://127.0.0.1:5000/api/v1/incidents/incident_id`
 
 ![post man](Assets/get_single_incident.png)
 
-`get all incidents: http://127.0.0.1:5000/api/v1/incidents`
+`**get all incidents:** http://127.0.0.1:5000/api/v1/incidents`
 
 ![post man](Assets/getall.png)
 
-`update an incident's location: http://127.0.0.1:5000/api/v1/incident_id/location`
+`**update an incident's location:** http://127.0.0.1:5000/api/v1/incident_id/location`
 
 ![post man](Assets/edit_location.png)
 
@@ -149,7 +149,7 @@ The app should be accessiable via : http://127.0.0.1:5000/
   }
   ```
 
-`update an incident's comment: http://127.0.0.1:5000/api/v1/incident_id/comment`
+`**update an incident's comment:** http://127.0.0.1:5000/api/v1/incident_id/comment`
 
 ![post man](Assets/edit_comment.png)
 
@@ -160,7 +160,7 @@ The app should be accessiable via : http://127.0.0.1:5000/
   }
   ```
 
-`update any incident field: http://127.0.0.1:5000/api/v1/incidents/incident_id`
+`**update any incident field:** http://127.0.0.1:5000/api/v1/incidents/incident_id`
 
 ![post man](Assets/edit_all.png)
 
