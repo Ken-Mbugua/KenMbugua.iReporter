@@ -27,7 +27,7 @@ class Incidents(Resource, IncidentsModel):
         ]
         missing_fields = fields_validate.missing_fields(fields, data)
 
-        if not missing_fields:
+        if not missing_fields: # filter missing fields
             incident_entry = {
                 "title": data["title"],
                 "description": data["description"],
