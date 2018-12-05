@@ -17,8 +17,8 @@ All this while providing some degree of anonimity.
 
 - #### Available Resource Endpoints
 
-| Method | Endpoint                                                 | Usage                                          |
-| ------ | -------------------------------------------------------- | ---------------------------------------------- |
+| Method | Endpoint                                            | Usage                                          |
+| ------ | --------------------------------------------------- | ---------------------------------------------- |
 | POST   | `[hostname]/api/v1/incident`                        | Create a red-flag or an intervention.          |
 | GET    | `[hostname]/api/v1/incident`                        | Get all red-flags or interventions.            |
 | GET    | `[hostname]/api/v1/incident/<incident_id>`          | Get a red-flad or an intervention.             |
@@ -85,22 +85,36 @@ flask run
 The app should be accessiable via : http://127.0.0.1:5000/
 
 ## Screenshots
-> to use heroku replace `http://127.0.0.1:5000`  with  `https://km-ireporter-api.herokuapp.com`
 
- `creating a new incident:  http://127.0.0.1:5000/api/v1/incidents`
- 
- `deleting an incident:    http://127.0.0.1:5000/api/v1/incidents/incident_id`
- 
- `get one incident:   http://127.0.0.1:5000/api/v1/incidents/incident_id`
- 
- 
- `get all incidents: http://127.0.0.1:5000/api/v1/incidents`
- 
- `update an incident's location:   http://127.0.0.1:5000/api/v1/incident_id/location`
- 
- `update an incident's comment:   http://127.0.0.1:5000/api/v1/incident_id/comment`
- 
- `update any incident field:   http://127.0.0.1:5000/api/v1/incidents/incident_id`
+> to use heroku replace `http://127.0.0.1:5000` with `https://km-ireporter-api.herokuapp.com`
+
+`creating a new incident: http://127.0.0.1:5000/api/v1/incidents`
+
+![post man](Assets/create_incident.png)
+
+`deleting an incident: http://127.0.0.1:5000/api/v1/incidents/incident_id`
+
+![post man](Assets/delete_incident.png)
+
+`get one incident: http://127.0.0.1:5000/api/v1/incidents/incident_id`
+
+![post man](Assets/get_single_incident.png)
+
+`get all incidents: http://127.0.0.1:5000/api/v1/incidents`
+
+![post man](Assets/getall.png)
+
+`update an incident's location: http://127.0.0.1:5000/api/v1/incident_id/location`
+
+![post man](Assets/edit_location.png)
+
+`update an incident's comment: http://127.0.0.1:5000/api/v1/incident_id/comment`
+
+![post man](Assets/edit_comment.png)
+
+`update any incident field: http://127.0.0.1:5000/api/v1/incidents/incident_id`
+
+![post man](Assets/edit_all.png)
 
 ## Running the tests
 
