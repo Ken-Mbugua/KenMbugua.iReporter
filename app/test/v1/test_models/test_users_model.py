@@ -15,13 +15,14 @@ class TestUsersModel(TestCase):
             "phoneNumber": "07168858858",
             "username": "@Ankibi",
             "registered": str(datetime.datetime.now()),
-            "isAdmin": "False"
+            "isAdmin": False
         }
 
     def create_test_user(self):
         return self.user.create_user(self.user_data)
 
     def test_create_user(self):
+        pass
 
     def tearDown(self):
         self.user_data.clear()
