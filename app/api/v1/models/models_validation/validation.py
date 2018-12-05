@@ -1,3 +1,4 @@
+from flask import jsonify
 
 
 class ModelValidation:
@@ -28,3 +29,9 @@ class ModelValidation:
             if record_id == db_list["id"]:
                 return record  # return same record if theres a duplicate
         return None
+
+    def models_error(self, status, error_message):
+        return {
+            "status": status,
+            "error": error_message
+        }

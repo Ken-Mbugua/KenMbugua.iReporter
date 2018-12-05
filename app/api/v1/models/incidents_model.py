@@ -1,5 +1,6 @@
 
 import datetime
+from app.api.v1.models.models_validation.validation import ModelValidation
 
 incidents = []
 
@@ -7,6 +8,7 @@ incidents = []
 class IncidentsModel():
     def __init__(self):
         self._dbase = incidents
+        self._validation_model = ModelValidation()
 
     def save(self, incident_entry):
         """
@@ -24,11 +26,20 @@ class IncidentsModel():
             "createdBy": incident_entry["createdBy"],
             "createdOn": str(datetime.datetime.now())
         }
+        print("ID::", incident_data["id"])
+        print("TITLE::", incident_data["title"])
 
         incident = self.get_incident_by_id(incident_data["id"])
+        incident_title = self.get_incident_by_title(incident_data["title"])
 
-        if incident:
-            return None  # incident already exists
+        print("ID::", incident_data["id"])
+        print("TITLE::", incident_data["title"])
+        if incident or incident_title:
+            # incident already exists
+            # error_message = "Duplicate Incident Error"
+            return self._validation_model.models_error(400,
+                                                       "Duplicate "
+                                                       " Incident Error")
         else:
             self._dbase.append(incident_data)
             return incident_data
@@ -53,7 +64,7 @@ class IncidentsModel():
             if (incident_id == incident["id"]):
                 return incident
 
-    def get_incident_by_name(self, incident_title):
+    def get_incident_by_title(self, incident_title):
         """
         method to a single incident record
         """
