@@ -6,14 +6,14 @@ incidents = []
 
 class IncidentsModel():
     def __init__(self):
-        self.dbase = incidents
+        self._dbase = incidents
 
     def save(self, incident_entry):
         """
         method to add new incident into incidents list
         """
         incident_data = {
-            "id": len(self.dbase)+1,  # implements id auto increment feature
+            "id": len(self._dbase)+1,  # implements id auto increment feature
             "title": incident_entry["title"],
             "description": incident_entry["description"],
             "location": incident_entry["location"],
@@ -25,20 +25,27 @@ class IncidentsModel():
             "createdOn": str(datetime.datetime.now())
         }
 
-        self.dbase.append(incident_data)
-        return incident_data
+        incident = self.get_incident(incident_data["id"])
+        if incident:
+            return None  # incident already exists
+        else:
+            self._dbase.append(incident_data)
+            return incident_data
 
     def get_incidents(self):
         """
         method to get all incidences
         """
-        return self.dbase
+        if not self._dbase:
+            return None
+        else:
+            return self._dbase
 
     def get_incident(self, incident_id):
         """
         method to a single incident record
         """
-        all_incidents = self.dbase         # get all incidents
+        all_incidents = self._dbase         # get all incidents
         # loop through the incidents to find an id match
         for incident in all_incidents:
             # id found success return unique incident
@@ -49,7 +56,7 @@ class IncidentsModel():
         """
         method to delete single incident
         """
-        new_incidents = self.dbase     # copy incidents dictonary
+        new_incidents = self._dbase     # copy incidents dictonary
         for incident in new_incidents:  # look for incident by id
             if(incident_id == incident["id"]):  # incident found now remove it
                 new_incidents.pop(incident_id-1)  # remove item at pop(1d-1)
