@@ -92,6 +92,40 @@ The app should be accessiable via : http://127.0.0.1:5000/
 
 ![post man](Assets/create_incident.png)
 
+-request body:
+
+```
+{
+  "title": "Traffice Corruption",
+    "description": "Offices taking bribes",
+    "type": "RedFlag",
+    "status": "Rejected",
+    "location": "-34444400, 3444499900",
+    "location2": "-34444400, 3444499900",
+    "image": [
+                {
+                    "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
+                    "filesize": "2045kb"
+                },
+                {
+                    "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
+                    "filesize": "2045kb"
+                }
+    ],
+    "video": [
+                {
+                    "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
+                    "filesize": "340098245Kb"
+                },{
+                    "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
+                    "filesize": "340098245Kb"
+                }
+    ],
+    "comment": "This is all fake, they will deny alll charges!"
+
+}
+```
+
 `deleting an incident: http://127.0.0.1:5000/api/v1/incidents/incident_id`
 
 ![post man](Assets/delete_incident.png)
@@ -108,13 +142,47 @@ The app should be accessiable via : http://127.0.0.1:5000/
 
 ![post man](Assets/edit_location.png)
 
+- request body:
+  ```
+  {
+  		    "location": "-9.5566025, -35.776295"
+  }
+  ```
+
 `update an incident's comment: http://127.0.0.1:5000/api/v1/incident_id/comment`
 
 ![post man](Assets/edit_comment.png)
 
+- request body:
+  ```
+  {
+  		    "comment":"As far as am concerned This is all fake news"
+  }
+  ```
+
 `update any incident field: http://127.0.0.1:5000/api/v1/incidents/incident_id`
 
 ![post man](Assets/edit_all.png)
+
+- request body:
+  ```
+  {
+  	"title": "Pesa Laundring",
+  	"description": "Kenya's 12th biggest gambling company is surely involved",
+  	"status": "Under Inverstigation",
+  	"createdBy": 15,
+  	"video": [
+                {
+                    "dir": "var/www/uploads/incidents/video/USR-232455.mp4",
+                    "filesize": "940098245Kb"
+                },
+                {
+                    "dir": "var/www/uploads/incidents/video/USR-232455.mp4",
+                    "filesize": "740098245Kb"
+                }
+    ]
+  }
+  ```
 
 ## Running the tests
 
