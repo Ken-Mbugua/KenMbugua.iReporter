@@ -25,7 +25,8 @@ class IncidentsModel():
             "createdOn": str(datetime.datetime.now())
         }
 
-        incident = self.get_incident(incident_data["id"])
+        incident = self.get_incident_by_id(incident_data["id"])
+
         if incident:
             return None  # incident already exists
         else:
@@ -41,7 +42,7 @@ class IncidentsModel():
         else:
             return self._dbase
 
-    def get_incident(self, incident_id):
+    def get_incident_by_id(self, incident_id):
         """
         method to a single incident record
         """
@@ -50,6 +51,17 @@ class IncidentsModel():
         for incident in all_incidents:
             # id found success return unique incident
             if (incident_id == incident["id"]):
+                return incident
+
+    def get_incident_by_name(self, incident_title):
+        """
+        method to a single incident record
+        """
+        all_incidents = self._dbase         # get all incidents
+        # loop through the incidents to find an id match
+        for incident in all_incidents:
+            # id found success return unique incident
+            if (incident_title == incident["title"]):
                 return incident
 
     def delete_incident(self, incident_id):
@@ -64,7 +76,7 @@ class IncidentsModel():
 
     def edit_incident(self, incident_id, data):
         # filter incidents by id
-        incident = self.get_incident(incident_id)
+        incident = self.get_incident_by_id(incident_id)
         if incident:
             # if found update list
             incident.update(data)
@@ -73,7 +85,7 @@ class IncidentsModel():
     @staticmethod
     def update_incident(incident_id, data):
         new_incident_instance = IncidentsModel()
-        incident = new_incident_instance.get_incident(incident_id)
+        incident = new_incident_instance.get_incident_by_id(incident_id)
         if incident:
             incident.update(data)
             return incident
