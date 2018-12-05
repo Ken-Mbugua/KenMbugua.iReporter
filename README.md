@@ -85,11 +85,14 @@ flask run
 The app should be accessiable via : http://127.0.0.1:5000/
 
 ## Screenshots
+> to use heroku replace `http://127.0.0.1:5000`  with  `https://km-ireporter-api.herokuapp.com`
+
  `creating a new incident:  http://127.0.0.1:5000/api/v1/incidents`
  
  `deleting an incident:    http://127.0.0.1:5000/api/v1/incidents/incident_id`
  
  `get one incident:   http://127.0.0.1:5000/api/v1/incidents/incident_id`
+ 
  
  `get all incidents: http://127.0.0.1:5000/api/v1/incidents`
  
