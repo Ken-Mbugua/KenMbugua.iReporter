@@ -19,7 +19,7 @@ class IncidentsModel():
             "title": incident_entry["title"],
             "description": incident_entry["description"],
             "location": incident_entry["location"],
-            "status": incident_entry["status"],
+            "incident_status": incident_entry["incident_status"],
             "image": incident_entry["image"],
             "video": incident_entry["video"],
             "comment": incident_entry["comment"],
@@ -38,6 +38,7 @@ class IncidentsModel():
                                                        " Incident Error")
         else:
             self._dbase.append(incident_data)
+            incident_data["status"] = 200
             return incident_data
 
     def get_incidents(self):
@@ -80,6 +81,12 @@ class IncidentsModel():
             if(incident_id == incident["id"]):  # incident found now remove it
                 new_incidents.pop(incident_id-1)  # remove item at pop(1d-1)
                 return incident
+
+    def clear_all_incidents(self):
+        """
+        method to delete single incident
+        """
+        self._dbase.clear()
 
     def edit_incident(self, incident_id, data):
         # filter incidents by id

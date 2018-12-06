@@ -41,7 +41,7 @@ class Users(Resource, UsersModel):
             }
 
             res = self._userz.create_user(user_entry)
-            print("RES::", res)
+            print("RES:::", res)
             if res:
                 if res["status"] == 400:
                     return res
@@ -53,9 +53,7 @@ class Users(Resource, UsersModel):
                             "message": "user record has been created"
                         }]
                     }, 201
-
             else:
-                print("RES:: ", res)
                 return {
                     "status": 400,
                     "error": "Bad Request"
