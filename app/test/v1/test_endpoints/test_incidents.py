@@ -113,7 +113,11 @@ class TestIncidents(TestCase):
         self.assertEqual(result["status"], 404)
 
         # add an incident
+<<<<<<< HEAD
         self.add_incident("Corruption Case 1")
+=======
+        self.add_incident()
+>>>>>>> 129a56765dbd1dff1672ecb149cd3eb649bda6d1
 
         # when poulates should return status 200
         response = self.app.get("/api/v1/incidents")
