@@ -26,14 +26,10 @@ class IncidentsModel():
             "createdBy": incident_entry["createdBy"],
             "createdOn": str(datetime.datetime.now())
         }
-        print("ID::", incident_data["id"])
-        print("TITLE::", incident_data["title"])
 
         incident = self.get_incident_by_id(incident_data["id"])
         incident_title = self.get_incident_by_title(incident_data["title"])
 
-        print("ID::", incident_data["id"])
-        print("TITLE::", incident_data["title"])
         if incident or incident_title:
             # incident already exists
             # error_message = "Duplicate Incident Error"

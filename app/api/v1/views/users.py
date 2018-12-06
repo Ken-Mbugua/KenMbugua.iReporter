@@ -8,6 +8,7 @@ from .views_validation.validation import ViewsValidation
 class Users(Resource, UsersModel):
     def __init__(self):
         self._userz = UsersModel()
+        self._views_validation = ViewsValidation()
 
     def post(self):
         """
@@ -17,13 +18,13 @@ class Users(Resource, UsersModel):
         # validate received fileds
         fields_validate = ViewsValidation()
         fields = [
-            'title',
-            'description',
-            'status',
-            'comment',
-            'video',
-            'image',
-            'location'
+            'firstname',
+            'lastname',
+            'email',
+            'phonenumber',
+            'username',
+            'othernames',
+            'password'
         ]
         missing_fields = fields_validate.missing_fields(fields, data)
 
@@ -34,12 +35,13 @@ class Users(Resource, UsersModel):
                 "email": data["email"],
                 "phonenumber": data["phonenumber"],
                 "username": data["username"],
-                "isAdmin": data["isAdmin"],
-                "othername": data["othername"],
+                "othernames": data["othernames"],
+                "password": data['password'],
                 "createdBy": len(['title'])
             }
 
             res = self._userz.create_user(user_entry)
+            print("RES::", res)
             if res:
                 if res["status"] == 400:
                     return res

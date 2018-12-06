@@ -94,6 +94,16 @@ class TestIncidents(TestCase):
         """
         method to test GET all incident endpoint
         """
+
+        # when empty should return 404
+        response = self.app.get("/api/v1/incidents")
+        result = json.loads(response.data)
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(result["status"], 404)
+
+        self.add_incident()
+
+        # when poulates should return status 200
         response = self.app.get("/api/v1/incidents")
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 200)

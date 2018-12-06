@@ -41,6 +41,7 @@ class Incidents(Resource, IncidentsModel):
             }
 
             res = self.incident.save(incident_entry)
+            print("RES 2::", res)
             if res:
                 if res["status"] == 400:
                     return res

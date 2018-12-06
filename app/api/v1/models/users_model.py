@@ -1,5 +1,6 @@
 import datetime
 from flask_bcrypt import generate_password_hash
+from .models_validation.validation import ModelValidation
 
 _users_db = []
 
@@ -7,8 +8,9 @@ _users_db = []
 class UsersModel():
 
     def __init__(self):
-        self.createt_at = datetime.datetime
+        self.created_at = datetime.datetime.now()
         self._users_db = _users_db
+        self.model_val = ModelValidation()
 
     def create_user(self, user_details):
 
@@ -17,19 +19,21 @@ class UsersModel():
             "id": len(self._users_db)+1,
             "firstname": user_details["firstname"],
             "lastname": user_details["lastname"],
-            "othername": user_details["othername"],
+            "othernames": user_details["othernames"],
             "email": user_details["email"],
             "phonenumber": user_details["phonenumber"],
             "password_hash": generate_password_hash(user_details["password"])
             .decode("utf-8"),
             "isAdmin": False,
             "createdBy": user_details["createdBy"],
-            "Registered": str(datetime.datetime.now())
+            "Registered": str(self.created_at)
         }
 
-        user = self.get_single_user(user_details["id"])
-        if user:
-            return None  # user already exists
+        userr = self.get_single_user(user_details["id"])
+        if userr:
+            return self.model_val.models_error(400,
+                                               "User"
+                                               " Already Exists")
         else:
             self._users_db.append(user_details)
             return user_details
@@ -50,7 +54,7 @@ class UsersModel():
 
     def get_single_user(self, user_id):
         for user in self._users_db:
-            if user.id == user_id:
+            if (user_id == user["id"]):
                 return user
         return None  # user not found
 
