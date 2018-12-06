@@ -15,7 +15,9 @@ class IncidentsModel():
         method to add new incident into incidents list
         """
         incident_data = {
-            "id": len(self._dbase)+1,  # implements id auto increment feature
+            # implements id auto increment feature
+            # get last elemt then increment by 1
+            "id": self.auto_increment(),
             "title": incident_entry["title"],
             "description": incident_entry["description"],
             "location": incident_entry["location"],
@@ -33,9 +35,10 @@ class IncidentsModel():
         if incident or incident_title:
             # incident already exists
             # error_message = "Duplicate Incident Error"
-            return self._validation_model.models_error(400,
-                                                       "Duplicate "
-                                                       " Incident Error")
+            queried_data = self._validation_model.models_error(
+                400, "Duplicate Incident Error")
+
+            return queried_data
         else:
             self._dbase.append(incident_data)
             incident_data["status"] = 200
@@ -103,6 +106,12 @@ class IncidentsModel():
         if incident:
             incident.update(data)
             return incident
+
+    def auto_increment(self):
+        if not self._dbase:
+            return len(self._dbase)+1
+        else:
+            return (self._dbase[-1]["id"])+1
 
 # end of file past line 75 any methods will be ignored by ptyhon
 # interpreter and the entire flask app :-(
