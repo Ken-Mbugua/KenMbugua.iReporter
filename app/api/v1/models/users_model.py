@@ -29,36 +29,46 @@ class UsersModel():
             "Registered": str(self.created_at)
         }
 
-        userr = self.get_single_user(user_details["id"])
-        if userr:
+        if_user = self.get_user_by_id(user_details["id"])
+        if_email = self.get_user_by_email(user_details["email"])
+        print("EMAIL:: ", if_email)
+        if if_user or if_email:  # duplicate user found return
+            # duplicate record error
             return self.model_val.models_error(400,
                                                "User"
                                                " Already Exists")
         else:
             self._users_db.append(user_details)
+            user_details["status"] = 200
             return user_details
 
     def delete_user(self, user_id):
-        user = self.get_single_user(user_id)
+        user = self.get_user_by_id(user_id)
         if user:
             _users_db.pop(user_id - 1)
             return user
         return None  # user not found
 
     def update_user(self, user_id, data):
-        user = self.get_single_user(user_id)
+        user = self.get_user_by_id(user_id)
         if user:
             user.update(data)
             return user
         return None  # user not found
 
-    def get_single_user(self, user_id):
+    def get_user_by_id(self, user_id):
         for user in self._users_db:
             if (user_id == user["id"]):
                 return user
         return None  # user not found
 
+    def get_user_by_email(self, user_email):
+        for user in self._users_db:
+            if (user_email == user["email"]):
+                return user
+        return None  # user not found
+
     def get_all_users(self):
         if not self._users_db:
-            return self._users_db
-        return None  # user not found
+            return None
+        return self._users_db  # user not found

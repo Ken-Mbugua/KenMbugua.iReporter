@@ -19,7 +19,7 @@ class Incidents(Resource, IncidentsModel):
         fields = [
             'title',
             'description',
-            'status',
+            'incident_status',
             'comment',
             'video',
             'image',
@@ -31,7 +31,7 @@ class Incidents(Resource, IncidentsModel):
             incident_entry = {
                 "title": data["title"],
                 "description": data["description"],
-                "status": data["status"],
+                "incident_status": data["incident_status"],
                 "location": data["location"],
                 "type": data["type"],
                 "image": data["image"],

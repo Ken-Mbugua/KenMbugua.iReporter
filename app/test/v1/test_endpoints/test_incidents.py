@@ -101,6 +101,7 @@ class TestIncidents(TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(result["status"], 404)
 
+        # add an incident
         self.add_incident()
 
         # when poulates should return status 200
