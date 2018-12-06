@@ -41,10 +41,10 @@ class UsersModel():
             return user
         return None  # user not found
 
-    def update_user(self, user_id):
+    def update_user(self, user_id, data):
         user = self.get_single_user(user_id)
         if user:
-            _users_db.pop(user_id - 1)
+            user.update(data)
             return user
         return None  # user not found
 
@@ -52,4 +52,9 @@ class UsersModel():
         for user in self._users_db:
             if user.id == user_id:
                 return user
+        return None  # user not found
+
+    def get_all_users(self):
+        if not self._users_db:
+            return self._users_db
         return None  # user not found
