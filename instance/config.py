@@ -22,7 +22,7 @@ class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
     TESTING = True
     DEBUG = True
-    TEST_DB_NAME = os.getenv("TEST_DB_NAME")
+    DB_NAME = os.getenv("TEST_DB_NAME")
 
 
 class StagingConfig(Config):
