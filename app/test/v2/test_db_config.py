@@ -6,6 +6,10 @@ from app import create_app
 
 
 class TestDbModel(TestCase):
+    """
+    class to test Db connection class Db config
+    """
+
     def setUp(self):
         app = create_app("testing")
         self.app = app.test_client()
@@ -21,7 +25,7 @@ class TestDbModel(TestCase):
         self.assertEqual(
             self.dbase.create_tables(),
             None,
-            "Created tablez"
+            "Created tables Successfully"
         )
 
     def test_query(self):
