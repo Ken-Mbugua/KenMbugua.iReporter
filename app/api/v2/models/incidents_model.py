@@ -84,7 +84,8 @@
 #         """
 #         new_incidents = self._dbase     # copy incidents dictonary
 #         for incident in new_incidents:  # look for incident by id
-#             if(incident_id == incident["id"]):  # incident found now remove it
+#             if(incident_id == incident["id"]):  # incident found
+# now remove it
 #                 new_incidents.pop(incident_id-1)  # remove item at pop(1d-1)
 #                 return incident
 
