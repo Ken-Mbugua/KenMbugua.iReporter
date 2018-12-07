@@ -24,8 +24,15 @@ class DbModel():
 
     def query(self, query):
         """ pass query statements for execution """
-        result = self.cur.execute(query)
-        return result
+        self.cur.execute(query)
+
+    def find_all(self):
+        """method to return all table data"""
+        return self.cur.fetchall()
+
+    def find_one(self):
+        """method to return all table data"""
+        return self.cur.fetchone()
 
     def save(self):
         """ pass method to commit record """
