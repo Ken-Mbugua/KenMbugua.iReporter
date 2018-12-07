@@ -24,7 +24,8 @@ class DbModel():
 
     def query(self, query):
         """ pass query statements for execution """
-        self.cur.execute(query)
+        result = self.cur.execute(query)
+        return result
 
     def save(self):
         """ pass method to commit record """
