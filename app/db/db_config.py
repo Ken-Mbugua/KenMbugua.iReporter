@@ -85,6 +85,7 @@ class DbModel():
                 last_name character varying(50),
                 username character varying(50) NOT NULL,
                 email character varying(50) ,
+                phone_number character varying(50) ,
                 is_admin BOOLEAN,
                 date_created timestamp with time zone
                  DEFAULT (now() at time zone 'utc'),
