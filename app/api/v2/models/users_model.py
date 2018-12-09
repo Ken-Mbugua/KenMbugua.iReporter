@@ -30,11 +30,13 @@ class UsersModel():
             # duplicate record error
             return None
         else:
-            query = """INSERT INTO users(email, phone_number, password_hash)"
-            " VALUES (%s,%s,%s)""",
-            (user_details["email"],
-             user_details["phone_number"],
-             user_details["password_hash"])
+            query = "INSERT INTO users(email, phone_number, password_hash) " +\
+                " VALUES (" +\
+                " '"+(user_details["email"]+"', " +
+                      " '"+user_details["phone_number"]+"', " +
+                      " '"+user_details["password_hash"])+"') "
+
+            print("INSERT QUERY ", type(query))
 
             # hope it doesnt crash here
             self._users_db.query(query)
