@@ -4,13 +4,14 @@ from flask import current_app
 
 
 class DbModel():
-    def __init__(self, app):
+    def __init__(self, app=None):
         """ 
         import variables from current context
         set by Config class
         """
-        current_context = self.context_switcher()
+
         self.app = app
+        current_context = self.context_switcher()
         self.db_name = current_context.config['DB_NAME']
         self.db_user = current_context.config['DB_USERNAME']
         self.db_password = current_context.config['DB_PASSWORD']
