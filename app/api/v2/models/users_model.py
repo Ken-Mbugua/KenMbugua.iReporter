@@ -17,7 +17,8 @@ class UsersModel():
         user_details = {
             "email": user_details["email"],
             "phone_number": user_details["phone_number"],
-            "password_hash": generate_password_hash(user_details["password"])
+            "password_hash": generate_password_hash(user_details["password"]),
+            "username": user_details["username"]
             .decode("utf-8"),
             "isAdmin": False,
             "createdBy": 34,
@@ -28,12 +29,12 @@ class UsersModel():
         email = self.get_user_by_email(user_details["email"])
 
         if email:  # duplicate user found return
-            # duplicate record error
             return None
         else:
-            query = "INSERT INTO users(email, phone_number, password_hash, " +\
-                " auth_token) VALUES (" +\
+            query = "INSERT INTO users(email, username, phone_number, " +\
+                " password_hash, auth_token) VALUES (" +\
                 " '"+(user_details["email"]+"', " +
+                      " '"+user_details["username"]+"', " +
                       " '"+user_details["phone_number"]+"', " +
                       " '"+user_details["password_hash"]+"', " +
                       " '"+user_details["demo_token"])+"') "
