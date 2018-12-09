@@ -19,16 +19,17 @@ class TestIncidentsModel(unittest.TestCase):
         self.app_context.push()
 
         self.current_time = str(datetime.datetime.now())
+        self.maxDiff = None
         self.incident_entry = {
             "title": "Traffice Corruption",
             "description": "Offices taking bribes",
             "type": "RedFlag",
-            "status": "Rejected",
+            "incident_status": "Rejected",
             "location": "-34444400, 3444499900",
             "image": [
                 {
-                      "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
-                      "filesize": "2045kb"
+                    "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
+                    "filesize": "2045kb"
                 },
                 {
                     "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
@@ -48,25 +49,70 @@ class TestIncidentsModel(unittest.TestCase):
             "createdBy": 24
         }
 
-        print(self.incident_entry["createdBy"])
+        self.insert_result = {
+            'id': 1,
+            'title': 'Traffice Corruption',
+            'description': 'Offices taking bribes',
+            'location': '-34444400, 3444499900',
+            'incident_status': 'Rejected',
+            'image': [{'dir': 'var/www/uploads/incidents/img/USR-232455.jpeg',
+                       'filesize': '2045kb'},
+                      {'dir': 'var/www/uploads/incidents/img/USR-232455.jpeg',
+                       'filesize': '2045kb'}],
+            'video': [
+                {'dir': 'var/www/uploads/readflags/video/USR-232455.mp4',
+                    'filesize': '340098245Kb'},
+                {'dir': 'var/www/uploads/readflags/video/USR-232455.mp4',
+                 'filesize': '340098245Kb'}],
+            'comment': 'This is fake all news i tell ya',
+            'createdBy': 24,
+            'createdOn': '2018-12-06 11:13:51.573138',
+            'status': 200
+        }
+
+        # self.insert_record(self.incident_entry)
+        # print(self.incident_entry["createdBy"])
+
+    def insert_record(self):
+        self.incident.save(self.incident_entry)
 
     def test_save_incident(self):
-        # self.assertEqual(self.incident.save(
-        #     self.incident_entry["comment"]),
-        #     "This is fake all news i tell ya")
-        pass
+        test_incident = self.incident.save(self.incident_entry)
+        self.assertEqual(test_incident["comment"],
+                         "This is fake all news i tell ya")
 
     def test_delete_incident(self):
-        pass
+        print(self.incident._dbase)
+        test_incident = self.incident.delete_incident(1)
+        self.assertIsNone(test_incident)
 
     def test_edit_incident(self):
-        pass
+        self.insert_record()
+        test_incident = self.incident.edit_incident(
+            1, {"incident_status": "Resolved"})
+        self.assertAlmostEqual(test_incident["incident_status"], "Resolved")
 
     def test_get_incident(self):
-        pass
+        # return none since incidents = empty
+        test_incident = self.incident.get_incident_by_id(1)
+        self.assertIsNone(test_incident)
+
+        # insert record
+        self.insert_record()
+
+        test_incident = self.incident.get_incident_by_id(1)
+        self.assertIsNotNone(test_incident)
 
     def test_get_incidents(self):
-        pass
+        # return none since incidents = empty
+        test_incident = self.incident.get_incidents()
+        self.assertIsNone(test_incident)
+
+        # insert record
+        self.insert_record()
+
+        test_incident = self.incident.get_incidents()
+        self.assertIsNotNone(test_incident)
 
     def tearDown(self):
-        pass
+        self.incident._dbase.clear()

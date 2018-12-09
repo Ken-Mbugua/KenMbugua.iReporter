@@ -91,16 +91,6 @@ class TestIncidents(TestCase):
             headers={"Content-Type": "application/json"})
         return new_incident
 
-    # def remove_incident(self, incident_title):
-    #     """
-    #     method to add new incident
-    #     """
-    #     self.incident2["title"] = incident_title
-    #     new_incident = self.app.post(
-    #         "/api/v1/incidents", data=json.dumps(self.incident2),
-    #         headers={"Content-Type": "application/json"})
-    #     return new_incident
-
     def test_get_all_inicidents(self):
         """
         method to test GET all incident endpoint
@@ -113,11 +103,7 @@ class TestIncidents(TestCase):
         self.assertEqual(result["status"], 404)
 
         # add an incident
-<<<<<<< HEAD
         self.add_incident("Corruption Case 1")
-=======
-        self.add_incident()
->>>>>>> 129a56765dbd1dff1672ecb149cd3eb649bda6d1
 
         # when poulates should return status 200
         response = self.app.get("/api/v1/incidents")

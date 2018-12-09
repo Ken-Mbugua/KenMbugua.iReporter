@@ -13,10 +13,10 @@ class UsersModel():
         self.model_val = ModelValidation()
 
     def create_user(self, user_details):
-
         user_details = {
             # implements id auto increment feature
-            "id": len(self._users_db)+1,
+            # get last record id then increment by 1
+            "id": self.auto_increment(),
             "firstname": user_details["firstname"],
             "lastname": user_details["lastname"],
             "othernames": user_details["othernames"],
@@ -31,12 +31,12 @@ class UsersModel():
 
         if_user = self.get_user_by_id(user_details["id"])
         if_email = self.get_user_by_email(user_details["email"])
-        print("EMAIL:: ", if_email)
+
         if if_user or if_email:  # duplicate user found return
             # duplicate record error
-            return self.model_val.models_error(400,
-                                               "User"
-                                               " Already Exists")
+            query_result = self.model_val.models_error(
+                400, "User Already Exists")
+            return query_result
         else:
             self._users_db.append(user_details)
             user_details["status"] = 200
@@ -72,3 +72,9 @@ class UsersModel():
         if not self._users_db:
             return None
         return self._users_db  # user not found
+
+    def auto_increment(self):
+        if not self._users_db:
+            return len(self._users_db)+1
+        else:
+            return (self._users_db[-1]["id"])+1
