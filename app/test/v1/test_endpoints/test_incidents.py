@@ -234,12 +234,3 @@ class TestIncidents(TestCase):
                          "Not found for id 32")
 
         # index not found
-
-    # def test_get_all_inicidents_invalid_url(self):
-    #     """
-    #     method to test GET all incident endpoint
-    #     """
-    #     response = self.app.get("/api/v1/incidentsz")
-    #     result = json.loads(response.data)
-    #     self.assertEqual(response.status_code, 404)
-    #     # self.assertEqual(result["status"], 200)

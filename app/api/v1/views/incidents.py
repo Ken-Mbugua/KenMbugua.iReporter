@@ -27,7 +27,7 @@ class Incidents(Resource, IncidentsModel):
         ]
         missing_fields = fields_validate.missing_fields(fields, data)
 
-        if not missing_fields:
+        if not missing_fields: # filter missing fields
             incident_entry = {
                 "title": data["title"],
                 "description": data["description"],
@@ -66,11 +66,17 @@ class Incidents(Resource, IncidentsModel):
         """
         method to query all incidences from db
         """
-
-        return {
-            "status": 200,
-            "data": self.incident.get_incidents()
-        }, 200
+        res = self.incident.get_incidents()
+        if res:
+            return {
+                "status": 200,
+                "data": res
+            }, 200
+        else:
+            return {
+                "status": 404,
+                "error": "No incidents found"
+            }, 404
 
 
 class IncidentsId(Resource, IncidentsModel):
