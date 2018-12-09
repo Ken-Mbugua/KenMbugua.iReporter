@@ -69,7 +69,6 @@ class DbModel():
         self.close()
 
     def tables(self):
-        """('now'::text)"""
         users = """ CREATE TABLE IF NOT EXISTS users (
                 user_id serial PRIMARY KEY NOT NULL,
                 auth_token character varying(256) NOT NULL,

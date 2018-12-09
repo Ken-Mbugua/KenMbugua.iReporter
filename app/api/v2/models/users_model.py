@@ -16,7 +16,7 @@ class UsersModel():
 
         user_details = {
             "email": user_details["email"],
-            "phonenumber": user_details["phonenumber"],
+            "phone_number": user_details["phone_number"],
             "password_hash": generate_password_hash(user_details["password"])
             .decode("utf-8"),
             "isAdmin": False,
@@ -30,13 +30,19 @@ class UsersModel():
             # duplicate record error
             return None
         else:
-            query = "INSERT INTO users(email, phonenumber, password_hash) VALUES ("+user_details["email"]+", "+user_details["phonenumber"] +", "+user_details["password_hash"]+" )"
+            query = """INSERT INTO users(email, phone_number, password_hash)"
+            " VALUES (%s,%s,%s)""",
+            (user_details["email"],
+             user_details["phone_number"],
+             user_details["password_hash"])
 
-            print(self._users_db.query(query).save())  # hope it doesnt crash here
+            # hope it doesnt crash here
+            self._users_db.query(query)
+            self._users_db.save()
             return {"status": 201, "message": "User created successesfully"}
 
     def delete_user(self, user_id):
-        query = "DELETE FROM users WHERE id="+user_id
+        query = "DELETE FROM users WHERE id='"+user_id+"'"
         # query db
         self._users_db.query(query).save()
         # return queried records (single record)
