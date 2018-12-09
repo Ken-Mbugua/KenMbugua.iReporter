@@ -81,15 +81,15 @@ class DbModel():
         users = """ CREATE TABLE IF NOT EXISTS users (
                 user_id serial PRIMARY KEY NOT NULL,
                 auth_token character varying(256) NOT NULL,
-                first_name character varying(50) NOT NULL,
-                last_name character varying(50),
                 username character varying(50) NOT NULL,
-                email character varying(50) ,
+                email character varying(50) NOT NULL, 
+                password_hash character varying(500) NOT NULL,
+                first_name character varying(50),
+                last_name character varying(50),
                 phone_number character varying(50) ,
                 is_admin BOOLEAN,
                 date_created timestamp with time zone
-                 DEFAULT (now() at time zone 'utc'),
-                password_hash character varying(500) NOT NULL
+                 DEFAULT (now() at time zone 'utc')
             ) """
         incidents = """ CREATE TABLE IF NOT EXISTS incidents (
                 incident_id serial PRIMARY KEY NOT NULL,
