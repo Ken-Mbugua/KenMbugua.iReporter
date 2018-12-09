@@ -21,7 +21,8 @@ class UsersModel():
             .decode("utf-8"),
             "isAdmin": False,
             "createdBy": 34,
-            "Registered": str(self.created_at)
+            "Registered": str(self.created_at),
+            "demo_token": "iwtgrsh7772099gavgfhlwe??@@##gafugiuwef&$$"
         }
 
         email = self.get_user_by_email(user_details["email"])
@@ -30,11 +31,12 @@ class UsersModel():
             # duplicate record error
             return None
         else:
-            query = "INSERT INTO users(email, phone_number, password_hash) " +\
-                " VALUES (" +\
+            query = "INSERT INTO users(email, phone_number, password_hash, " +\
+                " auth_token) VALUES (" +\
                 " '"+(user_details["email"]+"', " +
                       " '"+user_details["phone_number"]+"', " +
-                      " '"+user_details["password_hash"])+"') "
+                      " '"+user_details["password_hash"]+"', " +
+                      " '"+user_details["demo_token"])+"') "
 
             print("INSERT QUERY ", type(query))
 
