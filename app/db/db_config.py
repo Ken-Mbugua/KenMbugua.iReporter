@@ -5,15 +5,16 @@ from flask import current_app
 
 class DbModel():
     def __init__(self, app):
-        self.app = app
         """ 
         import variables from current context
         set by Config class
         """
-        self.db_name = current_app.config['DB_NAME']
-        self.db_user = current_app.config['DB_USERNAME']
-        self.db_password = current_app.config['DB_PASSWORD']
-        self.db_host = current_app.config['DB_HOST']
+        current_context = self.context_switcher()
+        self.app = app
+        self.db_name = current_context.config['DB_NAME']
+        self.db_user = current_context.config['DB_USERNAME']
+        self.db_password = current_context.config['DB_PASSWORD']
+        self.db_host = current_context.config['DB_HOST']
         # password = self.db_password, host = self.db_host
 
         self.conn = psycopg2.connect(

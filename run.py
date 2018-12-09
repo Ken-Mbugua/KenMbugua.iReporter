@@ -17,7 +17,7 @@ and passing development config
 
 
 app = create_app(CONFIG_NAME)
-db = DbModel()
+db = DbModel(app)
 db.create_tables()
 
 # print("CURRENT_APP:::", current_app.config["DB_NAME"])
