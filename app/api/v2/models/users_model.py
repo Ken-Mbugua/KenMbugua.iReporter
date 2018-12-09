@@ -17,14 +17,16 @@ class UsersModel():
         user_details = {
             "email": user_details["email"],
             "phone_number": user_details["phone_number"],
-            "password_hash": generate_password_hash(user_details["password"]),
-            "username": user_details["username"]
+            "password_hash": generate_password_hash(user_details["password"])
             .decode("utf-8"),
+            "username": user_details["username"],
             "isAdmin": False,
             "createdBy": 34,
             "Registered": str(self.created_at),
             "demo_token": "iwtgrsh7772099gavgfhlwe??@@##gafugiuwef&$$"
         }
+
+        print("User_details::", user_details)
 
         email = self.get_user_by_email(user_details["email"])
 
