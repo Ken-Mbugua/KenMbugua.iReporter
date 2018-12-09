@@ -6,6 +6,7 @@ install:
   - pip install pytest
   - pip install pytest-cov
   - pip install flask_restful
+  - pip install Flask-Bcrypt
   - pip install coveralls
   - pip install codecov
 script:
