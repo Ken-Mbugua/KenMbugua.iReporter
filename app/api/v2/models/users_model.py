@@ -41,9 +41,7 @@ class UsersModel():
                       " '"+user_details["password_hash"]+"', " +
                       " '"+user_details["demo_token"])+"') "
 
-            print("INSERT QUERY ", type(query))
-
-            # hope it doesnt crash here
+            # run query then commit record
             self._users_db.query(query)
             self._users_db.save()
             return {"status": 201, "message": "User created successesfully"}
