@@ -4,7 +4,8 @@ from flask import current_app
 
 
 class DbModel():
-    def __init__(self):
+    def __init__(self, app):
+        self.app = app
         """ 
         import variables from current context
         set by Config class
@@ -21,6 +22,12 @@ class DbModel():
             host=self.db_host
         )
         self.cur = self.conn.cursor()
+
+    def context_switcher(self):
+        if current_app:
+            return current_app
+        else:
+            return self.app
 
     def query(self, query):
         """ pass query statements for execution """
