@@ -5,7 +5,7 @@ from flask import current_app
 
 class DbModel():
     def __init__(self, app=None):
-        """ 
+        """
         import variables from current context
         set by Config class
         """
@@ -82,7 +82,7 @@ class DbModel():
                 user_id serial PRIMARY KEY NOT NULL,
                 auth_token character varying(256) NOT NULL,
                 username character varying(50) NOT NULL,
-                email character varying(50) NOT NULL, 
+                email character varying(50) NOT NULL,
                 password_hash character varying(500) NOT NULL,
                 first_name character varying(50),
                 last_name character varying(50),
