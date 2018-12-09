@@ -4,7 +4,7 @@ from flask_bcrypt import generate_password_hash
 _users_db = []
 
 
-class UsersModel:
+class UsersModel():
 
     def __init__(self):
         self.createt_at = datetime.datetime

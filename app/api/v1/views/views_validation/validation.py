@@ -13,3 +13,9 @@ class ViewsValidation:
             field for field in fields if field not in field_list]
 
         return missing_fields
+
+    def views_error(self, status, error_message):
+        return {
+            "status": status,
+            "error": error_message
+        }

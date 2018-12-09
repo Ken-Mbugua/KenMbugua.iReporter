@@ -27,7 +27,7 @@ class Incidents(Resource, IncidentsModel):
         ]
         missing_fields = fields_validate.missing_fields(fields, data)
 
-        if not missing_fields: # filter missing fields
+        if not missing_fields:  # filter missing fields
             incident_entry = {
                 "title": data["title"],
                 "description": data["description"],
@@ -42,15 +42,19 @@ class Incidents(Resource, IncidentsModel):
 
             res = self.incident.save(incident_entry)
             if res:
-                return {
-                    "status": 201,
-                    "data": [{
-                        "id": res["id"],
-                        "message": "incident record has been created"
-                    }]
-                }, 201
+                if res["status"] == 400:
+                    return res
+                else:
+                    return {
+                        "status": 201,
+                        "data": [{
+                            "id": res["id"],
+                            "message": "incident record has been created"
+                        }]
+                    }, 201
 
             else:
+                print("RES:: ", res)
                 return {
                     "status": 400,
                     "error": "Bad Request"
@@ -87,7 +91,7 @@ class IncidentsId(Resource, IncidentsModel):
         """
         method to handle GET single incident request
         """
-        res = self.db.get_incident(incident_id)
+        res = self.db.get_incident_by_id(incident_id)
 
         if res:
             return {
