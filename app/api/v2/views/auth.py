@@ -15,14 +15,14 @@ class AuthSignUp(Resource):
 
         if res:
             return {
-                "status": 200,
+                "status": 201,
                 "message": "user added successfully"
-            }
+            }, 201
         else:
             return {
                 "status": 400,
                 "error": "Bad Request"
-            }
+            }, 400
 
 
 # class AuthSignIn(Resource):

@@ -115,7 +115,8 @@ class TestIncidentsV2(TestCase):
         method to test Create incident endpoint
         """
         response = self.app.post(
-            "/api/v1/incidents", data=json.dumps(self.incident1),
+            "/api/v1/incidents",
+            data=json.dumps(self.incident1),
             headers={"Content-Type": "application/json"})
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 201)
