@@ -68,6 +68,11 @@ class DbModel():
         self.query("DROP TABLE IF EXISTS " + tbl_name)
         self.save()
 
+    def truncate(self, tbl_name):
+        """truncate table by name"""
+        self.query("TRUNCATE TABLE IF EXISTS " + tbl_name)
+        self.save()
+
     def destroy_tables(self):
         """
         Loop through tbl_names to drop them all
@@ -75,6 +80,16 @@ class DbModel():
         tables = self.table_names
         for table in tables:
             self.drop(table)
+            self.save()
+        self.close()
+
+    def truncate_tables(self):
+        """
+        Loop through tbl_names to truncate them all
+        """
+        tables = self.table_names
+        for table in tables:
+            self.truncate(table)
             self.save()
         self.close()
 
