@@ -73,3 +73,9 @@ class UsersModel():
         if not self._users_db:
             return None
         return self._users_db  # user not found
+
+    def gen_auth_token(self, user_email):
+        pass
+
+    def decode_auth_token(self):
+        pass
