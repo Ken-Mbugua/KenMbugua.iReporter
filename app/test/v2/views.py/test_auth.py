@@ -56,4 +56,5 @@ class TestAuth(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def tearDown(self):
-        self.db.destroy_tables()
+        # empty table data after each test
+        self.db.truncate_tables()
