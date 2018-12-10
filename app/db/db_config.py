@@ -65,12 +65,12 @@ class DbModel():
 
     def drop(self, tbl_name):
         """drop table by name"""
-        self.query("DROP TABLE IF EXISTS " + tbl_name)
+        self.query("DROP TABLE IF EXISTS " + tbl_name+" CASCADE")
         self.save()
 
     def truncate(self, tbl_name):
         """truncate table by name"""
-        self.query("TRUNCATE TABLE IF EXISTS " + tbl_name)
+        self.query("TRUNCATE TABLE IF EXISTS " + tbl_name+" CASCADE")
         self.save()
 
     def destroy_tables(self):
