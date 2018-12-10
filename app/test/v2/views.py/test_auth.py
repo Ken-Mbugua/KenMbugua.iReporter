@@ -14,7 +14,7 @@ class TestAuth(TestCase):
         self.db = DbModel()
 
         self.sign_up_data = {
-            "email": "user791@gmail.com",
+            "email": "user792@gmail.com",
             "password": "user_1#",
             "phone_number": "0958576262",
             "username": "de_jong"
@@ -35,6 +35,7 @@ class TestAuth(TestCase):
         response = self.signup_user(self.sign_up_data)
         result = json.loads(response.data.decode())
         print("DATA1:::", result)
+        print("result['status']:::", result['status'])
         self.assertTrue(result['status'] == 201)
         self.assertTrue(result['data'])
         print("data length:::", len(result['data']))

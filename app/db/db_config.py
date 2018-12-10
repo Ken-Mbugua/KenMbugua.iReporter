@@ -72,8 +72,8 @@ class DbModel():
         Loop through tbl_names to drop them all
         """
         queries = self.tables()
-        for query in queries:
-            self.drop(query)
+        for tables in queries:
+            self.drop(tables)
             self.save()
         self.close()
 
