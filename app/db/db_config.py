@@ -17,13 +17,14 @@ class DbModel():
         self.db_password = current_context.config['DB_PASSWORD']
         self.db_host = current_context.config['DB_HOST']
         # password = self.db_password, host = self.db_host
-
         self.conn = psycopg2.connect(
             database=self.db_name, user=self.db_user,
             password=self.db_password,
             host=self.db_host
         )
         self.cur = self.conn.cursor()
+
+        self.table_names = ["users", "incidents"]
 
     def context_switcher(self):
         if current_app:
@@ -71,14 +72,15 @@ class DbModel():
         """
         Loop through tbl_names to drop them all
         """
-        queries = self.tables()
-        for tables in queries:
-            self.drop(tables)
+        tables = self.table_names
+        for table in tables:
+            self.drop(table)
             self.save()
         self.close()
 
     def tables(self):
-        users = """ CREATE TABLE IF NOT EXISTS users (
+        # users table
+        self.table_names[0] = """ CREATE TABLE IF NOT EXISTS users (
                 user_id serial PRIMARY KEY NOT NULL,
                 auth_token character varying(256) NOT NULL,
                 username character varying(50) NOT NULL,
@@ -91,7 +93,9 @@ class DbModel():
                 date_created timestamp with time zone
                  DEFAULT (now() at time zone 'utc')
             ) """
-        incidents = """ CREATE TABLE IF NOT EXISTS incidents (
+
+        # incidents table
+        self.table_names[1] = """ CREATE TABLE IF NOT EXISTS incidents (
                 incident_id serial PRIMARY KEY NOT NULL,
                 created_on timestamp with time zone
                  DEFAULT (now() at time zone 'utc'),
@@ -103,5 +107,5 @@ class DbModel():
                 comment character varying(512)
             ) """
 
-        queries = [users, incidents]
+        queries = [self.table_names[0], self.table_names[1]]
         return queries
