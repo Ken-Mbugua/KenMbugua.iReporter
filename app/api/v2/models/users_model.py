@@ -12,9 +12,8 @@ class UsersModel():
         self._users_db = DbModel()
         self.model_val = ModelValidation()
 
-    def create_user(self, user_details):
-
-        user_details = {
+    def user_details(self, user_details):
+        return {
             "email": user_details["email"],
             "phone_number": user_details["phone_number"],
             "password_hash": generate_password_hash(user_details["password"])
@@ -25,6 +24,8 @@ class UsersModel():
             "Registered": str(self.created_at),
             "demo_token": "iwtgrsh7772099gavgfhlwe??@@##gafugiuwef&$$"
         }
+
+    def create_user(self, user_details):
 
         print("User_details::", user_details)
 
@@ -44,7 +45,7 @@ class UsersModel():
             # run query then commit record
             self._users_db.query(query)
             self._users_db.save()
-            return {"status": 201, "message": "User created successesfully"}
+            return user_details
 
     def delete_user(self, user_id):
         query = "DELETE FROM users WHERE id='"+user_id+"'"

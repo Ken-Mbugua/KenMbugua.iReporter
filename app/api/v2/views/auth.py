@@ -16,7 +16,7 @@ class AuthSignUp(Resource):
         if res:
             return {
                 "status": 201,
-                "message": "user added successfully"
+                "data": res
             }, 201
         else:
             return {
