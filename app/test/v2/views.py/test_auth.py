@@ -47,9 +47,15 @@ class TestAuth(TestCase):
     def test_auth_sign_up_duplicate_user(self):
         """ Test for duplicate user registration """
 
+        # sign up user attempt 1 -> success
+        self.signup_user(self.sign_up_data)
+
+        # sign up user attempt 2 -> failure
         response = self.signup_user(self.sign_up_data)
+
         result = json.loads(response.data.decode())
         print("DATA1:::", result)
+        print("result['status']:::2:", result['status'])
         self.assertTrue(result['status'] == 400)
         self.assertFalse(result['error'] == "User Already Exists")
         self.assertTrue(response.content_type == 'application/json')
