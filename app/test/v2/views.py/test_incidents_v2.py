@@ -253,6 +253,4 @@ class TestIncidentsV2(TestCase):
         # index not found
 
     def tearDown(self):
-        from app.api.v2.models.incidents_model import IncidentsModel
-        self._incident = IncidentsModel()
-        self._incident._dbase.clear()
+        pass
