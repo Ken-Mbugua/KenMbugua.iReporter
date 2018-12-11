@@ -27,6 +27,7 @@ class DbModel():
         self.table_names = ["users", "incidents"]
 
     def context_switcher(self):
+        """get current passed context to the dbModel"""
         if current_app:
             return current_app
         else:

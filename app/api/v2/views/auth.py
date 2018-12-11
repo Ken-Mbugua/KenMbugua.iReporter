@@ -28,6 +28,23 @@ class AuthSignUp(Resource):
             }, 403
 
 
-# class AuthSignIn(Resource):
-#     def __init__(self):
-#         self._signin = UsersModel()
+class AuthSignIn(Resource):
+    def __init__(self):
+        self._signin = UsersModel()
+
+    def post(self):  # get users by id
+
+        data = request.get_json()
+
+        res = self._signin.get_user_by_email(data["email"])
+
+        if res:
+            return {
+                "status": 200,
+                "message": "Login Success"
+            }, 200
+        else:
+            return {
+                "status": 400,
+                "error": "Bad Request"
+            }, 400
