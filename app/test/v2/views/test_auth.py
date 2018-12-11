@@ -15,17 +15,31 @@ class TestAuth(TestCase):
 
         self.sign_up_data = {
             "email": "user792@gmail.com",
-            "password": "user_1#",
+            "password": "user_792#",
             "phone_number": "0958576262",
             "username": "de_jong"
         }
 
         self.sign_in_data = {
-            "email": "user45@hotmail.com",
-            "password": "user4545"
+            "email": "user792@gmail.com",
+            "password": "user_792#"
+        }
+
+        self.sign_in_data_2 = {
+            "email": "user345@gmail.com",
+            "password": "user_345#"
         }
 
     def signup_user(self, sign_up_data):
+        response = self.app.post(
+            'api/v2/auth/signup',
+            data=json.dumps(self.sign_up_data),
+            content_type='application/json'
+        )
+
+        return response
+
+    def signin_user(self, sign_up_data):
         response = self.app.post(
             'api/v2/auth/signup',
             data=json.dumps(self.sign_up_data),
@@ -68,12 +82,12 @@ class TestAuth(TestCase):
 
     def test_auth_sign_in(self):
         """ Test for user login endpoint """
+        # create a new user
+        self.signup_user(self.sign_up_data)
 
-        response = self.app.post(
-            'api/v2/auth/login',
-            data=json.dumps(self.sign_up_data),
-            content_type='application/json'
-        )
+        # sign in with the user created above
+        response = self.signin_user(self.sign_in_data_2)
+
         result = json.loads(response.data.decode())
         # print("DATA1:::", result)
         # print("result['status']:::", result['status'])
@@ -83,7 +97,23 @@ class TestAuth(TestCase):
         # test for auth token
         self.assertTrue(result['data'][0])
         self.assertTrue(response.content_type == 'application/json')
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 200)
+
+    def test_auth_guest_sign_in(self):
+        """ Test for user login endpoint """
+        # user sign in
+        response = self.signin_user(self.sign_in_data)
+
+        result = json.loads(response.data.decode())
+        # print("DATA1:::", result)
+        # print("result['status']:::", result['status'])
+        self.assertTrue(result['status'] == 400)
+        self.assertTrue(result['data'])
+        # print("data length:::", len(result['data']))
+        # test for auth token
+        # self.assertTrue(result['data'][0])
+        self.assertTrue(response.content_type == 'application/json')
+        self.assertEqual(response.status_code, 400)
 
     def tearDown(self):
         # empty table data after each test
