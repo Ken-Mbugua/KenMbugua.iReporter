@@ -31,6 +31,20 @@ class UsersModel():
             }
         }
 
+    def user_res_object(self, user_details):
+        """method to formart user data object"""
+
+        return {
+            "auth_token": "iwtgrsh7772099gavgfhlwe??@@##gafugiuwef&$$",
+            "user": {
+                "firstname": "",
+                "username": user_details["username"],
+                "email": user_details["email"],
+                "phone_number": user_details["phone_number"],
+                "Registered": str(self.created_at)
+            }
+        }
+
     def create_user(self, user_details):
 
         user_details = self.user_object(user_details)
@@ -41,7 +55,7 @@ class UsersModel():
         email = self.get_user_by_email(user_details["user"]["email"])
 
         if email:  # duplicate user found return
-            return None
+            return {"status": 400, "error": "User Already Exists"}
         else:
             query = "INSERT INTO users(email, username, phone_number, " +\
                 " password_hash, auth_token) VALUES (" +\

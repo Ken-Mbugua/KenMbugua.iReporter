@@ -14,15 +14,18 @@ class AuthSignUp(Resource):
         res = self._signup.create_user(data)
 
         if res:
-            return {
-                "status": 201,
-                "data": [res]
-            }, 201
+            if res['error']:  # duplicate user error
+                return res, 400
+            else:
+                return {  # user creation success
+                    "status": 201,
+                    "data": [res]
+                }, 201
         else:
-            return {
-                "status": 400,
+            return {  # bad request error
+                "status": 403,
                 "error": "Bad Request"
-            }, 400
+            }, 403
 
 
 # class AuthSignIn(Resource):

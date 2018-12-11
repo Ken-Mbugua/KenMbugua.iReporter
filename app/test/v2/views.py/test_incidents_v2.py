@@ -86,7 +86,7 @@ class TestIncidentsV2(TestCase):
         """
         self.incident2["title"] = incident_title
         new_incident = self.app.post(
-            "/api/v1/incidents", data=json.dumps(self.incident2),
+            "/api/v2/incidents", data=json.dumps(self.incident2),
             headers={"Content-Type": "application/json"})
         return new_incident
 
@@ -94,9 +94,8 @@ class TestIncidentsV2(TestCase):
         """
         method to test GET all incident endpoint
         """
-
         # when empty should return 404
-        response = self.app.get("/api/v1/incidents")
+        response = self.app.get("/api/v2/incidents")
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(result["status"], 404)
@@ -105,7 +104,7 @@ class TestIncidentsV2(TestCase):
         self.add_incident("Corruption Case 1")
 
         # when poulates should return status 200
-        response = self.app.get("/api/v1/incidents")
+        response = self.app.get("/api/v2/incidents")
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["status"], 200)
@@ -115,7 +114,7 @@ class TestIncidentsV2(TestCase):
         method to test Create incident endpoint
         """
         response = self.app.post(
-            "/api/v1/incidents",
+            "/api/v2/incidents",
             data=json.dumps(self.incident1),
             headers={"Content-Type": "application/json"})
         result = json.loads(response.data)
@@ -131,7 +130,7 @@ class TestIncidentsV2(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/1/location",
+            "api/v2/incidents/1/location",
             data=json.dumps(self.location_data),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
@@ -149,7 +148,7 @@ class TestIncidentsV2(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/32/location",
+            "api/v2/incidents/32/location",
             data=json.dumps(self.location_data),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
@@ -167,7 +166,7 @@ class TestIncidentsV2(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/1/comment",
+            "api/v2/incidents/1/comment",
             data=json.dumps(self.comment_data),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
@@ -185,7 +184,7 @@ class TestIncidentsV2(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/32/comment",
+            "api/v2/incidents/32/comment",
             data=json.dumps(self.comment_data),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
@@ -202,7 +201,7 @@ class TestIncidentsV2(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/1",
+            "api/v2/incidents/1",
             data=json.dumps(self.incident1),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
@@ -219,7 +218,7 @@ class TestIncidentsV2(TestCase):
 
         response = self.app.patch(
             # dumps converts data into json
-            "api/v1/incidents/32",
+            "api/v2/incidents/32",
             data=json.dumps(self.incident1),
             headers={"Content-Type": "application/json"})
         # content type notifies the data being sent is in json formart
@@ -236,7 +235,7 @@ class TestIncidentsV2(TestCase):
         self.add_incident("Corruption Case 2")
 
         response = self.app.delete(
-            '/api/v1/incidents/1')  # record created by test_create_incident
+            '/api/v2/incidents/1')  # record created by test_create_incident
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         # print("JSON_BUMPZ::", result["data"])
@@ -245,7 +244,7 @@ class TestIncidentsV2(TestCase):
 
     def test_delete_incident_not_found(self):
         # any index above 1 == index not found
-        response = self.app.delete('/api/v1/incidents/28')
+        response = self.app.delete('/api/v2/incidents/28')
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(result["error"],
@@ -254,6 +253,6 @@ class TestIncidentsV2(TestCase):
         # index not found
 
     def tearDown(self):
-        from app.api.v1.models.incidents_model import IncidentsModel
+        from app.api.v2.models.incidents_model import IncidentsModel
         self._incident = IncidentsModel()
         self._incident._dbase.clear()
