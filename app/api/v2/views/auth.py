@@ -1,3 +1,4 @@
+import json
 from flask import request, json
 from flask_restful import Resource
 from app.api.v2.models.users_model import UsersModel
@@ -32,16 +33,19 @@ class AuthSignIn(Resource):
     def __init__(self):
         self._signin = UsersModel()
 
-    def post(self):  # get users by id
+    def post(self):  # login resource
 
         data = request.get_json()
 
         res = self._signin.get_user_by_email(data["email"])
 
+        print("RESPONSE:: ", res)
+
         if res:
             return {
                 "status": 200,
-                "message": "Login Success"
+                "message": "Login Success",
+                "data": [res]
             }, 200
         else:
             return {

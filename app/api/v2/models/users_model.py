@@ -89,7 +89,14 @@ class UsersModel():
         user = self._users_db.find_one()
 
         if user:
-            return user
+            user_data = dict(
+                token=user[1],
+                user=dict(
+                    username=user[2],
+                    date_created="{}".format(user[9])
+                )
+            )
+            return user_data
         return None  # user not found
 
     def get_all_users(self):
