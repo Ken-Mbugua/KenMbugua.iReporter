@@ -15,7 +15,7 @@ class AuthSignUp(Resource):
         res = self._signup.create_user(data)
 
         if res:
-            if res['error']:  # duplicate user error
+            if res["error"]:  # duplicate user error
                 return res, 400
             else:
                 return {  # user creation success

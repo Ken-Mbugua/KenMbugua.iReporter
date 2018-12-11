@@ -85,23 +85,6 @@ class TestAuth(TestCase):
         self.assertTrue(response.content_type == 'application/json')
         self.assertEqual(response.status_code, 201)
 
-        # user already exists sign in
-        response = self.app.post(
-            'api/v2/auth/login',
-            data=json.dumps(self.sign_up_data),
-            content_type='application/json'
-        )
-        result = json.loads(response.data.decode())
-        # print("DATA1:::", result)
-        # print("result['status']:::", result['status'])
-        self.assertTrue(result['status'] == 200)
-        self.assertTrue(result['data'])
-        # print("data length:::", len(result['data']))
-        # test for auth token
-        self.assertTrue(result['data'][0])
-        self.assertTrue(response.content_type == 'application/json')
-        self.assertEqual(response.status_code, 201)
-
     def tearDown(self):
         # empty table data after each test
         self.db.truncate_tables()
