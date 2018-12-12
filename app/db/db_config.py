@@ -115,7 +115,7 @@ class DbModel():
                 incident_id serial PRIMARY KEY NOT NULL,
                 created_on timestamp with time zone
                  DEFAULT (now() at time zone 'utc'),
-                created_by numeric NOT NULL,
+                created_by int NOT NULL,
                 type character varying(20) NOT NULL,
                 description character varying(200) NOT NULL,
                 incident_status character varying(50) NOT NULL,
