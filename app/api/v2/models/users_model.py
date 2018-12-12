@@ -5,12 +5,10 @@ from app.api.v1.models.models_validation.validation import ModelValidation
 from app.db.db_config import DbModel
 
 
-class UsersModel():
+class UsersModel(DbModel):
 
     def __init__(self):
         self.created_at = datetime.datetime.now()
-        self._users_db = DbModel()
-        self.model_val = ModelValidation()
 
     def user_object(self, user_details):
         """method to formart user data object"""
@@ -66,27 +64,17 @@ class UsersModel():
                       " '"+user_details["auth_token"])+"') "
 
             # run query then commit record
-            self._users_db.query(query)
-            self._users_db.save()
+            self.query(query)
+            self.save()
             return user_details
-
-    def delete_user(self, user_id):
-        query = "DELETE FROM users WHERE id='"+user_id+"'"
-        # query db
-        self._users_db.query(query).save()
-        # return queried records (single record)
-        user = self._users_db.find_one()
-        if not user:
-            return {"status": 204, "msg": "deleted user successfully"}
-        return None  # user not found
 
     def get_user_by_email(self, user_email):
 
         query = "SELECT * from users WHERE email='"+user_email+"'"
         # query db
-        self._users_db.query(query)
+        self.query(query)
         # return queried records (single record)
-        user = self._users_db.find_one()
+        user = self.find_one()
 
         if user:
             user_data = dict(
@@ -99,10 +87,10 @@ class UsersModel():
             return user_data
         return None  # user not found
 
-    def get_all_users(self):
-        if not self._users_db:
-            return None
-        return self._users_db  # user not found
+    # def get_all_users(self):
+    #     if not self.find_all():
+    #         return None
+    #     return self.find_all()  # user not found
 
     def gen_auth_token(self, user_email):
         pass
