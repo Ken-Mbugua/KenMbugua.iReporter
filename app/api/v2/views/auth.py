@@ -13,7 +13,17 @@ class AuthSignUp(Resource):
         # instanciate Users model and pass request data
         user = UsersModel(**data)
 
-        response = user.create_user()
+        email = user.get_user_by_email(data["email"])
+
+        if email:
+            # duplicate user found return
+            return {  # user creation success
+                "status": 202,
+                "message": "Duplicate User Error"
+            }, 202
+        else:
+            # create user
+            response = user.create_user()
 
         if response:
             return {  # user creation success
@@ -23,7 +33,7 @@ class AuthSignUp(Resource):
         else:
             return {  # bad request error  # duplicate user error
                 "status": 400,
-                "error": "User Already Exists"
+                "error": "Bad Request"
             }, 400
 
 

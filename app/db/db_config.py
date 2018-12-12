@@ -98,7 +98,6 @@ class DbModel():
         # users table
         self.table_names[0] = """ CREATE TABLE IF NOT EXISTS users (
                 user_id serial PRIMARY KEY NOT NULL,
-                auth_token character varying(256) NOT NULL,
                 username character varying(50) NOT NULL,
                 email character varying(50) NOT NULL,
                 password_hash character varying(500) NOT NULL,

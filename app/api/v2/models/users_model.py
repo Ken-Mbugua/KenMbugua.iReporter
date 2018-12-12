@@ -25,22 +25,16 @@ class UsersModel(DbModel):
 
     def create_user(self):
 
-        email = self.get_user_by_email(self.email)
+        query_string = "INSERT INTO users(email, username,  " +\
+            "phone_number, password_hash) VALUES (%s,%s,%s,%s)"
 
-        if email:
-            # duplicate user found return None
-            return None
-        else:
-            query_string = "INSERT INTO users(email, username,  " +\
-                "phone_number, password_hash) VALUES (%s,%s,%s,%s)"
+        data = (self.email, self.username,
+                self.phone_number, self.password_hash,)
 
-            data = (self.email, self.username,
-                    self.phone_number, self.password_hash,)
-
-            # run query then commit record
-            self.query(query_string, data)
-            self.save()
-            return "create user success"
+        # run query then commit record
+        self.query(query_string, data)
+        self.save()
+        return "create user success"
 
     def get_user_by_email(self, user_email):
 
