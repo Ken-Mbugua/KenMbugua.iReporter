@@ -49,8 +49,8 @@ class UsersModel():
 
         user_details = self.user_object(user_details)
 
-        print("User_details::", user_details)
-        print("Email::", user_details["user"]["email"])
+        # print("User_details::", user_details)
+        # print("Email::", user_details["user"]["email"])
 
         email = self.get_user_by_email(user_details["user"]["email"])
 

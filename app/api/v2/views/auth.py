@@ -21,21 +21,20 @@ class AuthSignUp(Resource):
         else:
             return {  # bad request error  # duplicate user error
                 "status": 400,
-                "error": "Bad Request"
+                "error": "User Already Exists"
             }, 400
 
 
 class AuthSignIn(Resource):
-    def __init__(self):
-        self._signin = UsersModel()
 
     def post(self):  # login resource
 
         data = request.get_json()
 
-        res = self._signin.get_user_by_email(data["email"])
+        user = UsersModel()  # instanciate Users model
+        res = user.get_user_by_email(data["email"])
 
-        print("RESPONSE:: ", res)
+        # print("RESPONSE:: ", res)
 
         if res:
             return {
@@ -45,6 +44,6 @@ class AuthSignIn(Resource):
             }, 200
         else:
             return {
-                "status": 400,
-                "error": "Bad Request"
-            }, 400
+                "status": 401,
+                "error": "Unregistered User"
+            }, 401
