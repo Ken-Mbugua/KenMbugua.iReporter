@@ -14,15 +14,15 @@ class TestAuth(TestCase):
         self.db = DbModel()
 
         self.sign_up_data = {
-            "email": "user792@gmail.com",
-            "password": "user_792#",
+            "email": "user799@gmail.com",
+            "password": "user_799#",
             "phone_number": "0958576262",
             "username": "de_jong"
         }
 
         self.sign_in_data = {
-            "email": "user792@gmail.com",
-            "password": "user_792#"
+            "email": "user799@gmail.com",
+            "password": "user_799#"
         }
 
         self.sign_in_data_2 = {
@@ -33,16 +33,16 @@ class TestAuth(TestCase):
     def signup_user(self, sign_up_data):
         response = self.app.post(
             'api/v2/auth/signup',
-            data=json.dumps(self.sign_up_data),
+            data=json.dumps(sign_up_data),
             content_type='application/json'
         )
 
         return response
 
-    def signin_user(self, sign_up_data):
+    def signin_user(self, sign_in_data):
         response = self.app.post(
-            'api/v2/auth/signup',
-            data=json.dumps(self.sign_up_data),
+            'api/v2/auth/login',
+            data=json.dumps(sign_in_data),
             content_type='application/json'
         )
 
@@ -57,7 +57,7 @@ class TestAuth(TestCase):
         # print("result['status']:::", result['status'])
         self.assertTrue(result['status'] == 201)
         self.assertTrue(result['data'])
-        print("data length:::", len(result['data']))
+
         # test for auth token
         self.assertTrue(result['data'][0])
         self.assertTrue(response.content_type == 'application/json')
@@ -75,10 +75,10 @@ class TestAuth(TestCase):
         result = json.loads(response.data.decode())
         # print("DATA1:::", result)
         # print("result['status']:::2:", result['status'])
-        self.assertTrue(result['status'] == 400)
-        self.assertEquals(result['error'], "User Already Exists")
+        self.assertTrue(result['status'] == 202)
+        self.assertEqual(result['message'], "Duplicate User Error")
         self.assertTrue(response.content_type == 'application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 202)
 
     def test_auth_sign_in(self):
         """ Test for user login endpoint """
@@ -86,14 +86,14 @@ class TestAuth(TestCase):
         self.signup_user(self.sign_up_data)
 
         # sign in with the user created above
-        response = self.signin_user(self.sign_in_data_2)
+        response = self.signin_user(self.sign_in_data)
 
         result = json.loads(response.data.decode())
-        # print("DATA1:::", result)
-        # print("result['status']:::", result['status'])
-        self.assertTrue(result['status'] == 200)
-        self.assertTrue(result['data'])
-        # print("data length:::", len(result['data']))
+        print("DATA1:::", result)
+
+        self.assertEqual(result['status'], 200)
+        self.assertEqual(len(result['data']), 1)
+
         # test for auth token
         self.assertTrue(result['data'][0])
         self.assertTrue(response.content_type == 'application/json')
@@ -105,15 +105,12 @@ class TestAuth(TestCase):
         response = self.signin_user(self.sign_in_data)
 
         result = json.loads(response.data.decode())
-        # print("DATA1:::", result)
+        print("DATA1:::", result)
         # print("result['status']:::", result['status'])
-        self.assertTrue(result['status'] == 400)
-        self.assertTrue(result['data'])
-        # print("data length:::", len(result['data']))
-        # test for auth token
-        # self.assertTrue(result['data'][0])
+        self.assertEqual(result['status'], 401)
         self.assertTrue(response.content_type == 'application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 401)
+        self.assertIn("User with email", result["message"])
 
     def tearDown(self):
         # empty table data after each test

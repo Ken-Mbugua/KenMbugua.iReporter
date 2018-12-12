@@ -33,5 +33,5 @@ class ViewsValidation:
     def views_error(self, status, error_message="error", field="error"):
         return {
             "status": status,
-            "error": error_message
+            field: error_message
         }, status
