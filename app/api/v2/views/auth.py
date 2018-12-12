@@ -10,8 +10,10 @@ class AuthSignUp(Resource):
 
         data = request.get_json()
 
-        user = UsersModel()  # instanciate Users model
-        response = user.create_user(data)
+        # instanciate Users model and pass request data
+        user = UsersModel(**data)
+
+        response = user.create_user()
 
         if response:
             return {  # user creation success

@@ -27,31 +27,31 @@ class UsersModel(DbModel):
 
         email = self.get_user_by_email(self.email)
 
-        if email:  # duplicate user found return None
+        if email:
+            # duplicate user found return None
             return None
         else:
-            query = "INSERT INTO users(email, username, phone_number, " +\
-                " password_hash, auth_token) VALUES (%s,%s,%s,%s)"
+            query_string = "INSERT INTO users(email, username,  " +\
+                "phone_number, password_hash) VALUES (%s,%s,%s,%s)"
 
             data = (self.email, self.username,
-                    self.phone_number, self.password_hash)
+                    self.phone_number, self.password_hash,)
 
             # run query then commit record
-            self.query((query, data))
+            self.query(query_string, data)
             self.save()
             return "create user success"
 
     def get_user_by_email(self, user_email):
 
-        query = "SELECT * from users WHERE email={}".format(user_email)
+        query = "SELECT * from users WHERE email= %s"
         # query db
-        self.query(query)
+        self.query(query, (user_email,))
         # return queried records (single record)
         user = self.find_one()
 
         if user:
             user_data = dict(
-                token=user[1],
                 user=dict(
                     username=user[2],
                     date_created="{}".format(user[9])

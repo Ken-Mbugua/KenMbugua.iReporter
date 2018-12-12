@@ -33,9 +33,9 @@ class DbModel():
         else:
             return self.app
 
-    def query(self, query):
+    def query(self, query, data=None):
         """ pass query statements for execution """
-        self.cur.execute(query)
+        self.cur.execute(query, data or ())
 
     def find_all(self):
         """method to return all table data"""
