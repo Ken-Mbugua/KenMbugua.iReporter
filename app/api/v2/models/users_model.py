@@ -7,40 +7,40 @@ from app.db.db_config import DbModel
 
 class UsersModel(DbModel):
 
-    def __init__(self,
-                 username=None, firstname=None,
-                 email=None, phone_number=None,
+    def __init__(self, username=None, firstname=None, email=None, phone_number=None,
                  password_hash=None, isAdmin=False,
                  date_created=None):
 
         self.firstname = firstname
         self.username = username
         self.email = email
-        self.password_hash = password_hash
+        self.password_hash = generate_password_hash
+        (user_details["password"])
+        .decode("utf-8"),
         self.isAdmin = isAdmin
         self.date_created = datetime.datetime.now()
 
         # instanciate the inherited DbModel class
         super().__init__()
 
-    def user_object(self, user_details):
-        """method to formart user data object"""
+    # def user_object(self, user_details):
+    #     """method to formart user data object"""
 
-        return {
-            "auth_token": "iwtgrsh7772099gavgfhlwe??@@##gafugiuwef&$$",
-            "user": {
-                "firstname": "",
-                "username": user_details["username"],
-                "email": user_details["email"],
-                "phone_number": user_details["phone_number"],
-                "password_hash": generate_password_hash
-                (user_details["password"])
-                .decode("utf-8"),
-                "isAdmin": False,
-                "createdBy": 34,
-                "Registered": str(self.date_created)
-            }
-        }
+    #     return {
+    #         "auth_token": "iwtgrsh7772099gavgfhlwe??@@##gafugiuwef&$$",
+    #         "user": {
+    #             "firstname": "",
+    #             "username": user_details["username"],
+    #             "email": user_details["email"],
+    #             "phone_number": user_details["phone_number"],
+    #             "password_hash": generate_password_hash
+    #             (user_details["password"])
+    #             .decode("utf-8"),
+    #             "isAdmin": False,
+    #             "createdBy": 34,
+    #             "Registered": str(self.date_created)
+    #         }
+    #     }
 
     def user_res_object(self, user_details):
         """method to formart user data object"""
