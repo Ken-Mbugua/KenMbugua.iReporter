@@ -34,6 +34,7 @@ class UsersModel(DbModel):
         # run query then commit record
         self.query(query_string, data)
         self.save()
+
         return "create user success"
 
     def get_user_by_email(self, user_email):
@@ -47,10 +48,11 @@ class UsersModel(DbModel):
         if user:
             user_data = dict(
                 username=user[2],
-                date_created="{}".format(user[9])
+                date_created="{}".format(user[8])
             )
             return user_data
         return None  # user not found
+    # def get_user_details()
 
     def gen_auth_token(self, user_email):
         pass
