@@ -2,6 +2,7 @@ import json
 from flask import request, json
 from flask_restful import Resource
 from app.api.v2.models.users_model import UsersModel
+from app.api.v2.views.validation import ViewsValidation
 
 
 class AuthSignUp(Resource):
@@ -10,38 +11,40 @@ class AuthSignUp(Resource):
 
         data = request.get_json(silent=True)
 
-        if data:  # alllow json formated data only
+        if data:  # allow json formated data only
 
-            # instanciate Users model and pass request data
-            user = UsersModel(**data)
+            # check for missing fields
+            fields = ['username', 'email', 'password', 'phone_number']
+            if not ViewsValidation().check_fields(fields, data):
 
-            email = user.get_user_by_email(data["email"])
+                # instanciate Users model and pass request data
+                user = UsersModel(**data)
 
-            if email:
-                # duplicate user found return
-                return {  # user creation success
-                    "status": 202,
-                    "message": "Duplicate User Error"
-                }, 202
+                email = user.get_user_by_email(data["email"])
 
-            try:
+                if email:
+                    # duplicate user  error
+                    return {
+                        "status": 202,
+                        "message": "Duplicate User Error"
+                    }, 202
+
                 # create user
                 response = user.create_user()
 
                 if response:
-                    return {  # user creation success
+
+                    user_details = user.get_user_details(data["email"])
+                    user_details.update({"token": "w23502384023-24360808"})
+                    return {  # user creation success return user data
                         "status": 201,
-                        "data": [{
-                            "token": "oirutonnvsoo3424592jsofhsf03wrj",
-                            response
-                        }]
+                        "data": [
+                            user_details
+                        ]
                     }, 201
 
-            except Exception as err:
-                return {  # bad request error
-                    "status": 400,
-                    "error": "Bad Request: "+err
-                }, 400
+            else:  # found missing fields
+                return ViewsValidation().check_fields(fields, data)
 
         else:
             return {  # bad request format error

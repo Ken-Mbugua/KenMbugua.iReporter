@@ -46,13 +46,23 @@ class UsersModel(DbModel):
         user = self.find_one()
 
         if user:
-            user_data = dict(
-                username=user[2],
-                date_created="{}".format(user[8])
-            )
-            return user_data
+            return user
         return None  # user not found
-    # def get_user_details()
+
+    def get_user_details(self, user_email):
+
+        user = self.get_user_by_email(user_email)
+        print("USER::::", user)
+        if user:
+            return dict(
+                user=dict(
+                    username=user[1],
+                    email=user[2],
+                    phone_number=user[6],
+                    date_created="{}".format(user[8])
+                )
+            )
+        return None  # user not found
 
     def gen_auth_token(self, user_email):
         pass
