@@ -54,8 +54,8 @@ class UsersModel():
 
         email = self.get_user_by_email(user_details["user"]["email"])
 
-        if email:  # duplicate user found return
-            return {"status": 400, "error": "User Already Exists"}
+        if email:  # duplicate user found return None
+            return None
         else:
             query = "INSERT INTO users(email, username, phone_number, " +\
                 " password_hash, auth_token) VALUES (" +\

@@ -5,14 +5,13 @@ from app.api.v2.models.users_model import UsersModel
 
 
 class AuthSignUp(Resource):
-    def __init__(self):
-        self._signup = UsersModel()
 
     def post(self):
 
         data = request.get_json()
 
-        response = self._signup.create_user(data)
+        user = UsersModel()  # instanciate Users model
+        response = user.create_user(data)
 
         if response:
             return {  # user creation success
