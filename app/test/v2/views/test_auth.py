@@ -6,6 +6,8 @@ from app.db.db_config import DbModel
 
 
 class TestAuth(TestCase):
+    """ Test class for sign up and sign in enpoints"""
+
     def setUp(self):
         app = create_app("testing")
         self.app = app.test_client()
@@ -87,7 +89,6 @@ class TestAuth(TestCase):
         response = self.signin_user(self.sign_in_data)
 
         result = json.loads(response.data.decode())
-        print("DATA1:::", result)
 
         self.assertEqual(result['status'], 200)
         self.assertEqual(len(result['data']), 1)
@@ -110,5 +111,5 @@ class TestAuth(TestCase):
         self.assertIn("User with email", result["message"])
 
     def tearDown(self):
-        # empty table data after each test
+        """empty table data after each test"""
         self.db.truncate_tables()
