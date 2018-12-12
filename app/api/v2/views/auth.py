@@ -11,67 +11,80 @@ class AuthSignUp(Resource):
 
         data = request.get_json(silent=True)
 
-        if data:  # allow json formated data only
+        if not data:  # allow json formated data only
 
-            # check for missing fields
-            fields = ['username', 'email', 'password', 'phone_number']
-            if not ViewsValidation().check_fields(fields, data):
+            return ViewsValidation().views_error(
+                400, "Bad Request Format")
 
-                # instanciate Users model and pass request data
-                user = UsersModel(**data)
+        # check for missing fields
+        fields = ['username', 'email', 'password', 'phone_number']
+        if ViewsValidation().check_fields(fields, data):
+            # found missing fields
+            return ViewsValidation().check_fields(fields, data)
 
-                email = user.get_user_by_email(data["email"])
+        # instanciate Users model and pass request data
+        user = UsersModel(**data)
 
-                if email:
-                    # duplicate user  error
-                    return {
-                        "status": 202,
-                        "message": "Duplicate User Error"
-                    }, 202
+        email = user.get_user_by_email(data["email"])
 
-                # create user
-                response = user.create_user()
+        if email:
+            # duplicate user  error
+            return ViewsValidation().views_error(
+                202, "Duplicate User Error", "message")
 
-                if response:
+        # create user
+        response = user.create_user()
 
-                    user_details = user.get_user_details(data["email"])
-                    user_details.update({"token": "w23502384023-24360808"})
-                    return {  # user creation success return user data
-                        "status": 201,
-                        "data": [
-                            user_details
-                        ]
-                    }, 201
-
-            else:  # found missing fields
-                return ViewsValidation().check_fields(fields, data)
-
-        else:
-            return {  # bad request format error
-                "status": 403,
-                "error": "Bad Request Format"
-            }, 403
+        if response:
+            user_details = user.get_user_details(data["email"])
+            user_details.update(
+                {"demo-token": "w23502384023-24360808"})
+            return {  # user creation success return user data
+                "status": 201,
+                "data": [
+                    user_details
+                ]
+            }, 201
 
 
 class AuthSignIn(Resource):
 
     def post(self):  # login resource
 
-        data = request.get_json()
+        data = request.get_json(silent=True)
 
-        user = UsersModel()  # instanciate Users model
-        res = user.get_user_by_email(data["email"])
+        if not data:  # allow json formated data only
+            # bad request format error
+            return ViewsValidation().views_error(400, "Bad Request Format")
 
-        # print("RESPONSE:: ", res)
+        fields = ['email', 'password']
+        # check for missing fields
+        if ViewsValidation().check_fields(fields, data):
+            # found missing fields
+            return ViewsValidation().check_fields(fields, data)
 
-        if res:
-            return {
-                "status": 200,
-                "message": "Login Success",
-                "data": [res]
-            }, 200
+        # instanciate Users model and pass request data
+        user = UsersModel(**data)
+
+        email = user.get_user_by_email(data["email"])
+
+        if email:
+            # user found check password
+            if user.password_is_valid(data["password"]):
+                # login success
+                user_details = user.get_user_details(data["email"])
+                user_details.update({"demo-token": "w23502384023-24360808"})
+
+                return {  # user login success return token and suser data
+                    "status": 200,
+                    "data": [
+                        user_details
+                    ]
+                }, 200
+            else:
+                return ViewsValidation().views_error(
+                    401, "Invalid Login credentials", "message")
         else:
-            return {
-                "status": 401,
-                "error": "Unregistered User"
-            }, 401
+            return ViewsValidation().views_error(
+                401, "User with email {} not found ".format(data["email"]),
+                "message")

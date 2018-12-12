@@ -1,5 +1,5 @@
 import datetime
-from flask_bcrypt import generate_password_hash
+from flask_bcrypt import generate_password_hash, check_password_hash
 from app.api.v1.models.models_validation.validation import ModelValidation
 
 from app.db.db_config import DbModel
@@ -52,7 +52,7 @@ class UsersModel(DbModel):
     def get_user_details(self, user_email):
 
         user = self.get_user_by_email(user_email)
-        print("USER::::", user)
+        # print("USER::::", user)
         if user:
             return dict(
                 user=dict(
@@ -63,6 +63,15 @@ class UsersModel(DbModel):
                 )
             )
         return None  # user not found
+
+    def password_is_valid(self, password):
+        user = self.get_user_by_email(self.email)
+        password_hash = user[3]
+
+        if check_password_hash(password_hash, password):
+            return True
+        else:
+            return None
 
     def gen_auth_token(self, user_email):
         pass
