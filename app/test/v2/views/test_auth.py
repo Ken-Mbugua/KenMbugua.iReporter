@@ -53,8 +53,7 @@ class TestAuth(TestCase):
 
         response = self.signup_user(self.sign_up_data)
         result = json.loads(response.data.decode())
-        # print("DATA1:::", result)
-        # print("result['status']:::", result['status'])
+
         self.assertTrue(result['status'] == 201)
         self.assertTrue(result['data'])
 
@@ -73,8 +72,7 @@ class TestAuth(TestCase):
         response = self.signup_user(self.sign_up_data)
 
         result = json.loads(response.data.decode())
-        # print("DATA1:::", result)
-        # print("result['status']:::2:", result['status'])
+
         self.assertTrue(result['status'] == 202)
         self.assertEqual(result['message'], "Duplicate User Error")
         self.assertTrue(response.content_type == 'application/json')
@@ -105,8 +103,7 @@ class TestAuth(TestCase):
         response = self.signin_user(self.sign_in_data)
 
         result = json.loads(response.data.decode())
-        print("DATA1:::", result)
-        # print("result['status']:::", result['status'])
+
         self.assertEqual(result['status'], 401)
         self.assertTrue(response.content_type == 'application/json')
         self.assertEqual(response.status_code, 401)

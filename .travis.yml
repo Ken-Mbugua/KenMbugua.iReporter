@@ -21,8 +21,10 @@ addons:
 before_script:
   - psql -c 'CREATE DATABASE ireporter_test' -U k-mbugua
   - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to k-mbugua;" -U k-mbugua
+
 script:
   - python -m pytest --cov=./app/test/v2
+
 after_success:
   - codecov
   - coveralls
