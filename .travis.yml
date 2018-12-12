@@ -11,6 +11,16 @@ install:
   # - pip install coveralls
   # - pip install codecov
   - pip install -r requirements.txt
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "10.6"
+
+before_script:
+  - psql -c 'CREATE DATABASE ireporter_test' -U k-mbugua
+  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to k-mbugua;" -U k-mbugua
 script:
   - python -m pytest --cov=./app/test/v2
 after_success:
