@@ -1,5 +1,5 @@
 from app.db.db_config import DbModel
-import datetime
+from datetime import datetime, timedelta
 import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 from app.api.v1.models.models_validation.validation import ModelValidation
@@ -19,7 +19,7 @@ class UsersModel(DbModel):
             password).decode("utf-8")
         self.isAdmin = isAdmin
         self.phone_number = phone_number
-        self.date_created = datetime.datetime.now()
+        self.date_created = datetime.utcnow()
 
         # instanciate the inherited DbModel class
         super().__init__()
@@ -27,10 +27,10 @@ class UsersModel(DbModel):
     def create_user(self):
 
         query_string = "INSERT INTO users(email, username,  " +\
-            "phone_number, password_hash) VALUES (%s,%s,%s,%s)"
+            "phone_number, password_hash, is_admin) VALUES (%s,%s,%s,%s,%s)"
 
         data = (self.email, self.username,
-                self.phone_number, self.password_hash,)
+                self.phone_number, self.password_hash, self.isAdmin,)
 
         # run query then commit record
         self.query(query_string, data)
@@ -77,11 +77,10 @@ class UsersModel(DbModel):
     def gen_auth_token(self, user_email):
         try:
             payload = {
-                'exp': datetime.datetime.utcnow() + datetime
-                .timedelta(days=0, minutes=25),
-
-                'iat': datetime.datetime.utcnow(),
-                'sub': user_email
+                'exp': datetime.utcnow() + timedelta(days=0, minutes=25),
+                'isa': "{}".format(datetime.utcnow()),
+                'sub': user_email,
+                'role': self.isAdmin
             }
             return jwt.encode(
                 payload,

@@ -16,7 +16,7 @@ services:
   - postgresql
 
 addons:
-  postgresql: "10.6"
+  postgresql: "9.3"
 
 before_script:
   - psql -c 'CREATE DATABASE test_km_ireporter' -U postgres

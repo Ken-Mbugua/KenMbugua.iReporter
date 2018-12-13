@@ -76,7 +76,6 @@ class TestAuth(TestCase):
 
         # test for auth token
         self.assertTrue(result['data'][0])
-        self.assertTrue(response.content_type == 'application/json')
         self.assertEqual(response.status_code, 201)
 
     def test_auth_sign_up_duplicate_user(self):
@@ -92,7 +91,6 @@ class TestAuth(TestCase):
 
         self.assertTrue(result['status'] == 202)
         self.assertEqual(result['message'], "Duplicate User Error")
-        self.assertTrue(response.content_type == 'application/json')
         self.assertEqual(response.status_code, 202)
 
     def test_auth_sign_in(self):
@@ -110,7 +108,6 @@ class TestAuth(TestCase):
 
         # test for auth token
         self.assertTrue(result['data'][0])
-        self.assertTrue(response.content_type == 'application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_auth_guest_sign_in(self):
@@ -121,7 +118,6 @@ class TestAuth(TestCase):
         result = json.loads(response.data.decode())
 
         self.assertEqual(result['status'], 401)
-        self.assertTrue(response.content_type == 'application/json')
         self.assertEqual(response.status_code, 401)
         self.assertIn("User with email", result["message"])
 
@@ -151,7 +147,7 @@ class TestAuth(TestCase):
 
         # get token
         auth_token = user.gen_auth_token(self.sign_in_data["email"])
-        print("TOKEN:", auth_token)
+        # print("TOKEN:", auth_token)
         # test for token
         self.assertTrue(isinstance(auth_token, bytes))
 

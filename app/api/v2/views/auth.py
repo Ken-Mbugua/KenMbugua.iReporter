@@ -3,6 +3,7 @@ from flask import request, json
 from flask_restful import Resource
 from app.api.v2.models.users_model import UsersModel
 from app.api.v2.views.validation import ViewsValidation
+# from app.api.v2.auth_decorators.auth_decorator import isAdmin
 
 
 class AuthSignUp(Resource):
@@ -39,6 +40,7 @@ class AuthSignUp(Resource):
             user_details = user.get_user_details(data["email"])
             # generate token
             auth_token = user.gen_auth_token(data["email"])
+            print("AUTH_TOKEN::: {} ".format(auth_token.decode()))
             user_details.update({"token": auth_token.decode()})
             return {  # user creation success return user data
                 "status": 201,
