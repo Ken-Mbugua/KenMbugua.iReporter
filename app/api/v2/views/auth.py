@@ -40,7 +40,10 @@ class AuthSignUp(Resource):
             user_details = user.get_user_details(data["email"])
             # generate token
             auth_token = user.gen_auth_token(data["email"])
-            print("AUTH_TOKEN::: {} ".format(auth_token.decode()))
+
+            # user.decode_auth_token(auth_token)["role"]
+            # returns role or email
+
             user_details.update({"token": auth_token.decode()})
             return {  # user creation success return user data
                 "status": 201,

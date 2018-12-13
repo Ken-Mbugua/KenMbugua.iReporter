@@ -76,6 +76,7 @@ class TestAuth(TestCase):
 
         # test for auth token
         self.assertTrue(result['data'][0])
+        print("Result Print:::", result['data'][0])
         self.assertEqual(response.status_code, 201)
 
     def test_auth_sign_up_duplicate_user(self):

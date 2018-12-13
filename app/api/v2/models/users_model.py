@@ -101,7 +101,11 @@ class UsersModel(DbModel):
                 algorithms='HS256'
             )
 
-            return payload['sub']
+            return {
+                "email": payload['sub'],
+                "role": payload['role']
+            }
+
         except jwt.ExpiredSignatureError:
             return 'Signature expired. Please log in again.'
         except jwt.InvalidTokenError:
