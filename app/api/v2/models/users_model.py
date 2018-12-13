@@ -36,7 +36,7 @@ class UsersModel(DbModel):
         self.query(query_string, data)
         self.save()
 
-        return "create user success"
+        return {"message": "record saved successsfully"}
 
     def get_user_by_email(self, user_email):
 
