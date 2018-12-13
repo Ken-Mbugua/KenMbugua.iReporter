@@ -37,7 +37,7 @@ class TestAuth(TestCase):
         response = self.app.post(
             'api/v2/auth/signup',
             data=json.dumps(sign_up_data),
-            content_type='application/json'
+            headers={"Content-Type": "application/json"}
         )
 
         return response
@@ -46,7 +46,9 @@ class TestAuth(TestCase):
         response = self.app.post(
             'api/v2/auth/login',
             data=json.dumps(sign_in_data),
-            content_type='application/json'
+            headers={
+                "Content-Type": "application/json"
+            }
         )
 
         return response
