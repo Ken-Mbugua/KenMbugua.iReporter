@@ -4,6 +4,7 @@ from unittest import TestCase
 from app import create_app
 from app.db.db_config import DbModel
 from app.api.v2.models.users_model import UsersModel
+from .test_data import sign_in_data, sign_in_data_2, sign_up_data
 
 
 class TestAuth(TestCase):
@@ -16,22 +17,22 @@ class TestAuth(TestCase):
         self.app_context.push()
         self.db = DbModel()
 
-        self.sign_up_data = {
-            "email": "user799@gmail.com",
-            "password": "user_799#",
-            "phone_number": "0958576262",
-            "username": "de_jong"
-        }
+        # self.sign_up_data = {
+        #     "email": "user799@gmail.com",
+        #     "password": "user_799#",
+        #     "phone_number": "0958576262",
+        #     "username": "de_jong"
+        # }
 
-        self.sign_in_data = {
-            "email": "user799@gmail.com",
-            "password": "user_799#"
-        }
+        # self.sign_in_data = {
+        #     "email": "user799@gmail.com",
+        #     "password": "user_799#"
+        # }
 
-        self.sign_in_data_2 = {
-            "email": "user345@gmail.com",
-            "password": "user_345#"
-        }
+        # self.sign_in_data_2 = {
+        #     "email": "user345@gmail.com",
+        #     "password": "user_345#"
+        # }
 
     def signup_user(self, sign_up_data):
         response = self.app.post(
@@ -68,7 +69,7 @@ class TestAuth(TestCase):
     def test_auth_sign_up(self):
         """ Test for user registration """
 
-        response = self.signup_user(self.sign_up_data)
+        response = self.signup_user(sign_up_data)
         result = json.loads(response.data.decode())
 
         self.assertTrue(result['status'] == 201)
@@ -83,10 +84,10 @@ class TestAuth(TestCase):
         """ Test for duplicate user registration """
 
         # sign up user attempt 1 -> success
-        self.signup_user(self.sign_up_data)
+        self.signup_user(sign_up_data)
 
         # sign up user attempt 2 -> failure
-        response = self.signup_user(self.sign_up_data)
+        response = self.signup_user(sign_up_data)
 
         result = json.loads(response.data.decode())
 
@@ -97,10 +98,10 @@ class TestAuth(TestCase):
     def test_auth_sign_in(self):
         """ Test for user login endpoint """
         # create a new user
-        self.signup_user(self.sign_up_data)
+        self.signup_user(sign_up_data)
 
         # sign in with the user created above
-        response = self.signin_user(self.sign_in_data)
+        response = self.signin_user(sign_in_data)
 
         result = json.loads(response.data.decode())
 
@@ -114,7 +115,7 @@ class TestAuth(TestCase):
     def test_auth_guest_sign_in(self):
         """ Test for user login endpoint """
         # user sign in
-        response = self.signin_user(self.sign_in_data)
+        response = self.signin_user(sign_in_data)
 
         result = json.loads(response.data.decode())
 
@@ -134,7 +135,7 @@ class TestAuth(TestCase):
         )
 
         # get token
-        auth_token = user.gen_auth_token(self.sign_in_data["email"])
+        auth_token = user.gen_auth_token(sign_in_data["email"])
 
         # test for token
         self.assertTrue(isinstance(auth_token, bytes))
@@ -143,16 +144,16 @@ class TestAuth(TestCase):
 
         # get token
         user = self.get_user(
-            self.sign_in_data
+            sign_in_data
         )
 
         # get token
-        auth_token = user.gen_auth_token(self.sign_in_data["email"])
+        auth_token = user.gen_auth_token(sign_in_data["email"])
         self.assertTrue(isinstance(auth_token, bytes))
 
         # test passes if the email used to encode is returned
         self.assertEqual(user.decode_auth_token(
-            auth_token), self.sign_in_data["email"])
+            auth_token)["email"], sign_in_data["email"])
 
     def tearDown(self):
         """empty table data after each test"""
