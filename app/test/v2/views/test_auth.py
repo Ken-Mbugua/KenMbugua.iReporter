@@ -3,6 +3,7 @@ import json
 from unittest import TestCase
 from app import create_app
 from app.db.db_config import DbModel
+from app.api.v2.models.users_model import UsersModel
 
 
 class TestAuth(TestCase):
@@ -49,6 +50,18 @@ class TestAuth(TestCase):
         )
 
         return response
+
+    def get_user(self, sign_in_data):
+        # sign in
+        self.signin_user(sign_in_data)
+
+        # instanciate user
+        user = UsersModel(
+            email=sign_in_data["email"],
+            password=sign_in_data["password"]
+        )
+
+        return user
 
     def test_auth_sign_up(self):
         """ Test for user registration """
@@ -114,10 +127,32 @@ class TestAuth(TestCase):
         pass
 
     def test_gen_auth_token(self):
-        pass
+        """ test for generated tokem """
+
+        # get token
+        user = self.get_user(
+            self.sign_in_data
+        )
+
+        # get token
+        auth_token = user.gen_auth_token(self.sign_in_data["email"])
+
+        # test for token
+        self.assertTrue(isinstance(auth_token, bytes))
 
     def test_decode_auth_token(self):
-        pass
+
+        # get token
+        user = self.get_user(
+            self.sign_in_data
+        )
+
+        # get token
+        auth_token = user.decode_auth_token(self.sign_in_data["email"])
+
+        # test for token
+        self.assertTrue(isinstance(auth_token, bytes))
+        self.assertTrue(user.decode_auth_token(auth_token) == 1)
 
     def tearDown(self):
         """empty table data after each test"""

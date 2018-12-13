@@ -74,7 +74,7 @@ class UsersModel(DbModel):
             return None
 
     def gen_auth_token(self, user_email):
-        pass
+        return "TOKEN:TOKEN:TOKEN"
 
-    def decode_auth_token(self):
-        pass
+    def decode_auth_token(self, user_email):
+        return "NEKTO:NEKTO:NEKTO"
