@@ -88,8 +88,16 @@ class UsersModel(DbModel):
                 current_app.config['SECRET_KEY'],
                 algorithm='HS256'
             )
-        except Exception as e:
-            return e
+        except Exception as error:
+            return error
 
-    def decode_auth_token(self, user_email):
-        return "NEKTO:NEKTO:NEKTO"
+    def decode_auth_token(self, auth_token):
+        """decode auth_token to obtain payload data"""
+
+        try:
+            payload = jwt.decode(auth_token, current_app.config['SECRET_KEY'])
+            return payload['sub']
+        except jwt.ExpiredSignatureError:
+            return 'Signature expired. Please log in again.'
+        except jwt.InvalidTokenError:
+            return 'Invalid token. Please log in again.'
