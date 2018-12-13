@@ -1,8 +1,9 @@
+from app.db.db_config import DbModel
 import datetime
+import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 from app.api.v1.models.models_validation.validation import ModelValidation
-
-from app.db.db_config import DbModel
+from flask import current_app
 
 
 class UsersModel(DbModel):
@@ -74,7 +75,21 @@ class UsersModel(DbModel):
             return None
 
     def gen_auth_token(self, user_email):
-        return "TOKEN:TOKEN:TOKEN"
+        try:
+            payload = {
+                'exp': datetime.datetime.utcnow() + datetime
+                .timedelta(days=0, minutes=25),
+
+                'iat': datetime.datetime.utcnow(),
+                'sub': user_email
+            }
+            return jwt.encode(
+                payload,
+                current_app.config['SECRET_KEY'],
+                algorithm='HS256'
+            )
+        except Exception as e:
+            return e
 
     def decode_auth_token(self, user_email):
         return "NEKTO:NEKTO:NEKTO"
