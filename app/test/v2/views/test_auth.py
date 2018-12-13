@@ -147,8 +147,6 @@ class TestAuth(TestCase):
 
         # get token
         auth_token = user.gen_auth_token(self.sign_in_data["email"])
-        # print("TOKEN:", auth_token)
-        # test for token
         self.assertTrue(isinstance(auth_token, bytes))
 
         # test passes if the email used to encode is returned
