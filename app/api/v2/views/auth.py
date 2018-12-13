@@ -37,8 +37,9 @@ class AuthSignUp(Resource):
 
         if response:
             user_details = user.get_user_details(data["email"])
-            user_details.update(
-                {"demo-token": "w23502384023-24360808"})
+            # generate token
+            auth_token = user.gen_auth_token(data["email"])
+            user_details.update({"token": auth_token.decode()})
             return {  # user creation success return user data
                 "status": 201,
                 "data": [
@@ -71,9 +72,11 @@ class AuthSignIn(Resource):
         if email:
             # user found check password
             if user.password_is_valid(data["password"]):
-                # login success
+                # login success: get user details
                 user_details = user.get_user_details(data["email"])
-                user_details.update({"demo-token": "w23502384023-24360808"})
+                # generete token
+                auth_token = user.gen_auth_token(data["email"])
+                user_details.update({"token": auth_token.decode()})
 
                 return {  # user login success return token and suser data
                     "status": 200,
