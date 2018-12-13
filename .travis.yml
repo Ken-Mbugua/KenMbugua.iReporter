@@ -19,9 +19,9 @@ addons:
   postgresql: "10.6"
 
 before_script:
-  - psql -c 'CREATE DATABASE test_km_ireporter' -U k-mbugua
+  - psql -c 'CREATE DATABASE test_km_ireporter' -U postgres
   - psql -c "CREATE USER k-mbugua WITH PASSWORD 'kmbugua54321';" -U postgres
-  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to k-mbugua;" -U k-mbugua
+  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to k-mbugua;" -U postgres
 
 script:
   - python -m pytest --cov=./app/test/v2
