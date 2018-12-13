@@ -148,11 +148,14 @@ class TestAuth(TestCase):
         )
 
         # get token
-        auth_token = user.decode_auth_token(self.sign_in_data["email"])
-
+        auth_token = user.gen_auth_token(self.sign_in_data["email"])
+        print("TOKEN:", auth_token)
         # test for token
         self.assertTrue(isinstance(auth_token, bytes))
-        self.assertTrue(user.decode_auth_token(auth_token) == 1)
+
+        # test passes if the email used to encode is returned
+        self.assertEqual(user.decode_auth_token(
+            auth_token), self.sign_in_data["email"])
 
     def tearDown(self):
         """empty table data after each test"""

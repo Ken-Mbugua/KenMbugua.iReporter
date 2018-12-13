@@ -91,11 +91,17 @@ class UsersModel(DbModel):
         except Exception as error:
             return error
 
-    def decode_auth_token(self, auth_token):
+    @staticmethod
+    def decode_auth_token(auth_token):
         """decode auth_token to obtain payload data"""
 
         try:
-            payload = jwt.decode(auth_token, current_app.config['SECRET_KEY'])
+            payload = jwt.decode(
+                auth_token,
+                current_app.config['SECRET_KEY'],
+                algorithms='HS256'
+            )
+
             return payload['sub']
         except jwt.ExpiredSignatureError:
             return 'Signature expired. Please log in again.'
