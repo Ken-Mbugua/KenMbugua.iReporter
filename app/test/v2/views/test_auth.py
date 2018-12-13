@@ -110,6 +110,15 @@ class TestAuth(TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertIn("User with email", result["message"])
 
+    def test_password_is_valid(self):
+        pass
+
+    def test_gen_auth_token(self):
+        pass
+
+    def test_decode_auth_token(self):
+        pass
+
     def tearDown(self):
         """empty table data after each test"""
         self.db.truncate_tables()
