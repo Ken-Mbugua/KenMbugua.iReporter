@@ -4,7 +4,7 @@ from unittest import TestCase
 from app import create_app
 from app.db.db_config import DbModel
 from app.api.v2.models.users_model import UsersModel
-from .test_data import sign_in_data, sign_in_data_2, sign_up_data
+from test_data import sign_in_data, sign_in_data_2, sign_up_data
 
 
 class TestAuth(TestCase):
@@ -16,23 +16,6 @@ class TestAuth(TestCase):
         self.app_context = app.app_context()
         self.app_context.push()
         self.db = DbModel()
-
-        # self.sign_up_data = {
-        #     "email": "user799@gmail.com",
-        #     "password": "user_799#",
-        #     "phone_number": "0958576262",
-        #     "username": "de_jong"
-        # }
-
-        # self.sign_in_data = {
-        #     "email": "user799@gmail.com",
-        #     "password": "user_799#"
-        # }
-
-        # self.sign_in_data_2 = {
-        #     "email": "user345@gmail.com",
-        #     "password": "user_345#"
-        # }
 
     def signup_user(self, sign_up_data):
         response = self.app.post(
@@ -131,7 +114,7 @@ class TestAuth(TestCase):
 
         # get token
         user = self.get_user(
-            self.sign_in_data
+            sign_in_data
         )
 
         # get token
