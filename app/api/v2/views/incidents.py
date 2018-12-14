@@ -34,19 +34,6 @@ class Incidents(Resource):
             # found missing fields
             return ViewsValidation().check_fields(fields, data)
 
-        # if not missing_fields:  # filter missing fields
-        #     incident_entry = {
-        #         "title": data["title"],
-        #         "description": data["description"],
-        #         "incident_status": data["incident_status"],
-        #         "location": data["location"],
-        #         "type": data["type"],
-        #         "image": data["image"],
-        #         "video": data["video"],
-        #         "comment": data["comment"],
-        #         "createdBy": len(['title'])
-        #     }
-
         #     res = self.incident.save(incident_entry)
         #     if res:
         #         if res["status"] == 400:
