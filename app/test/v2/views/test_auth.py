@@ -59,8 +59,7 @@ class TestAuth(TestCase):
         self.assertTrue(result['data'])
 
         # test for auth token
-        self.assertTrue(result['data'][0])
-        print("Result Print:::", result['data'][0])
+        self.assertTrue(result['data'][0]['token'])
         self.assertEqual(response.status_code, 201)
 
     def test_auth_sign_up_duplicate_user(self):
@@ -92,7 +91,7 @@ class TestAuth(TestCase):
         self.assertEqual(len(result['data']), 1)
 
         # test for auth token
-        self.assertTrue(result['data'][0])
+        self.assertTrue(result['data'][0]['token'])
         self.assertEqual(response.status_code, 200)
 
     def test_auth_guest_sign_in(self):

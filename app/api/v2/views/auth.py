@@ -55,7 +55,6 @@ class AuthSignUp(Resource):
 
 class AuthSignIn(Resource):
 
-    @isAdmin
     def post(self):  # login resource
 
         data = request.get_json(silent=True)
