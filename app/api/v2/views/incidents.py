@@ -1,85 +1,83 @@
-# from flask_restful import Resource
-# import datetime
-# from flask import request
+from flask_restful import Resource
+import datetime
+from flask import request
 
-# from app.api.v2.models.incidents_model import IncidentsModel
+from app.api.v2.models.incidents_model import IncidentsModel
 
 
-# class Incidents(Resource):
-#     def __init__(self):
-#         self.incident = IncidentsModel()
+class Incidents(Resource):
+    def __init__(self):
+        pass
 
-#     def post(self):
-#         """
-#         method to receive incident data and pass to db model save()
-#         """
-#         data = request.get_json()
-#         # validate received fileds
-#         fields_validate = ViewsValidation()
-#         fields = [
-#             'title',
-#             'description',
-#             'incident_status',
-#             'comment',
-#             'video',
-#             'image',
-#             'location'
-#         ]
-#         missing_fields = fields_validate.missing_fields(fields, data)
+    def post(self):
+        """
+        method to receive incident data and pass to db model save()
+        """
+        data = request.get_json()
+        # validate received fileds
 
-#         if not missing_fields:  # filter missing fields
-#             incident_entry = {
-#                 "title": data["title"],
-#                 "description": data["description"],
-#                 "incident_status": data["incident_status"],
-#                 "location": data["location"],
-#                 "type": data["type"],
-#                 "image": data["image"],
-#                 "video": data["video"],
-#                 "comment": data["comment"],
-#                 "createdBy": len(['title'])
-#             }
+        fields = [
+            'title',
+            'description',
+            'incident_status',
+            'comment',
+            'video',
+            'image',
+            'location'
+        ]
+        if not missing_fields:  # filter missing fields
+            incident_entry = {
+                "title": data["title"],
+                "description": data["description"],
+                "incident_status": data["incident_status"],
+                "location": data["location"],
+                "type": data["type"],
+                "image": data["image"],
+                "video": data["video"],
+                "comment": data["comment"],
+                "createdBy": len(['title'])
+            }
 
-#             res = self.incident.save(incident_entry)
-#             if res:
-#                 if res["status"] == 400:
-#                     return res, 400
-#                 else:
-#                     return {
-#                         "status": 201,
-#                         "data": [{
-#                             "id": res["id"],
-#                             "message": "incident record has been created"
-#                         }]
-#                     }, 201
+            res = self.incident.save(incident_entry)
+            if res:
+                if res["status"] == 400:
+                    return res, 400
+                else:
+                    return {
+                        "status": 201,
+                        "data": [{
+                            "id": res["id"],
+                            "message": "incident record has been created"
+                        }]
+                    }, 201
 
-#             else:
-#                 return {
-#                     "status": 400,
-#                     "error": "Bad Request"
-#                 }, 400
-#         else:
-#             return {
-#                 "status": 403,
-#                 "error": "Bad request: missing"
-#                 " fileds {}".format(missing_fields)
-#             }, 403
+            else:
+                return {
+                    "status": 400,
+                    "error": "Bad Request"
+                }, 400
+        else:
+            return {
+                "status": 403,
+                "error": "Bad request: missing"
+                " fileds {}".format(missing_fields)
+            }, 403
 
-#     def get(self):
-#         """
-#         method to query all incidences from db
-#         """
-#         res = self.incident.get_incidents()
-#         if res:
-#             return {
-#                 "status": 200,
-#                 "data": res
-#             }, 200
-#         else:
-#             return {
-#                 "status": 404,
-#                 "error": "No incidents found"
-#             }, 404
+    def get(self):
+        """
+        method to query all incidences from db
+        """
+        res = self.incident.get_incidents()
+        if res:
+            return {
+                "status": 200,
+                "data": res
+            }, 200
+        else:
+            return {
+                "status": 404,
+                "error": "No incidents found"
+            }, 404
 
 
 # class IncidentsId(Resource, IncidentsModel):
