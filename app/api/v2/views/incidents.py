@@ -1,8 +1,9 @@
 from flask_restful import Resource
 import datetime
 from flask import request
+from app.api.v2.validation.validation import ViewsValidation
 
-from app.api.v2.models.incidents_model import IncidentsModel
+# from app.api.v2.models.incidents_model import IncidentsModel
 
 
 class Incidents(Resource):
@@ -13,7 +14,7 @@ class Incidents(Resource):
         """
         method to receive incident data and pass to db model save()
         """
-        data = request.get_json()
+        data = request.get_json(silent=True)
         # validate received fileds
 
         fields = [
@@ -25,43 +26,47 @@ class Incidents(Resource):
             'image',
             'location'
         ]
-        if not missing_fields:  # filter missing fields
-            incident_entry = {
-                "title": data["title"],
-                "description": data["description"],
-                "incident_status": data["incident_status"],
-                "location": data["location"],
-                "type": data["type"],
-                "image": data["image"],
-                "video": data["video"],
-                "comment": data["comment"],
-                "createdBy": len(['title'])
-            }
 
-            res = self.incident.save(incident_entry)
-            if res:
-                if res["status"] == 400:
-                    return res, 400
-                else:
-                    return {
-                        "status": 201,
-                        "data": [{
-                            "id": res["id"],
-                            "message": "incident record has been created"
-                        }]
-                    }, 201
+        return ViewsValidation().views_error(
+            400, "Bad Request Format")
 
-            else:
-                return {
-                    "status": 400,
-                    "error": "Bad Request"
-                }, 400
-        else:
-            return {
-                "status": 403,
-                "error": "Bad request: missing"
-                " fileds {}".format(missing_fields)
-            }, 403
+        # if not missing_fields:  # filter missing fields
+        #     incident_entry = {
+        #         "title": data["title"],
+        #         "description": data["description"],
+        #         "incident_status": data["incident_status"],
+        #         "location": data["location"],
+        #         "type": data["type"],
+        #         "image": data["image"],
+        #         "video": data["video"],
+        #         "comment": data["comment"],
+        #         "createdBy": len(['title'])
+        #     }
+
+        #     res = self.incident.save(incident_entry)
+        #     if res:
+        #         if res["status"] == 400:
+        #             return res, 400
+        #         else:
+        #             return {
+        #                 "status": 201,
+        #                 "data": [{
+        #                     "id": res["id"],
+        #                     "message": "incident record has been created"
+        #                 }]
+        #             }, 201
+
+        #     else:
+        #         return {
+        #             "status": 400,
+        #             "error": "Bad Request"
+        #         }, 400
+        # else:
+        #     return {
+        #         "status": 403,
+        #         "error": "Bad request: missing"
+        #         " fileds {}".format(missing_fields)
+        #     }, 403
 
     def get(self):
         """

@@ -1,9 +1,10 @@
+from app import create_app
 import os
 import json
 from unittest import TestCase
 from app.db.db_config import DbModel
-
-from app import create_app
+from .test_incidents_data import incident1, incident2, comment_data,\
+    location_data
 
 
 class TestIncidentsV2(TestCase):
@@ -14,73 +15,6 @@ class TestIncidentsV2(TestCase):
         self.app_context = app.app_context()
         self.app_context.push()
         self.db = DbModel()
-
-        # test data
-        self.incident1 = {
-            'title': 'Traffice Corruption',
-            'description': 'Offices taking bribes',
-            'type': 'RedFlag',
-            'incident_status': 'Rejected',
-            'location': '-34444400, 3444499900',
-            'image': [
-                {
-                    'dir': 'var/www/uploads/incidents/img/USR-232455.jpeg',
-                    'filesize': '2045kb'
-                },
-                {
-                    'dir': 'var/www/uploads/incidents/img/USR-232455.jpeg',
-                    'filesize': '2045kb'
-                }
-            ],
-            'video': [
-                {
-                    'dir': 'var/www/uploads/readflags/video/USR-232455.mp4',
-                    'filesize': '340098245Kb'
-                }, {
-                    'dir': 'var/www/uploads/readflags/video/USR-232455.mp4',
-                    'filesize': '340098245Kb'
-                }
-            ],
-            'comment': 'This is fake all news i tell ya'
-
-
-        }
-        # test data
-
-        self.incident2 = {
-            "title": "Manhole Hazard",
-            "description": "Manhole open around hirlingum mall",
-            "type": "Intervention",
-            "incident_status": "Rejected",
-            "location": "-34444400, 3444499900",
-            "image": [
-                {
-                    "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
-                    "filesize": "2045kb"
-                },
-                {
-                    "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
-                    "filesize": "2045kb"
-                }
-            ],
-            "video": [
-                {
-                    "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
-                    "filesize": "340098245Kb"
-                }, {
-                    "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
-                    "filesize": "340098245Kb"
-                }
-            ],
-            "comment": "ignore it or cover it up, out of sight out of mind"
-        }
-
-        self.comment_data = {
-            "comment": "Scintilating"
-        }
-        self.location_data = {
-            "location": "-3455666, 42254555"
-        }
 
     def add_incident(self, incident_title):
         """

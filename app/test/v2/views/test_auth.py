@@ -4,7 +4,7 @@ from unittest import TestCase
 from app import create_app
 from app.db.db_config import DbModel
 from app.api.v2.models.users_model import UsersModel
-from test_data import sign_in_data, sign_in_data_2, sign_up_data
+from .test_data_auth import sign_in_data, sign_in_data_2, sign_up_data
 
 
 class TestAuth(TestCase):
