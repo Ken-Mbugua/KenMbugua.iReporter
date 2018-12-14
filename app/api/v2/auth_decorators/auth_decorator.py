@@ -11,7 +11,10 @@ def isAdmin(j):
         message = None
 
         if "Authorization" in request.headers:
-            print("HEADERz:::", request.headers)
+            # extract the token only from [bearer xxxxxxxx]
+            access_token = request.headers["Authorization"].split(" ")[1]
+            message = UsersModel().decode_auth_token(access_token)
+            print("HEADERz:::", message)
 
         return j(*args, **kwargs)
 

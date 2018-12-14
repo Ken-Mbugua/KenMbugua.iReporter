@@ -15,8 +15,9 @@ class UsersModel(DbModel):
         self.firstname = firstname
         self.username = username
         self.email = email
+        self.password = "user34" if password is None else password
         self.password_hash = generate_password_hash(
-            password).decode("utf-8")
+            self.password).decode("utf-8")
         self.isAdmin = isAdmin
         self.phone_number = phone_number
         self.date_created = datetime.utcnow()
