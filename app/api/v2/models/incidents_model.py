@@ -49,7 +49,8 @@ class IncidentsModel(DbModel):
         return None
 
     def get_last_incident(self):
-        query_string = "SELECT * from incidents ORDER BY TIMESTAMP DESC LIMIT 1"
+        query_string = "SELECT * from incidents " +\
+            "ORDER BY TIMESTAMP DESC LIMIT 1"
 
         # query db
         self.query(query_string)
