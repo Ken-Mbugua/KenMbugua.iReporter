@@ -7,7 +7,7 @@ class IncidentsModel(DbModel):
 
     def __init__(self, title=None, description=None,
                  incident_status=None, incident_type=None,
-                 location=None, comment=None, createdBy=None):
+                 location=None, comment=None, created_by=None):
 
         self.title = title
         self.title = description
@@ -19,6 +19,8 @@ class IncidentsModel(DbModel):
         self.created_on = datetime.utcnow()
 
     def create_incident(self):
+        """method to insert new incident into database"""
+
         query_string = "INSERT INTO incidents (title, description,  " +\
             "incident_type, location, comment, incident_status, created_by," +\
             " created_on) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -32,3 +34,16 @@ class IncidentsModel(DbModel):
         self.save()
 
         return {"message": "record saved successsfully"}
+
+    def get_incident_by_id(self, incident_id):
+        query_string = "SELECT * from incidents WHERE incident_id= %s"
+
+        # query db
+        self.query(query_string, (incident_id,))
+
+        # return queried records (single record)
+        incident = self.find_one()
+
+        if incident:
+            return incident
+        return None

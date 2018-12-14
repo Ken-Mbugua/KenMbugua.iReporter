@@ -2,8 +2,7 @@ from flask_restful import Resource
 import datetime
 from flask import request
 from app.api.v2.validation.validation import ViewsValidation
-
-# from app.api.v2.models.incidents_model import IncidentsModel
+from app.api.v2.models.incidents_model import IncidentsModel
 
 
 class Incidents(Resource):
@@ -33,6 +32,9 @@ class Incidents(Resource):
         if ViewsValidation().check_fields(fields, data):
             # found missing fields
             return ViewsValidation().check_fields(fields, data)
+
+        # instanciate Users model and pass request data
+        incidents = IncidentsModel(**data)
 
         #     res = self.incident.save(incident_entry)
         #     if res:
