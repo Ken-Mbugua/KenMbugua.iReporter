@@ -11,7 +11,7 @@ def isAdmin(j):
         message = None
 
         if "Authorization" in request.headers:
-            print("HEADERS:::", request.headers)
+            print("HEADERz:::", request.headers)
 
         return j(*args, **kwargs)
 
