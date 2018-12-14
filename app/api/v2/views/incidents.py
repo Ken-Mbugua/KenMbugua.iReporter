@@ -6,8 +6,6 @@ from app.api.v2.models.incidents_model import IncidentsModel
 
 
 class Incidents(Resource):
-    def __init__(self):
-        pass
 
     def post(self):
         """
@@ -23,9 +21,8 @@ class Incidents(Resource):
             'title',
             'description',
             'incident_status',
+            'incident_type',
             'comment',
-            'video',
-            'image',
             'location'
         ]
 

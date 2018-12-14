@@ -22,7 +22,11 @@ class DbModel():
             password=self.db_password,
             host=self.db_host
         )
-        self.cur = self.conn.cursor()
+        try:
+            self.cur = self.conn.cursor()
+            print("CONNECTION_SUCCESS!!")
+        except:
+            print("CONNECTION_ERROR!!")
 
         self.table_names = ["users", "incidents"]
 

@@ -10,24 +10,27 @@ class IncidentsModel(DbModel):
                  location=None, comment=None, created_by=None):
 
         self.title = title
-        self.title = description
+        self.description = description
         self.incident_type = incident_type
         self.location = location
         self.comment = comment
         self.incident_status = incident_status
-        self.created_by = created_by
+        self.created_by = 23 if created_by is None else created_by
         self.created_on = datetime.utcnow()
+
+        # instanciate the inherited DbModel class
+        super().__init__()
 
     def create_incident(self):
         """method to insert new incident into database"""
 
         query_string = "INSERT INTO incidents (title, description,  " +\
-            "incident_type, location, comment, incident_status, created_by," +\
-            " created_on) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+            "incident_type, location, comment, incident_status, created_by" +\
+            ") VALUES (%s,%s,%s,%s,%s,%s,%s)"
 
         data = (self.title, self.description, self.incident_type,
                 self.location, self.comment, self.incident_status,
-                self.created_by, self.created_on,)
+                self.created_by,)
 
         # run query then commit record
         self.query(query_string, data)
@@ -50,13 +53,14 @@ class IncidentsModel(DbModel):
 
     def get_last_incident(self):
         query_string = "SELECT * from incidents " +\
-            "ORDER BY TIMESTAMP DESC LIMIT 1"
+            "ORDER BY created_on DESC LIMIT 1;"
 
         # query db
         self.query(query_string)
 
         # return queried records (single record)
         incident = self.find_one()
+        print("INCIDENT::", incident)
 
         if incident:
             return incident
