@@ -16,6 +16,9 @@ class Incidents(Resource):
         """
         data = request.get_json(silent=True)
         # validate received fileds
+        if not data:
+            return ViewsValidation().views_error(
+                400, "Bad Request Format")
 
         fields = [
             'title',
@@ -27,8 +30,9 @@ class Incidents(Resource):
             'location'
         ]
 
-        return ViewsValidation().views_error(
-            400, "Bad Request Format")
+        if ViewsValidation().check_fields(fields, data):
+            # found missing fields
+            return ViewsValidation().check_fields(fields, data)
 
         # if not missing_fields:  # filter missing fields
         #     incident_entry = {

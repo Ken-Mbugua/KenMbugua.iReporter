@@ -3,7 +3,7 @@ import os
 import json
 from unittest import TestCase
 from app.db.db_config import DbModel
-from .test_incidents_data import incident1, incident2, comment_data,\
+from test_incidents_data import incident1, incident2, comment_data,\
     location_data
 
 
