@@ -33,8 +33,22 @@ class Incidents(Resource):
             # found missing fields
             return ViewsValidation().check_fields(fields, data)
 
-        # instanciate Users model and pass request data
-        incidents = IncidentsModel(**data)
+        # instanciate incident model and pass incident data
+        incident = IncidentsModel(**data)
+
+        response = incident.create_incident()
+
+        if response:
+            incident_details = incident.get_last_incident()
+
+            return {  # incident creation success return incident data
+                "status": 201,
+                "data": [
+                    incident_details
+                ]
+            }, 201
+
+        # incidents.get_incident_by_id(incident_id)
 
         #     res = self.incident.save(incident_entry)
         #     if res:

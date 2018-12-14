@@ -15,7 +15,7 @@ class IncidentsModel(DbModel):
         self.location = location
         self.comment = comment
         self.incident_status = incident_status
-        self.created_by = createdBy
+        self.created_by = created_by
         self.created_on = datetime.utcnow()
 
     def create_incident(self):
@@ -33,13 +33,26 @@ class IncidentsModel(DbModel):
         self.query(query_string, data)
         self.save()
 
-        return {"message": "record saved successsfully"}
+        return {"message": "record created successsfully"}
 
     def get_incident_by_id(self, incident_id):
         query_string = "SELECT * from incidents WHERE incident_id= %s"
 
         # query db
         self.query(query_string, (incident_id,))
+
+        # return queried records (single record)
+        incident = self.find_one()
+
+        if incident:
+            return incident
+        return None
+
+    def get_last_incident(self):
+        query_string = "SELECT * from incidents ORDER BY TIMESTAMP DESC LIMIT 1"
+
+        # query db
+        self.query(query_string)
 
         # return queried records (single record)
         incident = self.find_one()
