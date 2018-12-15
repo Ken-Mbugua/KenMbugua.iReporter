@@ -79,7 +79,7 @@ class TestIncidentsV2(TestCase):
         print("RESULT::", result)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["data"][0]["message"],
-                         "created Intervention record")
+                         "created interventions record")
 
     def test_create_incident(self):
         """
@@ -91,7 +91,7 @@ class TestIncidentsV2(TestCase):
         print("RESULT::", result)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["data"][0]["message"],
-                         "created RedFlag record")
+                         "created redflags record")
 
     def tearDown(self):
         """empty table data after each test"""

@@ -129,6 +129,8 @@ class DbModel():
                 incident_type character varying(20) NOT NULL,
                 description character varying(200) NOT NULL,
                 incident_status character varying(50) NOT NULL,
+                image character varying(500)[],
+                video character varying(500)[],
                 location character varying(200),
                 comment character varying(512)
             ) """
