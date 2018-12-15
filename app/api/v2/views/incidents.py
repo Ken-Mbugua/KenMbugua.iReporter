@@ -35,7 +35,8 @@ class Incidents(Resource):
                 user_id = UsersModel().get_user_by_email(user_email)[0]
 
                 # instanciate incident model and pass incident data
-                incident = IncidentsModel(**data, created_by=user_id)
+                incident = IncidentsModel(**data, created_by=user_id,
+                                          incident_type=incident_type)
 
                 # insert incident in db
                 incident.create_incident()
