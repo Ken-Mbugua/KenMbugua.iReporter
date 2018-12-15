@@ -1,3 +1,4 @@
+
 from app.db.db_config import DbModel
 from datetime import datetime, timedelta
 
@@ -60,8 +61,10 @@ class IncidentsModel(DbModel):
 
         # return queried records (single record)
         incident = self.find_one()
-        print("INCIDENT::", incident)
 
         if incident:
             return incident
         return None
+
+    def return_incident(self):
+        pass
