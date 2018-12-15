@@ -24,15 +24,21 @@ class Incidents(Resource):
         # instanciate incident model and pass incident data
         incident = IncidentsModel(**data)
 
-        response = incident.create_incident()
+        try:
+            incident.create_incident()
 
-        if response:
-            incident_details = incident.get_incident_by("incident_id", 4)
+            incident_details = incident.get_last_incident()
             return {  # incident creation success return incident data
                 "status": 201,
                 "data": [{
-                    "id": incident_details[0],
-                    "message": "created {} record"
+                      # return incident_id at index 0
+                      "id": incident_details[0],
+                      "message": "created {} record"
                     .format(incident.incident_type)
                 }]
             }, 201
+        except Exception as error:
+
+            return ViewsValidation().views_error(
+                403, "Failed To create {}:::{}"
+                .format(incident.incident_type, error))

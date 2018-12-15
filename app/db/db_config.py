@@ -51,7 +51,9 @@ class DbModel():
 
     def find_fields(self):
         """ return fields of the queried table"""
-        return self.cur.description
+
+        fields = [field[0] for field in self.cur.description]
+        return fields
 
     def save(self):
         """ pass method to commit record """

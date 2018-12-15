@@ -37,8 +37,6 @@ class IncidentsModel(DbModel):
         self.query(query_string, data)
         self.save()
 
-        return {"message": "record created successsfully"}
-
     def get_incident_by_id(self, incident_id):
         query_string = "SELECT * from incidents WHERE incident_id= %s"
 
@@ -66,11 +64,11 @@ class IncidentsModel(DbModel):
             return incident
         return None
 
-    def get_incident_by(self, field, data):
+    def get_incident_by(self, field, value):
         """ return incident based on field and data provided"""
 
         query_string = "SELECT * from incidents WHERE {} = {}".format(
-            field, data)
+            field, value)
 
         self.query(query_string)
 
@@ -78,8 +76,27 @@ class IncidentsModel(DbModel):
 
         fields = self.find_fields()
 
-        print("FIELDS::", fields[0][0])
-        print("ICIDENT::", incident)
+        incident_data = {
+            # incident_id
+            fields[0]: incident[0][0],
+            # createad formated to  str
+            fields[1]: "{}".format(incident[0][1]),
+            # created_by
+            fields[2]: incident[0][2],
+            # title
+            fields[3]: incident[0][3],
+            # incident_type
+            fields[4]: incident[0][4],
+            # description
+            fields[5]: incident[0][5],
+            # incident_status
+            fields[6]: incident[0][6],
+            # location
+            fields[7]: incident[0][7],
+            # comment
+            fields[8]: incident[0][8]
+        }
+
         if incident:
-            return incident[0]
+            return incident_data
         return None
