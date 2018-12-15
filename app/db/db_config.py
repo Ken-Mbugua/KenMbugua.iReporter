@@ -49,6 +49,10 @@ class DbModel():
         """method to return all table data"""
         return self.cur.fetchone()
 
+    def find_fields(self):
+        """ return fields of the queried table"""
+        return self.cur.description
+
     def save(self):
         """ pass method to commit record """
         self.conn.commit()

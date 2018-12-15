@@ -6,26 +6,17 @@ from app.api.v2.models.incidents_model import IncidentsModel
 
 class Incidents(Resource):
 
-    def post(self):
+    def post(self, incident_type):
         """
         method to receive incident data and pass to db model save()
         """
         data = request.get_json(silent=True)
         # validate received fileds
         if not data:
-            return ViewsValidation().views_error(
+            return ViewValidation().views_error(
                 400, "Bad Request Format")
 
-        fields = [
-            'title',
-            'description',
-            'incident_status',
-            'incident_type',
-            'comment',
-            'location'
-        ]
-
-        if ViewsValidation().check_fields(fields, data):
+        if ViewsValidation().check_fields(incident_type, data):
             # found missing fields
             return ViewsValidation().check_fields(fields, data)
 

@@ -13,5 +13,5 @@ api = Api(version_two)
 
 api.add_resource(AuthSignUp, '/auth/signup')
 api.add_resource(AuthSignIn, '/auth/login')
-api.add_resource(Incidents, '/redflags')
+api.add_resource(Incidents, '/<incident_type>')
 # api.add_resource(Incidents, '/interventions')
