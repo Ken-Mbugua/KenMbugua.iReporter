@@ -68,6 +68,7 @@ class DbModel():
         """
         Loop through tbl_names to create them all
         """
+
         queries = self.tables()
         for query in queries:
             self.query(query)  # execute queries
@@ -137,3 +138,25 @@ class DbModel():
 
         queries = [self.table_names[0], self.table_names[1]]
         return queries
+
+    def seed_admin_user(self):
+        """method to seed admin"""
+
+        create_admin = """ INSERT INTO users (
+            username,
+            email,
+            password_hash,
+            is_admin
+        )
+        SELECT
+            'k_mbugua',
+            'kmbugua@mail.com',
+            '$2b$12$ydWOi22vO4KKnbsp8s5Z.O1tqErTN2pj1wuaEawYEIWLQVEKBi9xq',
+            TRUE
+        WHERE
+            NOT EXISTS (
+                 SELECT email FROM users WHERE email = 'kmbugua@mail.com'
+            ) """
+
+        self.query(create_admin)
+        self.save()

@@ -1,30 +1,20 @@
 # test data
 incident1 = {
-    'title': 'Traffice Corruption',
-    'description': 'Offices taking bribes',
-    'type': 'RedFlag',
-    'incident_status': 'Rejected',
-    'location': '-34444400, 3444499900',
-    'image': [
-        {
-            'dir': 'var/www/uploads/incidents/img/USR-232455.jpeg',
-            'filesize': '2045kb'
-        },
-        {
-            'dir': 'var/www/uploads/incidents/img/USR-232455.jpeg',
-            'filesize': '2045kb'
-        }
+    "title": "Traffice Corruption",
+    "description": "Offices taking bribes",
+    "type": "RedFlag",
+    "incident_status": "Rejected",
+    "location": "-34444400, 3444499900",
+    "image": [
+        "var/www/uploads/incidents/img/USR-232455.jpeg",
+        "var/www/uploads/incidents/img/USR-232455.jpeg",
+
     ],
-    'video': [
-        {
-            'dir': 'var/www/uploads/readflags/video/USR-232455.mp4',
-            'filesize': '340098245Kb'
-        }, {
-            'dir': 'var/www/uploads/readflags/video/USR-232455.mp4',
-            'filesize': '340098245Kb'
-        }
+    "video": [
+        "var/www/uploads/readflags/video/USR-232455.mp4",
+        "var/www/uploads/readflags/video/USR-232455.mp4",
     ],
-    'comment': 'This is fake all news i tell ya'
+    "comment": "This is fake all news i tell ya"
 
 
 }
@@ -37,23 +27,13 @@ incident2 = {
     "incident_status": "Rejected",
     "location": "-34444400, 3444499900",
     "image": [
-        {
-            "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
-            "filesize": "2045kb"
-        },
-        {
-            "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
-            "filesize": "2045kb"
-        }
+        "var/www/uploads/incidents/img/USR-232455.jpeg",
+        "var/www/uploads/incidents/img/USR-232455.jpeg",
+
     ],
     "video": [
-        {
-            "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
-            "filesize": "340098245Kb"
-        }, {
-            "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
-            "filesize": "340098245Kb"
-        }
+        "var/www/uploads/readflags/video/USR-232455.mp4",
+        "var/www/uploads/readflags/video/USR-232455.mp4",
     ],
     "comment": "ignore it or cover it up, out of sight out of mind"
 }
