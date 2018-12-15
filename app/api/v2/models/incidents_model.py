@@ -67,6 +67,25 @@ class IncidentsModel(DbModel):
             return incident
         return None
 
+    def get_all_incidents(self):
+        query_string = "SELECT * from incidents;"
+
+        # query db
+        self.query(query_string)
+
+        # return queried records (single record)
+        incident = self.find_one()
+        fields = self.find_fields()
+        incident_data = {}
+
+        for index in range(8):
+            incident_data.update({fields[0]: incident[0][0]})
+
+        print("INCIDENT_DATA::", incident_data)
+        if incident:
+            return incident
+        return None
+
     def get_incident_by(self, field, value):
         """ return incident based on field and data provided"""
 
