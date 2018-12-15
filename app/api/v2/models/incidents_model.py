@@ -8,7 +8,8 @@ class IncidentsModel(DbModel):
 
     def __init__(self, title=None, description=None,
                  incident_status=None, incident_type=None,
-                 location=None, comment=None, created_by=None):
+                 location=None, comment=None, image=None,
+                 video=None, created_by=None):
 
         self.title = title
         self.description = description
@@ -17,6 +18,8 @@ class IncidentsModel(DbModel):
         self.comment = comment
         self.incident_status = incident_status
         self.created_by = created_by
+        self.image = []
+        self.video = []
         self.created_on = datetime.utcnow()
 
         # instanciate the inherited DbModel class
@@ -26,12 +29,12 @@ class IncidentsModel(DbModel):
         """method to insert new incident into database"""
 
         query_string = "INSERT INTO incidents (title, description,  " +\
-            "incident_type, location, comment, incident_status, created_by" +\
-            ") VALUES (%s,%s,%s,%s,%s,%s,%s)"
+            "incident_type, location, comment, incident_status, image" +\
+            ", video ,created_by ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
         data = (self.title, self.description, self.incident_type,
                 self.location, self.comment, self.incident_status,
-                self.created_by,)
+                self.image, self.video, self.created_by,)
 
         # run query then commit record
         self.query(query_string, data)
