@@ -18,8 +18,8 @@ class IncidentsModel(DbModel):
         self.comment = comment
         self.incident_status = incident_status
         self.created_by = created_by
-        self.image = []
-        self.video = []
+        self.image = [] if image is None else image
+        self.video = [] if video is None else video
         self.created_on = datetime.utcnow()
 
         # instanciate the inherited DbModel class

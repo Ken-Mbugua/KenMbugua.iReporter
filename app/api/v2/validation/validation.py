@@ -14,6 +14,8 @@ class ViewsValidation:
                 'title',
                 'description',
                 'incident_status',
+                'image',
+                'video',
                 'comment',
                 'location'
             ]
