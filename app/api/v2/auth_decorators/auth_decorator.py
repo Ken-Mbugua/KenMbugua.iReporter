@@ -17,11 +17,11 @@ def isAdmin(j):
 
         if not access_token:
             return {"message": "Please provide a token"}, 401
-        if subject["invalid-error"]:
+        if subject.get('invalid-error', None):
             return {"message": subject["invalid-error"]}, 401
-        if subject["expired-error"]:
+        if subject.get('expired-error', None):
             return {"message": subject["expired-error"]}, 401
-        if not subject["role"]:
+        if not subject.get('role', None):
             return {"message": "You are a peasant"}, 401
 
         return j(*args, **kwargs)
@@ -29,7 +29,7 @@ def isAdmin(j):
     return decorated
 
 
-def isAthenticated(j):
+def isAuthenticated(j):
     @wraps(j)
     def decorated(*args, **kwargs):
         access_token = None
@@ -42,9 +42,9 @@ def isAthenticated(j):
 
         if not access_token:
             return {"message": "Please provide a token"}, 401
-        if subject["invalid-error"]:
+        if subject.get('invalid-error'):
             return {"message": subject["invalid-error"]}, 401
-        if subject["expired-error"]:
+        if subject.get('expired-error'):
             return {"message": subject["expired-error"]}, 401
 
         return j(*args, **kwargs)

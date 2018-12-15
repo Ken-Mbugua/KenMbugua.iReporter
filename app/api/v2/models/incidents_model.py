@@ -16,7 +16,7 @@ class IncidentsModel(DbModel):
         self.location = location
         self.comment = comment
         self.incident_status = incident_status
-        self.created_by = 23 if created_by is None else created_by
+        self.created_by = created_by
         self.created_on = datetime.utcnow()
 
         # instanciate the inherited DbModel class
