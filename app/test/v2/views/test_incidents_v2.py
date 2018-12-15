@@ -4,7 +4,7 @@ import json
 from unittest import TestCase
 from app.db.db_config import DbModel
 from test_incidents_data import incident1, incident2, comment_data,\
-    location_data, incident_no_media
+    location_data, incident_no_media_intervention, incident_no_media_redflag
 from test_data_auth import sign_in_data, sign_up_data
 
 
@@ -47,7 +47,7 @@ class TestIncidentsV2(TestCase):
 
         return response
 
-    def add_incident(self):
+    def add_incident(self, incident_type, incident_data):
         """
         method to add new incident
         """
@@ -60,7 +60,7 @@ class TestIncidentsV2(TestCase):
         token = register_response_data["data"][0]["token"]
 
         new_incident = self.app.post(
-            "/api/v2/interventions", data=json.dumps(incident_no_media),
+            "/api/v2/{}".format(incident_type), data=json.dumps(incident_data),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Bearer "+token
@@ -68,17 +68,30 @@ class TestIncidentsV2(TestCase):
         )
         return new_incident
 
-    def test_create_incident(self):
+    def test_create_redflag(self):
         """
         method to test create incident endpoint
         incident_type: intervention
         """
-        response = self.add_incident()
+        response = self.add_incident(
+            "interventions", incident_no_media_intervention)
         result = json.loads(response.data)
         print("RESULT::", result)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["data"][0]["message"],
                          "created Intervention record")
+
+    def test_create_incident(self):
+        """
+        method to test create incident endpoint
+        incident_type: intervention
+        """
+        response = self.add_incident("redflags", incident_no_media_redflag)
+        result = json.loads(response.data)
+        print("RESULT::", result)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(result["data"][0]["message"],
+                         "created RedFlag record")
 
     def tearDown(self):
         """empty table data after each test"""
