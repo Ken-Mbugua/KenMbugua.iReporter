@@ -4,11 +4,11 @@ from flask import jsonify
 class ViewsValidation:
 
     # define check input fileds method
-    def check_fields(self, incident_type, field_data):
+    def check_fields(self, resource_type=None, field_data=None):
         # fields - list of fields to be checked
         # request.body recived at endpoint
         # extract fields into list
-        if (incident_type == "red-flags" or "interventions"):
+        if (resource_type == "red-flags" or "interventions"):
             fields = [
                 'title',
                 'description',
@@ -17,8 +17,15 @@ class ViewsValidation:
                 'comment',
                 'location'
             ]
-        else:
+        elif(resource_type == "signup"):
+            fields = ['username', 'email', 'password', 'phone_number']
+        elif(resource_type == "login"):
             fields = ['email', 'password']
+        else:
+            return self.views_error(
+                400,
+                "Invalid fields !"
+            )
 
         field_list = list(field_data.keys())
         missing_fields = [

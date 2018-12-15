@@ -18,10 +18,10 @@ class AuthSignUp(Resource):
                 400, "Bad Request Format")
 
         # check for missing fields
-        fields = ['username', 'email', 'password', 'phone_number']
-        if ViewsValidation().check_fields(fields, data):
+        valid_fields = ViewsValidation().check_fields("signup", data)
+        if valid_fields:
             # found missing fields
-            return ViewsValidation().check_fields(fields, data)
+            return valid_fields
 
         # instanciate Users model and pass request data
         user = UsersModel(**data)
@@ -55,7 +55,7 @@ class AuthSignUp(Resource):
 
 class AuthSignIn(Resource):
 
-    def post(self, incident_type):  # login resource
+    def post(self):  # login resource
 
         data = request.get_json(silent=True)
 
@@ -64,9 +64,10 @@ class AuthSignIn(Resource):
             return ViewsValidation().views_error(400, "Bad Request Format")
 
         # check for missing fields
-        if ViewsValidation().check_fields(incident_type, data):
+        valid_fields = ViewsValidation().check_fields("login", data)
+        if valid_fields:
             # found missing fields
-            return ViewsValidation().check_fields(fields, data)
+            return valid_fields
 
         # instanciate Users model and pass request data
         user = UsersModel(**data)

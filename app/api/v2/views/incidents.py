@@ -16,9 +16,10 @@ class Incidents(Resource):
             return ViewsValidation().views_error(
                 400, "Bad Request Format")
 
-        if ViewsValidation().check_fields(incident_type, data):
+        valid_fields = ViewsValidation().check_fields(incident_type, data)
+        if valid_fields:
             # found missing fields
-            return ViewsValidation().check_fields(incident_type, data)
+            return valid_fields
 
         # instanciate incident model and pass incident data
         incident = IncidentsModel(**data)
@@ -26,7 +27,7 @@ class Incidents(Resource):
         response = incident.create_incident()
 
         if response:
-            incident_details = incident.get_last_incident()
+            incident_details = incident.get_incident_by("incident_id", 4)
             return {  # incident creation success return incident data
                 "status": 201,
                 "data": [{

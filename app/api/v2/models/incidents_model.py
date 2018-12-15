@@ -78,7 +78,7 @@ class IncidentsModel(DbModel):
 
         fields = self.find_fields()
 
-        print("FIELDS::", fields)
+        print("FIELDS::", fields[0][0])
         print("ICIDENT::", incident)
         if incident:
             return incident[0]
