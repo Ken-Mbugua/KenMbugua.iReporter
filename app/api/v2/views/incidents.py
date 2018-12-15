@@ -13,12 +13,12 @@ class Incidents(Resource):
         data = request.get_json(silent=True)
         # validate received fileds
         if not data:
-            return ViewValidation().views_error(
+            return ViewsValidation().views_error(
                 400, "Bad Request Format")
 
         if ViewsValidation().check_fields(incident_type, data):
             # found missing fields
-            return ViewsValidation().check_fields(fields, data)
+            return ViewsValidation().check_fields(incident_type, data)
 
         # instanciate incident model and pass incident data
         incident = IncidentsModel(**data)
