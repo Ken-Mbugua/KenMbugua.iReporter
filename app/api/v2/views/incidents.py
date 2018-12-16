@@ -214,7 +214,8 @@ class IncidentsID(Resource):
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "Pach Failed, No {} record found".format(incident_type))
+                    404, "Pach Failed, No {}"
+                    " record found".format(incident_type))
 
         except Exception as error:
 
