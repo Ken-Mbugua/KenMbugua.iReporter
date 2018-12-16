@@ -180,3 +180,44 @@ class IncidentsID(Resource):
             return ViewsValidation().views_error(
                 403, "Failed to delete {} record  ::: {}"
                 .format(incident_type, error))
+
+    @isAuthenticated
+    def patch(self, incident_type, incident_id):
+        """
+        method to update an incident by field provided
+        """
+
+        if incident_type not in ["redflags", "interventions"]:
+            return ViewsValidation().views_error(
+                405, "Invalid Endpoint {} ".format(incident_type)
+            )
+
+        if ViewsValidation().validate_id(incident_id):
+            return ViewsValidation().validate_id(incident_id)
+
+        try:
+            # instanciate incident model incident type
+            incident = IncidentsModel(
+                incident_type=incident_type
+            )
+
+            update_incident = incident.update_incident(
+                field, value)
+            if update_incident:
+                # incident query success return incident data
+                return {
+                    "status": 200,
+                    "data": [{
+                        "id": update_incident[0]["incident_id"],
+                        "message": "Updated {} record ".formart(incident_type)
+                    }]
+                }, 200
+            else:
+                return ViewsValidation().views_error(
+                    404, "Pach Failed, No {} record found".format(incident_type))
+
+        except Exception as error:
+
+            return ViewsValidation().views_error(
+                403, "Failed to patch {} record  ::: {}"
+                .format(incident_type, error))
