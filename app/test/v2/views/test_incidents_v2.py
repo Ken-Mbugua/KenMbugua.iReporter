@@ -5,7 +5,8 @@ from unittest import TestCase
 from app.db.db_config import DbModel
 from test_incidents_data import incident1, incident2, incident3, incident4,\
     incident5, comment_data, location_data, incident_no_media_intervention,\
-    incident_no_media_redflag, incident2_invalid_field
+    incident_no_media_redflag, incident2_invalid_field, comment_data_2, \
+    location_data_2
 from test_data_auth import sign_in_data, sign_up_data
 
 
@@ -137,6 +138,23 @@ class TestIncidentsV2(TestCase):
             }
         )
         return del_incident
+
+    def update_incident(self, incident_type, incident_id, field, update_data):
+        """
+        method to update incident, based on incident_id
+        """
+        # login to get token
+        token = self.get_token("signin")
+
+        patch_incident = self.app.patch(
+            "/api/v2/{}/{}/{}".format(incident_type, incident_id, field),
+            data=json.dumps(update_data),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Bearer "+token
+            }
+        )
+        return patch_incident
 
     def test_create_intervention(self):
         """
@@ -360,6 +378,68 @@ class TestIncidentsV2(TestCase):
         self.assertEqual(result["data"][0]["title"], "Traffic Corruption")
         # assert single record returned
         self.assertEqual(len(result["data"]), 1)
+        # assert returned incident_id
+        self.assertEqual(incident_id, result["data"][0]["incident_id"])
+
+    def test_update_redflag_comment(self):
+        """
+        method to test update redflag comment
+        incident_type: redflag
+        """
+        # add mock data to databse: 2 redflag records
+        res_redflag_a = self.add_incident("redflags", incident1)
+        res_redflag_b = self.add_incident("redflags", incident3, True)
+
+        result_b = json.loads(res_redflag_b.data)
+        incident_id = result_b["data"][0]["id"]
+
+        response = self.update_incident(
+            "redflags",
+            incident_id,
+            "comment",
+            comment_data,
+        )
+        result = json.loads(response.data)
+        print("RESULT::", result)
+        # assert updated redflag comment
+        self.assertEqual(result["data"][0]["comment"], comment_data["comment"])
+        # assert success message
+        self.assertEqual(result["message"], "Updated redflags comment")
+        # assert returned incident_id
+        self.assertEqual(incident_id, result["data"][0]["incident_id"])
+
+    def test_update_redflag_location(self):
+        """
+        method to test update redflag comment
+        incident_type: redflag
+        """
+        # add mock data to databse: 2 redflag records
+        res_redflag_a = self.add_incident("redflags", incident1)
+        res_redflag_b = self.add_incident("redflags", incident3, True)
+
+        result_b = json.loads(res_redflag_b.data)
+        incident_id = result_b["data"][0]["id"]
+
+        response = self.update_incident(
+            "redflags",
+            incident_id,
+            "location",
+            location_data,
+        )
+        result = json.loads(response.data)
+        print("LOC_RESULT::", result)
+        # assert updated redflag lcation
+        self.assertEqual(
+            result["data"][0]["location"],
+            location_data["location"]
+        )
+        # assert redflag comment remain unchanged
+        self.assertEqual(
+            result["data"][0]["comment"],
+            "This is some next level nepotism"
+        )
+        # assert success message
+        self.assertEqual(result["message"], "Updated redflags location")
         # assert returned incident_id
         self.assertEqual(incident_id, result["data"][0]["incident_id"])
 

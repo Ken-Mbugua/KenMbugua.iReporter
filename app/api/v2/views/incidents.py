@@ -194,6 +194,14 @@ class IncidentsPatch(Resource):
             return ViewsValidation().views_error(
                 405, "Invalid Endpoint {} ".format(incident_type)
             )
+        if field not in ["comment", "location", "status"]:
+            return ViewsValidation().views_error(
+                405, "Invalid Endpoint {} ".format(field)
+            )
+
+        # check for admin
+        if "admin":
+            return
 
         if ViewsValidation().validate_id(incident_id):
             return ViewsValidation().validate_id(incident_id)
@@ -226,15 +234,15 @@ class IncidentsPatch(Resource):
             if update_incident:
                 # incident update success return incident data
                 return {
-                    "status": 200,
-                    "data": [{
-                        "id": update_incident[0]["incident_id"],
-                        "message": "Updated {} record ".format(incident_type)
-                    }]
+                    "status": "success",
+                    "message": "Updated {} {}".format(incident_type, field),
+                    "data": [
+                        update_incident[0],
+                    ]
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "Pach Failed, No {}"
+                    404, "Patch Failed, No {}"
                     " record found".format(incident_type))
 
         except Exception as error:

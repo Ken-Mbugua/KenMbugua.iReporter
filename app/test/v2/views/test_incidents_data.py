@@ -132,5 +132,13 @@ comment_data = {
     "comment": "Scintilating"
 }
 location_data = {
-    "location": "-3455666, 42254555"
+    "location": "-34.55666, 42.254555"
+}
+
+comment_data_2 = {
+    "comment": "Scintilating Stuff"
+}
+
+location_data_2 = {
+    "location": "-34.55666, 34.254555"
 }

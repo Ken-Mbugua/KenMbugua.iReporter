@@ -144,6 +144,8 @@ class IncidentsModel(DbModel):
             self.query(query_string)
             self.save()
 
-            return incident
+            updated_incident = self.get_incident_by("incident_id", incident_id)
+
+            return updated_incident
         else:
             return None
