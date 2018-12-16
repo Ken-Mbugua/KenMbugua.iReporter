@@ -82,7 +82,7 @@ class TestIncidentsV2(TestCase):
 
     def get_all_incidents(self, incident_type):
         """
-        method to add new incident
+        method to add new incident, based on incident type
         """
 
         # login to get token
