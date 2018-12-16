@@ -111,15 +111,3 @@ class UsersModel(DbModel):
             return {"expired-error": "Signature expired. Please log in again."}
         except jwt.InvalidTokenError:
             return {"invalid-error": "Invalid token. Please log in again."}
-
-    def isAdmin(self, user_email):
-        """
-        method to check whether user is an admin or not
-        based on email received
-        """
-        user = self.get_user_by_email(user_email)
-
-        if user[] == True:
-            return True
-        else:
-            return False

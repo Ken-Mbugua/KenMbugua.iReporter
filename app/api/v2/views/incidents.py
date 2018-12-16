@@ -165,11 +165,11 @@ class IncidentsID(Resource):
             if del_incidents:
                 # incident deletion success return incident id and message
                 return {
-                    "status": 200,
-                    "data": [{
-                        "id": del_incidents[0]["incident_id"],
-                        "message": "Deleted {} record".format(incident_type)
-                    }]
+                    "status": "success",
+                    "message": "Deleted {} record".format(incident_type),
+                    "data": [
+                        del_incidents[0]
+                    ]
                 }, 200
             else:
                 return ViewsValidation().views_error(
@@ -231,7 +231,11 @@ class IncidentsPatch(Resource):
             update_incident = incident.update_incident(
                 field, data[field], incident_id)
 
-            if update_incident:
+            if not update_incident:
+                return ViewsValidation().views_error(
+                    404, "Patch Failed, No {}"
+                    " record found".format(incident_type))
+            if update_incident[7] == "Draft":
                 # incident update success return incident data
                 return {
                     "status": "success",
@@ -242,8 +246,8 @@ class IncidentsPatch(Resource):
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "Patch Failed, No {}"
-                    " record found".format(incident_type))
+                    404, "Patch Failed,"
+                    " Record is no Longer Drafted".format(incident_type))
 
         except Exception as error:
 
