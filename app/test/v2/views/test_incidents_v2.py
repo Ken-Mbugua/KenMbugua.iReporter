@@ -139,12 +139,12 @@ class TestIncidentsV2(TestCase):
         response = self.get_all_incidents(
             "interventions")
         result = json.loads(response.data)
-        print("RESULT::", result)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["data"][0]["comment"],
-                         "This is all fake news i tell ya")
-        self.assertEqual(result["data"][0]["title"], "Traffice Corruption")
-        self.assertEqual(result["data"][1]["title"], "Manhole Hazard")
+                         "ignore it or cover it up, out of sight out of mind")
+        self.assertEqual(result["data"][0]["title"], "Manhole Hazard")
+        self.assertEqual(result["data"][1]["title"],
+                         "Building Collpase Hazard")
         self.assertEqual(result["data"][0]["incident_type"], "interventions")
         # should return 2 records
         self.assertEqual(len(result["data"]), 2)
@@ -164,12 +164,11 @@ class TestIncidentsV2(TestCase):
         response = self.get_all_incidents(
             "redflags")
         result = json.loads(response.data)
-        print("RESULT::", result)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["data"][0]["comment"],
                          "This is all fake news i tell ya")
         self.assertEqual(result["data"][2]["comment"],
-                         "This is some next level nepotism")
+                         "This is some next level tribalism")
         self.assertEqual(result["data"][0]["title"], "Traffice Corruption")
         self.assertEqual(result["data"][0]["incident_type"], "redflags")
         # should return two records

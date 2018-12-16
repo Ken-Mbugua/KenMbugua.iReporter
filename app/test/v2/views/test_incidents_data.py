@@ -6,12 +6,12 @@ incident1 = {
     "location": "-34444400, 3444499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
-        "var/www/uploads/incidents/img/USR-232455.jpeg",
+        "var/www/uploads/incidents/img/USR-232455.jpeg"
 
     ],
     "video": [
         "var/www/uploads/readflags/video/USR-232455.mp4",
-        "var/www/uploads/readflags/video/USR-232455.mp4",
+        "var/www/uploads/readflags/video/USR-232455.mp4"
     ],
     "comment": "This is all fake news i tell ya"
 
@@ -44,24 +44,25 @@ incident3 = {
     "location": "-34444400, 4344499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
-        "var/www/uploads/incidents/img/USR-232455.jpeg",
+        "var/www/uploads/incidents/img/USR-232455.jpeg"
 
     ],
     "video": [
         "var/www/uploads/readflags/video/USR-232455.mp4",
-        "var/www/uploads/readflags/video/USR-232455.mp4",
+        "var/www/uploads/readflags/video/USR-232455.mp4"
     ],
     "comment": "This is some next level nepotism"
 }
 
 incident4 = {
     "title": "Building Collpase Hazard",
-    "description": "A Residential Six floor flat pipeline area is "
+    "description": "A Residential Six floor flat pipeline area is " +
     " stil under construction and occupied upto the fourth floor",
     "location": "-34444400, 4344499900",
+    "incident_status": "Draft",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
-        "var/www/uploads/incidents/img/USR-232455.jpeg",
+        "var/www/uploads/incidents/img/USR-232455.jpeg"
 
     ],
     "video": [
@@ -81,12 +82,12 @@ incident5 = {
     "location": "-34444400, 4344499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
-        "var/www/uploads/incidents/img/USR-232455.jpeg",
+        "var/www/uploads/incidents/img/USR-232455.jpeg"
 
     ],
     "video": [
         "var/www/uploads/readflags/video/USR-232455.mp4",
-        "var/www/uploads/readflags/video/USR-232455.mp4",
+        "var/www/uploads/readflags/video/USR-232455.mp4"
     ],
     "comment": "This is some next level tribalism"
 }
