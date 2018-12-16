@@ -8,7 +8,6 @@ class ViewsValidation:
         # fields - list of fields to be checked
         # request.body recived at endpoint
         # extract fields into list
-        print("resource_type:::", resource_type)
         if (resource_type == "red-flags" or "interventions"):
             fields = [
                 'title',

@@ -13,6 +13,10 @@ class Incidents(Resource):
         """
         method to receive incident data and pass to db model save()
         """
+        if incident_type not in ["redflags", "interventions"]:
+            return ViewsValidation().views_error(
+                405, "Invalid Endpoint {} ".format(incident_type))
+
         data = request.get_json(silent=True)
         # validate received fileds
         if not data:
@@ -42,7 +46,7 @@ class Incidents(Resource):
                 incident.create_incident()
             else:
                 ViewsValidation().views_error(
-                    400, "Provide a valid token", "error")
+                    401, "Provide a valid token", "error")
 
             incident_details = incident.get_last_incident()
             return {  # incident creation success return incident data
@@ -58,4 +62,37 @@ class Incidents(Resource):
 
             return ViewsValidation().views_error(
                 403, "Failed To create {}:::\n {}"
-                .format(incident.incident_type, error))
+                .format(incident_type, error))
+
+    @isAuthenticated
+    def get(self, incident_type):
+        """
+             method to query all incident data from database
+        """
+        if incident_type not in ["redflags", "interventions"]:
+            return ViewsValidation().views_error(
+                405, "Invalid Endpoint {}".format(incident_type))
+        try:
+            # instanciate incident model incident type
+            incident = IncidentsModel(
+                incident_type=incident_type
+            )
+
+            all_incidents = incident.get_incident_by(
+                "incident_type", incident_type)
+            if all_incidents:
+                return {  # incident creation success return incident data
+                    "status": 200,
+                    "data":
+                        # return all incidents
+                        all_incidents
+                }, 200
+            else:
+                return ViewsValidation().views_error(
+                    404, "No {} found".format(incident_type))
+
+        except Exception as error:
+
+            return ViewsValidation().views_error(
+                403, "Failed to query all {}:::\n {}"
+                .format(incident_type, error))
