@@ -114,17 +114,9 @@ class IncidentsID(Resource):
             return ViewsValidation().views_error(
                 405, "Invalid Endpoint {} ".format(incident_type)
             )
-        if type(incident_id) not in [int]:
-            return ViewsValidation().views_error(
-                405, "Invalid ID, must be an Integer "
-            )
 
-        # receive data from request body
-        data = request.get_json(silent=True)
-        # validate received fileds
-        if not data:
-            return ViewsValidation().views_error(
-                400, "Bad Request Format")
+        if ViewsValidation().validate_id(incident_id):
+            return ViewsValidation().validate_id(incident_id)
 
         try:
             # instanciate incident model incident type
@@ -133,14 +125,15 @@ class IncidentsID(Resource):
             )
 
             del_incidents = incident.delete_incident(
-                "incident_type", incident_type)
+                "incident_id", incident_id)
             if del_incidents:
-                return {  # incident creation success return incident data
+                # incident deletion success return incident id and message
+                return {
                     "status": 200,
-                    "data": [
-                        "id": del_incidents[0],
+                    "data": [{
+                        "id": del_incidents[0]["incident_id"],
                         "message": "Deleted {} record".format(incident_type)
-                    ]
+                    }]
                 }, 200
             else:
                 return ViewsValidation().views_error(
@@ -149,5 +142,5 @@ class IncidentsID(Resource):
         except Exception as error:
 
             return ViewsValidation().views_error(
-                403, "Failed to delete {}:::\n {}"
+                403, "Failed to delete {} record  ::: {}"
                 .format(incident_type, error))

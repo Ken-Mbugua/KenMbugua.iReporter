@@ -95,7 +95,7 @@ class IncidentsModel(DbModel):
         return None
 
     def get_incident_by(self, field, value):
-        """ return incident based on field and data provided"""
+        """method return incident based on field and data provided"""
 
         query_string = "SELECT * from incidents WHERE {} = '{}';".format(
             field, value)
@@ -122,3 +122,20 @@ class IncidentsModel(DbModel):
         if incident:
             return incidents_list
         return None
+
+    def delete_incident(self, field, value):
+        """method to delete incident based on provided incident_field"""
+
+        incident = self.get_incident_by(field, value)
+
+        query_string = "DELETE from incidents WHERE {} = '{}';".format(
+            field, value
+        )
+
+        self.query(query_string)
+        self.save()
+
+        if incident:
+            return incident
+        else:
+            return None
