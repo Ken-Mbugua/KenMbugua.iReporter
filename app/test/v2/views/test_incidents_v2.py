@@ -115,14 +115,14 @@ class TestIncidentsV2(TestCase):
         # login to get token
         token = self.get_token("signin")
 
-        new_incident = self.app.delete(
+        del_incident = self.app.delete(
             "/api/v2/{}/{}".format(incident_type, incident_id),
             headers={
                 "Content-Type": "application/json",
                 "Authorization": "Bearer "+token
             }
         )
-        return new_incident
+        return del_incident
 
     def test_create_intervention(self):
         """
@@ -275,6 +275,16 @@ class TestIncidentsV2(TestCase):
         # query redflags only one should be left
         result_get_all = self.get_all_incidents("redflags")
         self.assertEqual(len(result_get_all["data"]), 1)
+
+        response_b = self.delete_incident(
+            "redflags", "5"
+        )
+        result_b = json.loads(response_b.data)
+        # invalid endpoint ID
+        self.assertEqual(
+            result_b["error"],
+            "Invalid ID, must be an Integer"
+        )
 
     def test_delete_intervention(self):
         """
