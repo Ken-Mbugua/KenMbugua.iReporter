@@ -159,9 +159,15 @@ class IncidentsID(Resource):
             incident = IncidentsModel(
                 incident_type=incident_type
             )
+            can_delete = incident.can_update_or_delete(incident_id)
+            if not can_delete:
+                return ViewsValidation().views_error(
+                    403, "Deletion Failed, Record is no Longer Drafted"
+                )
 
             del_incidents = incident.delete_incident(
                 "incident_id", incident_id)
+
             if del_incidents:
                 # incident deletion success return incident id and message
                 return {
@@ -199,10 +205,6 @@ class IncidentsPatch(Resource):
                 405, "Invalid Endpoint {} ".format(field)
             )
 
-        # check for admin
-        if "admin":
-            return
-
         if ViewsValidation().validate_id(incident_id):
             return ViewsValidation().validate_id(incident_id)
 
@@ -227,15 +229,16 @@ class IncidentsPatch(Resource):
             )
 
             # update_incident(self, field, field_data, incident_id)
+            can_update = incident.can_update_or_delete(incident_id)
+            if not can_update:
+                return ViewsValidation().views_error(
+                    403, "Patch Failed,"
+                    " Record is no Longer Drafted".format(incident_type))
 
             update_incident = incident.update_incident(
                 field, data[field], incident_id)
 
-            if not update_incident:
-                return ViewsValidation().views_error(
-                    404, "Patch Failed, No {}"
-                    " record found".format(incident_type))
-            if update_incident[7] == "Draft":
+            if update_incident:
                 # incident update success return incident data
                 return {
                     "status": "success",
@@ -246,8 +249,8 @@ class IncidentsPatch(Resource):
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "Patch Failed,"
-                    " Record is no Longer Drafted".format(incident_type))
+                    404, "Patch Failed, {}"
+                    " Record Found".format(incident_type))
 
         except Exception as error:
 

@@ -150,3 +150,16 @@ class IncidentsModel(DbModel):
             return updated_incident
         else:
             return None
+
+    def can_update_or_delete(self, incident_id):
+        """
+        method to check incident status
+        return true if incident_status == draft
+        """
+        incident = self.get_incident_by("incident_id", incident_id)
+        print("@INCIDENT@: ", incident)
+        if incident[0]["incident_status"] != "Draft":
+            return False
+
+        else:
+            return True
