@@ -265,7 +265,7 @@ class TestIncidentsV2(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             result["data"][0]["message"],
-            "Successfully Deleted redflags"
+            "Deleted redflags record"
         )
         self.assertEqual(
             result["data"][0]["id"],
@@ -274,10 +274,12 @@ class TestIncidentsV2(TestCase):
 
         # query redflags only one should be left
         result_get_all = self.get_all_incidents("redflags")
-        self.assertEqual(len(result_get_all["data"]), 1)
+        response_get_all = json.loads(result_get_all.data)
+
+        self.assertEqual(len(response_get_all["data"]), 1)
 
         response_b = self.delete_incident(
-            "redflags", "5"
+            "redflags", "klk"
         )
         result_b = json.loads(response_b.data)
         # invalid endpoint ID
@@ -310,7 +312,7 @@ class TestIncidentsV2(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             result["data"][0]["message"],
-            "Successfully Deleted interventions"
+            "Deleted interventions record"
         )
         self.assertEqual(
             result["data"][0]["id"],
@@ -319,7 +321,10 @@ class TestIncidentsV2(TestCase):
 
         # query interventions only one should be left
         result_get_all = self.get_all_incidents("interventions")
-        self.assertEqual(len(result_get_all["data"]), 1)
+        response_get_all = json.loads(result_get_all.data)
+
+        print("RESUT_GET_ALL::", response_get_all)
+        self.assertEqual(len(response_get_all["data"]), 1)
 
     def tearDown(self):
         """empty table data after each test"""
