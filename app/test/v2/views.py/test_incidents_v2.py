@@ -4,11 +4,10 @@ import json
 
 from app import create_app
 
-app = create_app("testing")
 
-
-class TestIncidents(TestCase):
+class TestIncidentsV2(TestCase):
     def setUp(self):
+        app = create_app("testing")
         self.app = app.test_client()
         # app.testing = True
         self.app_context = app.app_context()

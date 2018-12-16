@@ -4,15 +4,18 @@ from flask import current_app
 
 
 class DbModel():
-    def __init__(self):
+    def __init__(self, app=None):
         """ 
         import variables from current context
         set by Config class
         """
-        self.db_name = current_app.config['DB_NAME']
-        self.db_user = current_app.config['DB_USERNAME']
-        self.db_password = current_app.config['DB_PASSWORD']
-        self.db_host = current_app.config['DB_HOST']
+
+        self.app = app
+        current_context = self.context_switcher()
+        self.db_name = current_context.config['DB_NAME']
+        self.db_user = current_context.config['DB_USERNAME']
+        self.db_password = current_context.config['DB_PASSWORD']
+        self.db_host = current_context.config['DB_HOST']
         # password = self.db_password, host = self.db_host
 
         self.conn = psycopg2.connect(
@@ -22,9 +25,23 @@ class DbModel():
         )
         self.cur = self.conn.cursor()
 
+    def context_switcher(self):
+        if current_app:
+            return current_app
+        else:
+            return self.app
+
     def query(self, query):
         """ pass query statements for execution """
         self.cur.execute(query)
+
+    def find_all(self):
+        """method to return all table data"""
+        return self.cur.fetchall()
+
+    def find_one(self):
+        """method to return all table data"""
+        return self.cur.fetchone()
 
     def save(self):
         """ pass method to commit record """
@@ -61,18 +78,18 @@ class DbModel():
         self.close()
 
     def tables(self):
-        """('now'::text)"""
         users = """ CREATE TABLE IF NOT EXISTS users (
                 user_id serial PRIMARY KEY NOT NULL,
                 auth_token character varying(256) NOT NULL,
-                first_name character varying(50) NOT NULL,
-                last_name character varying(50),
                 username character varying(50) NOT NULL,
-                email character varying(50) ,
+                email character varying(50) NOT NULL, 
+                password_hash character varying(500) NOT NULL,
+                first_name character varying(50),
+                last_name character varying(50),
+                phone_number character varying(50) ,
                 is_admin BOOLEAN,
                 date_created timestamp with time zone
-                 DEFAULT (now() at time zone 'utc'),
-                password_hash character varying(500) NOT NULL
+                 DEFAULT (now() at time zone 'utc')
             ) """
         incidents = """ CREATE TABLE IF NOT EXISTS incidents (
                 incident_id serial PRIMARY KEY NOT NULL,
