@@ -2,7 +2,7 @@ import json
 from flask import request, json
 from flask_restful import Resource
 from app.api.v2.models.users_model import UsersModel
-from app.api.v2.views.validation import ViewsValidation
+from app.api.v2.validation.validation import ViewsValidation
 from app.api.v2.auth_decorators.auth_decorator import isAdmin
 
 
@@ -18,10 +18,10 @@ class AuthSignUp(Resource):
                 400, "Bad Request Format")
 
         # check for missing fields
-        fields = ['username', 'email', 'password', 'phone_number']
-        if ViewsValidation().check_fields(fields, data):
+        valid_fields = ViewsValidation().check_fields("signup", data)
+        if valid_fields:
             # found missing fields
-            return ViewsValidation().check_fields(fields, data)
+            return valid_fields
 
         # instanciate Users model and pass request data
         user = UsersModel(**data)
@@ -63,11 +63,11 @@ class AuthSignIn(Resource):
             # bad request format error
             return ViewsValidation().views_error(400, "Bad Request Format")
 
-        fields = ['email', 'password']
         # check for missing fields
-        if ViewsValidation().check_fields(fields, data):
+        valid_fields = ViewsValidation().check_fields("login", data)
+        if valid_fields:
             # found missing fields
-            return ViewsValidation().check_fields(fields, data)
+            return valid_fields
 
         # instanciate Users model and pass request data
         user = UsersModel(**data)

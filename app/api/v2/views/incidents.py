@@ -1,149 +1,61 @@
-# from flask_restful import Resource
-# import datetime
-# from flask import request
-
-# from app.api.v2.models.incidents_model import IncidentsModel
-
-
-# class Incidents(Resource):
-#     def __init__(self):
-#         self.incident = IncidentsModel()
-
-#     def post(self):
-#         """
-#         method to receive incident data and pass to db model save()
-#         """
-#         data = request.get_json()
-#         # validate received fileds
-#         fields_validate = ViewsValidation()
-#         fields = [
-#             'title',
-#             'description',
-#             'incident_status',
-#             'comment',
-#             'video',
-#             'image',
-#             'location'
-#         ]
-#         missing_fields = fields_validate.missing_fields(fields, data)
-
-#         if not missing_fields:  # filter missing fields
-#             incident_entry = {
-#                 "title": data["title"],
-#                 "description": data["description"],
-#                 "incident_status": data["incident_status"],
-#                 "location": data["location"],
-#                 "type": data["type"],
-#                 "image": data["image"],
-#                 "video": data["video"],
-#                 "comment": data["comment"],
-#                 "createdBy": len(['title'])
-#             }
-
-#             res = self.incident.save(incident_entry)
-#             if res:
-#                 if res["status"] == 400:
-#                     return res, 400
-#                 else:
-#                     return {
-#                         "status": 201,
-#                         "data": [{
-#                             "id": res["id"],
-#                             "message": "incident record has been created"
-#                         }]
-#                     }, 201
-
-#             else:
-#                 return {
-#                     "status": 400,
-#                     "error": "Bad Request"
-#                 }, 400
-#         else:
-#             return {
-#                 "status": 403,
-#                 "error": "Bad request: missing"
-#                 " fileds {}".format(missing_fields)
-#             }, 403
-
-#     def get(self):
-#         """
-#         method to query all incidences from db
-#         """
-#         res = self.incident.get_incidents()
-#         if res:
-#             return {
-#                 "status": 200,
-#                 "data": res
-#             }, 200
-#         else:
-#             return {
-#                 "status": 404,
-#                 "error": "No incidents found"
-#             }, 404
+from flask_restful import Resource
+from flask import request
+from app.api.v2.validation.validation import ViewsValidation
+from app.api.v2.models.incidents_model import IncidentsModel
+from app.api.v2.models.users_model import UsersModel
+from app.api.v2.auth_decorators.auth_decorator import isAdmin, isAuthenticated
 
 
-# class IncidentsId(Resource, IncidentsModel):
-#     def __init__(self):
-#         self.db = IncidentsModel()
+class Incidents(Resource):
 
-#     def get(self, incident_id):
-#         """
-#         method to handle GET single incident request
-#         """
-#         res = self.db.get_incident_by_id(incident_id)
+    @isAuthenticated
+    def post(self, incident_type):
+        """
+        method to receive incident data and pass to db model save()
+        """
+        data = request.get_json(silent=True)
+        # validate received fileds
+        if not data:
+            return ViewsValidation().views_error(
+                400, "Bad Request Format")
 
-#         if res:
-#             return {
-#                 "status": 200,
-#                 "data": [res]
-#             }, 200
-#         else:
-#             return {
-#                 "status": 404,
-#                 "error": "incident with id {} "
-#                 "was not found ".format(incident_id)
-#             }, 404
+        valid_fields = ViewsValidation().check_fields(incident_type, data)
+        if valid_fields:
+            # found missing fields
+            return valid_fields
 
-#     def delete(self, incident_id):
-#         """
-#         method to handle DELETE single incident request
-#         """
-#         res = self.db.delete_incident(incident_id)
+        try:
+            # decode token to obtain email then user_id
+            auth_header = request.headers.get('Authorization')
+            if auth_header:
+                auth_token = auth_header.split(" ")[1]
+                user_email = UsersModel().decode_auth_token(
+                    auth_token)["email"]
 
-#         if res:
-#             return {
-#                 "status": 200,
-#                 "data": [{
-#                     "id": res["id"],
-#                     "message": "incident record has been deleted"
-#                 }]
-#             }, 200
-#         else:
-#             return {
-#                 "status": 404,
-#                 "error": "Not found for id {}".format(incident_id)
-#             }, 404
+                user_id = UsersModel().get_user_by_email(user_email)[0]
 
-#     def patch(self, incident_id):
-#         """
-#         method to handle PATCH sigle incident request
-#         any field provided can be updated here
-#         """
+                # instanciate incident model and pass incident data
+                incident = IncidentsModel(**data, created_by=user_id,
+                                          incident_type=incident_type)
 
-#         data = request.get_json()
+                # insert incident in db
+                incident.create_incident()
+            else:
+                ViewsValidation().views_error(
+                    400, "Provide a valid token", "error")
 
-#         res = self.db.edit_incident(incident_id, data)
+            incident_details = incident.get_last_incident()
+            return {  # incident creation success return incident data
+                "status": 201,
+                "data": [{
+                      # return incident_id at index 0
+                      "id": incident_details[0],
+                      "message": "created {} record"
+                    .format(incident.incident_type)
+                }]
+            }, 201
+        except Exception as error:
 
-#         if res:
-#             return {
-#                 "status": 200,
-#                 "data": [{
-#                     "id": res["id"],
-#                     "message": "incident record has been updated"
-#                 }]
-#             }, 200
-#         else:
-#             return {
-#                 "status": 404,
-#                 "error": "Not found for id {}".format(incident_id)
-#             }, 404
+            return ViewsValidation().views_error(
+                403, "Failed To create {}:::\n {}"
+                .format(incident.incident_type, error))

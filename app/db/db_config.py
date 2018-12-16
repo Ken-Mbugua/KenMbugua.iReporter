@@ -22,7 +22,11 @@ class DbModel():
             password=self.db_password,
             host=self.db_host
         )
-        self.cur = self.conn.cursor()
+        try:
+            self.cur = self.conn.cursor()
+            print("CONNECTION_SUCCESS!!")
+        except:
+            print("CONNECTION_ERROR!!")
 
         self.table_names = ["users", "incidents"]
 
@@ -45,6 +49,12 @@ class DbModel():
         """method to return all table data"""
         return self.cur.fetchone()
 
+    def find_fields(self):
+        """ return fields of the queried table"""
+
+        fields = [field[0] for field in self.cur.description]
+        return fields
+
     def save(self):
         """ pass method to commit record """
         self.conn.commit()
@@ -58,6 +68,7 @@ class DbModel():
         """
         Loop through tbl_names to create them all
         """
+
         queries = self.tables()
         for query in queries:
             self.query(query)  # execute queries
@@ -115,12 +126,37 @@ class DbModel():
                 created_on timestamp with time zone
                  DEFAULT (now() at time zone 'utc'),
                 created_by int NOT NULL,
-                type character varying(20) NOT NULL,
+                title character varying (200) NOT NULL,
+                incident_type character varying(20) NOT NULL,
                 description character varying(200) NOT NULL,
                 incident_status character varying(50) NOT NULL,
+                image character varying(500)[],
+                video character varying(500)[],
                 location character varying(200),
                 comment character varying(512)
             ) """
 
         queries = [self.table_names[0], self.table_names[1]]
         return queries
+
+    def seed_admin_user(self):
+        """method to seed admin"""
+
+        create_admin = """ INSERT INTO users (
+            username,
+            email,
+            password_hash,
+            is_admin
+        )
+        SELECT
+            'k_mbugua',
+            'kmbugua@mail.com',
+            '$2b$12$ydWOi22vO4KKnbsp8s5Z.O1tqErTN2pj1wuaEawYEIWLQVEKBi9xq',
+            TRUE
+        WHERE
+            NOT EXISTS (
+                 SELECT email FROM users WHERE email = 'kmbugua@mail.com'
+            ) """
+
+        self.query(create_admin)
+        self.save()
