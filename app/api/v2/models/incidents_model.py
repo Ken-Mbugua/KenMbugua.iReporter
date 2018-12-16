@@ -138,7 +138,7 @@ class IncidentsModel(DbModel):
         if incident:
             query_string = "UPDATE incidents SET " +\
                 "{}='{}' WHERE incident_id='{}';".format(
-                    field, field_data[field], incident_id,
+                    field, field_data, incident_id,
                 )
 
             self.query(query_string)

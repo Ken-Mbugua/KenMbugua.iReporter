@@ -221,14 +221,15 @@ class IncidentsPatch(Resource):
             # update_incident(self, field, field_data, incident_id)
 
             update_incident = incident.update_incident(
-                field, data, incident_id)
+                field, data[field], incident_id)
+
             if update_incident:
                 # incident update success return incident data
                 return {
                     "status": 200,
                     "data": [{
                         "id": update_incident[0]["incident_id"],
-                        "message": "Updated {} record ".formart(incident_type)
+                        "message": "Updated {} record ".format(incident_type)
                     }]
                 }, 200
             else:
