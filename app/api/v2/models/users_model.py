@@ -1,74 +1,81 @@
 import datetime
-from flask_bcrypt import generate_password_hash
+from flask_bcrypt import generate_password_hash, check_password_hash
 from app.api.v1.models.models_validation.validation import ModelValidation
 
 from app.db.db_config import DbModel
 
 
-class UsersModel():
+class UsersModel(DbModel):
 
-    def __init__(self):
-        self.created_at = datetime.datetime.now()
-        self._users_db = DbModel()
-        self.model_val = ModelValidation()
+    def __init__(self, username=None, firstname=None, email=None,
+                 phone_number=None, password=None,
+                 isAdmin=False, date_created=None):
 
-    def create_user(self, user_details):
+        self.firstname = firstname
+        self.username = username
+        self.email = email
+        self.password_hash = generate_password_hash(
+            password).decode("utf-8")
+        self.isAdmin = isAdmin
+        self.phone_number = phone_number
+        self.date_created = datetime.datetime.now()
 
-        user_details = {
-            "email": user_details["email"],
-            "phone_number": user_details["phone_number"],
-            "password_hash": generate_password_hash(user_details["password"])
-            .decode("utf-8"),
-            "username": user_details["username"],
-            "isAdmin": False,
-            "createdBy": 34,
-            "Registered": str(self.created_at),
-            "demo_token": "iwtgrsh7772099gavgfhlwe??@@##gafugiuwef&$$"
-        }
+        # instanciate the inherited DbModel class
+        super().__init__()
 
-        print("User_details::", user_details)
+    def create_user(self):
 
-        email = self.get_user_by_email(user_details["email"])
+        query_string = "INSERT INTO users(email, username,  " +\
+            "phone_number, password_hash) VALUES (%s,%s,%s,%s)"
 
-        if email:  # duplicate user found return
-            return None
-        else:
-            query = "INSERT INTO users(email, username, phone_number, " +\
-                " password_hash, auth_token) VALUES (" +\
-                " '"+(user_details["email"]+"', " +
-                      " '"+user_details["username"]+"', " +
-                      " '"+user_details["phone_number"]+"', " +
-                      " '"+user_details["password_hash"]+"', " +
-                      " '"+user_details["demo_token"])+"') "
+        data = (self.email, self.username,
+                self.phone_number, self.password_hash,)
 
-            # run query then commit record
-            self._users_db.query(query)
-            self._users_db.save()
-            return {"status": 201, "message": "User created successesfully"}
+        # run query then commit record
+        self.query(query_string, data)
+        self.save()
 
-    def delete_user(self, user_id):
-        query = "DELETE FROM users WHERE id='"+user_id+"'"
-        # query db
-        self._users_db.query(query).save()
-        # return queried records (single record)
-        user = self._users_db.find_one()
-        if not user:
-            return {"status": 204, "msg": "deleted user successfully"}
-        return None  # user not found
+        return "create user success"
+
 
     def get_user_by_email(self, user_email):
 
-        query = "SELECT * from users WHERE email='"+user_email+"'"
+        query = "SELECT * from users WHERE email= %s"
         # query db
-        self._users_db.query(query)
+        self.query(query, (user_email,))
         # return queried records (single record)
-        user = self._users_db.find_one()
+        user = self.find_one()
 
         if user:
             return user
         return None  # user not found
 
-    def get_all_users(self):
-        if not self._users_db:
+    def get_user_details(self, user_email):
+
+        user = self.get_user_by_email(user_email)
+        # print("USER::::", user)
+        if user:
+            return dict(
+                user=dict(
+                    username=user[1],
+                    email=user[2],
+                    phone_number=user[6],
+                    date_created="{}".format(user[8])
+                )
+            )
+        return None  # user not found
+
+    def password_is_valid(self, password):
+        user = self.get_user_by_email(self.email)
+        password_hash = user[3]
+
+        if check_password_hash(password_hash, password):
+            return True
+        else:
             return None
-        return self._users_db  # user not found
+
+    def gen_auth_token(self, user_email):
+        pass
+
+    def decode_auth_token(self):
+        pass

@@ -7,7 +7,7 @@ from flask import current_app
 # import development config var from env
 CONFIG_NAME = os.getenv('PROJECT_SETTINGS')
 
-"""  
+"""
 initialising flask app by calling create_app
 and passing development config
 """
