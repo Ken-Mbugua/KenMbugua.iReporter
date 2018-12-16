@@ -10,6 +10,7 @@ class Config(object):
     DB_USERNAME = os.getenv("DB_USERNAME")
     DB_HOST = os.getenv("DB_HOST")
     DB_NAME = os.getenv("DB_NAME")
+    SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 class DevelopmentConfig(Config):
@@ -23,6 +24,7 @@ class TestingConfig(Config):
     TESTING = True
     DEBUG = True
     DB_NAME = os.getenv("TEST_DB_NAME")
+    SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 class StagingConfig(Config):

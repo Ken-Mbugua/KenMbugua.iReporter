@@ -1,8 +1,9 @@
-import datetime
+from app.db.db_config import DbModel
+from datetime import datetime, timedelta
+import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 from app.api.v1.models.models_validation.validation import ModelValidation
-
-from app.db.db_config import DbModel
+from flask import current_app
 
 
 class UsersModel(DbModel):
@@ -18,7 +19,7 @@ class UsersModel(DbModel):
             password).decode("utf-8")
         self.isAdmin = isAdmin
         self.phone_number = phone_number
-        self.date_created = datetime.datetime.now()
+        self.date_created = datetime.utcnow()
 
         # instanciate the inherited DbModel class
         super().__init__()
@@ -26,16 +27,16 @@ class UsersModel(DbModel):
     def create_user(self):
 
         query_string = "INSERT INTO users(email, username,  " +\
-            "phone_number, password_hash) VALUES (%s,%s,%s,%s)"
+            "phone_number, password_hash, is_admin) VALUES (%s,%s,%s,%s,%s)"
 
         data = (self.email, self.username,
-                self.phone_number, self.password_hash,)
+                self.phone_number, self.password_hash, self.isAdmin,)
 
         # run query then commit record
         self.query(query_string, data)
         self.save()
 
-        return "create user success"
+        return {"message": "record saved successsfully"}
 
 
     def get_user_by_email(self, user_email):
@@ -75,7 +76,38 @@ class UsersModel(DbModel):
             return None
 
     def gen_auth_token(self, user_email):
-        pass
+        try:
+            payload = {
+                'exp': datetime.utcnow() + timedelta(days=0, minutes=25),
+                'isa': "{}".format(datetime.utcnow()),
+                'sub': user_email,
+                'role': self.isAdmin
+            }
+            return jwt.encode(
+                payload,
+                current_app.config['SECRET_KEY'],
+                algorithm='HS256'
+            )
+        except Exception as error:
+            return error
 
-    def decode_auth_token(self):
-        pass
+    @staticmethod
+    def decode_auth_token(auth_token):
+        """decode auth_token to obtain payload data"""
+
+        try:
+            payload = jwt.decode(
+                auth_token,
+                current_app.config['SECRET_KEY'],
+                algorithms='HS256'
+            )
+
+            return {
+                "email": payload['sub'],
+                "role": payload['role']
+            }
+
+        except jwt.ExpiredSignatureError:
+            return 'Signature expired. Please log in again.'
+        except jwt.InvalidTokenError:
+            return 'Invalid token. Please log in again.'
