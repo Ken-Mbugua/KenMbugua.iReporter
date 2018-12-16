@@ -37,6 +37,7 @@ class UsersModel(DbModel):
 
         return "create user success"
 
+
     def get_user_by_email(self, user_email):
 
         query = "SELECT * from users WHERE email= %s"
