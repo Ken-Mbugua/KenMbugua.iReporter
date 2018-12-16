@@ -1,6 +1,6 @@
+import jwt
 from app.db.db_config import DbModel
 from datetime import datetime, timedelta
-import jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 from app.api.v1.models.models_validation.validation import ModelValidation
 from flask import current_app
@@ -15,8 +15,9 @@ class UsersModel(DbModel):
         self.firstname = firstname
         self.username = username
         self.email = email
+        self.password = "user34" if password is None else password
         self.password_hash = generate_password_hash(
-            password).decode("utf-8")
+            self.password).decode("utf-8")
         self.isAdmin = isAdmin
         self.phone_number = phone_number
         self.date_created = datetime.utcnow()
@@ -80,7 +81,7 @@ class UsersModel(DbModel):
             payload = {
                 'exp': datetime.utcnow() + timedelta(days=0, minutes=25),
                 'isa': "{}".format(datetime.utcnow()),
-                'sub': user_email,
+                'email': user_email,
                 'role': self.isAdmin
             }
             return jwt.encode(
@@ -103,11 +104,11 @@ class UsersModel(DbModel):
             )
 
             return {
-                "email": payload['sub'],
+                "email": payload['email'],
                 "role": payload['role']
             }
 
         except jwt.ExpiredSignatureError:
-            return 'Signature expired. Please log in again.'
+            return {"expired-error": "Signature expired. Please log in again."}
         except jwt.InvalidTokenError:
-            return 'Invalid token. Please log in again.'
+            return {"invalid-error": "Invalid token. Please log in again."}

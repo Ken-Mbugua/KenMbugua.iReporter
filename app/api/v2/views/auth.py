@@ -3,7 +3,7 @@ from flask import request, json
 from flask_restful import Resource
 from app.api.v2.models.users_model import UsersModel
 from app.api.v2.views.validation import ViewsValidation
-# from app.api.v2.auth_decorators.auth_decorator import isAdmin
+from app.api.v2.auth_decorators.auth_decorator import isAdmin
 
 
 class AuthSignUp(Resource):
@@ -89,6 +89,7 @@ class AuthSignIn(Resource):
                         user_details
                     ]
                 }, 200
+
             else:
                 return ViewsValidation().views_error(
                     401, "Invalid Login credentials", "message")
