@@ -5,7 +5,7 @@ from unittest import TestCase
 from app.db.db_config import DbModel
 from test_incidents_data import incident1, incident2, incident3, incident4,\
     incident5, comment_data, location_data, incident_no_media_intervention,\
-    incident_no_media_redflag
+    incident_no_media_redflag, incident2_invalid_field
 from test_data_auth import sign_in_data, sign_up_data
 
 
@@ -109,10 +109,34 @@ class TestIncidentsV2(TestCase):
         response = self.add_incident(
             "interventions", incident2)
         result = json.loads(response.data)
-        print("RESULT::", result)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(result["data"][0]["message"],
                          "created interventions record")
+
+    def test_create_intervention_bad_url(self):
+        """ bad url test"""
+
+        response = self.add_incident(
+            "interventionz", incident2)
+        result = json.loads(response.data)
+        print("RESULT::", result)
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(result["error"],
+                         "Invalid Endpoint interventionz ")
+
+    def test_create_intervention_validation(self):
+        """
+        method to test create incident endpoint fields
+        validation
+        incident_type: intervention
+        """
+
+        response = self.add_incident(
+            "interventions", incident2_invalid_field)
+        result = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(result["error"],
+                         "Invalid fields ['my_field', 'responder']")
 
     def test_create_redflag(self):
         """
@@ -131,24 +155,28 @@ class TestIncidentsV2(TestCase):
         method to test create incident endpoint
         incident_type: interventions
         """
-        # add mock data to databse 2 records
+        # add mock data to databse: 2 records
         self.add_incident("interventions", incident2)
         self.add_incident("interventions", incident4, True)
 
         # get all incidents
+
         response = self.get_all_incidents(
             "interventions")
         result = json.loads(response.data)
+
+        # assert data: title, incident_type, comment
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result["data"][0]["comment"],
                          "ignore it or cover it up, out of sight out of mind")
+        self.assertEqual(result["data"][1]["comment"],
+                         "How many buildings should collapse for us to learn?")
         self.assertEqual(result["data"][0]["title"], "Manhole Hazard")
         self.assertEqual(result["data"][1]["title"],
                          "Building Collpase Hazard")
         self.assertEqual(result["data"][0]["incident_type"], "interventions")
         # should return 2 records
         self.assertEqual(len(result["data"]), 2)
-        # assert data: title, incident_type, comment
 
     def test_get_all_redflags(self):
         """

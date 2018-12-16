@@ -92,6 +92,25 @@ incident5 = {
     "comment": "This is some next level tribalism"
 }
 
+incident2_invalid_field = {
+    "title": "Manhole Hazard",
+    "description": "Manhole open around hurlingam mall",
+    "incident_status": "Rejected",
+    "location": "-34444400, 3444499900",
+    "my_field": "efwfwfwf",
+    "responder": "Username3456",
+    "image": [
+        "var/www/uploads/incidents/img/USR-232455.jpeg",
+        "var/www/uploads/incidents/img/USR-232455.jpeg",
+
+    ],
+    "video": [
+        "var/www/uploads/readflags/video/USR-232455.mp4",
+        "var/www/uploads/readflags/video/USR-232455.mp4",
+    ],
+    "comment": "ignore it or cover it up, out of sight out of mind, right?"
+}
+
 incident_no_media_intervention = {
     "title": "Manhole Hazard",
     "description": "Manhole open around hirlingum mall",
