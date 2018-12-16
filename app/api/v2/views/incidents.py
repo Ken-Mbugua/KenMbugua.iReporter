@@ -67,7 +67,7 @@ class Incidents(Resource):
     @isAuthenticated
     def get(self, incident_type):
         """
-             method to query all incident data from database
+        method to query all incident data from database
         """
         if incident_type not in ["redflags", "interventions"]:
             return ViewsValidation().views_error(
@@ -89,10 +89,58 @@ class Incidents(Resource):
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "No {} found".format(incident_type))
+                    404, "No {} records found".format(incident_type))
 
         except Exception as error:
 
             return ViewsValidation().views_error(
                 403, "Failed to query all {}:::\n {}"
+                .format(incident_type, error))
+
+
+class IncidentsID(Resource):
+    """class to operate on incidents based on incident id"""
+
+    def __init__(self):
+        pass
+
+    @isAuthenticated
+    def delete(self, incident_type, incident_id):
+        """
+        method to delete an incident from database
+        """
+
+        if incident_type not in ["redflags", "interventions"]:
+            return ViewsValidation().views_error(
+                405, "Invalid Endpoint {} ".format(incident_type)
+            )
+
+        if ViewsValidation().validate_id(incident_id):
+            return ViewsValidation().validate_id(incident_id)
+
+        try:
+            # instanciate incident model incident type
+            incident = IncidentsModel(
+                incident_type=incident_type
+            )
+
+            del_incidents = incident.delete_incident(
+                "incident_id", incident_id)
+            if del_incidents:
+                # incident deletion success return incident id and message
+                return {
+                    "status": 200,
+                    "data": [{
+                        "id": del_incidents[0]["incident_id"],
+                        "message": "Deleted {} record".format(incident_type)
+                    }]
+                }, 200
+            else:
+                return ViewsValidation().views_error(
+                    404, "No {} record found".format(incident_type))
+
+        except Exception as error:
+
+            return ViewsValidation().views_error(
+                403, "Failed to delete {} record  ::: {}"
                 .format(incident_type, error))

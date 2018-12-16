@@ -55,3 +55,12 @@ class ViewsValidation:
             "status": status,
             field: error_message
         }, status
+
+    def validate_id(self, id):
+        try:
+            int(id)
+        except:
+            return self.views_error(
+                405,
+                "Invalid ID, must be an Integer"
+            )

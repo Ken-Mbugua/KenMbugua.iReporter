@@ -82,7 +82,7 @@ class DbModel():
 
     def truncate(self, tbl_name):
         """truncate table by name"""
-        self.query("TRUNCATE " + tbl_name+" CASCADE")
+        self.query("TRUNCATE " + tbl_name+" RESTART IDENTITY CASCADE")
         self.save()
 
     def destroy_tables(self):
