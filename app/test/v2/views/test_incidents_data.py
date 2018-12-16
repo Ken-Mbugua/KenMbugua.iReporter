@@ -1,6 +1,6 @@
 # test data
 incident1 = {
-    "title": "Traffice Corruption",
+    "title": "Traffic Corruption",
     "description": "Offices taking bribes",
     "incident_status": "Rejected",
     "location": "-34444400, 3444499900",
