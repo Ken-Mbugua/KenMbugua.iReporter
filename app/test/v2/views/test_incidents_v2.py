@@ -337,7 +337,6 @@ class TestIncidentsV2(TestCase):
         result_get_all = self.get_all_incidents("interventions")
         response_get_all = json.loads(result_get_all.data)
 
-        print("RESUT_GET_ALL::", response_get_all)
         self.assertEqual(len(response_get_all["data"]), 1)
 
     def test_get_single_redflag(self):
