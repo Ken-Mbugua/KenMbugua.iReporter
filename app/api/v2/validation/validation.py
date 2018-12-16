@@ -4,10 +4,12 @@ from flask import jsonify
 class ViewsValidation:
 
     # define check input fileds method
-    def check_fields(self, resource_type="", field_data=None):
+    def check_fields(self, resource_type="", field_data=None, field=None):
         # fields - list of fields to be checked
         # request.body recived at endpoint
         # extract fields into list
+
+        # incidents fields validation
         if (resource_type == "red-flags" or "interventions"):
             fields = [
                 'title',
@@ -18,6 +20,15 @@ class ViewsValidation:
                 'comment',
                 'location'
             ]
+        # patch fields validation
+        if(field == "comment"):
+            fields = ['comment']
+        if(field == "location"):
+            fields = ['location']
+        if(field == "status"):
+            fields = ['incident_status']
+
+        # auth fields validation
         if(resource_type == "signup"):
             fields = ['username', 'email', 'password', 'phone_number']
         if(resource_type == "login"):
@@ -62,5 +73,5 @@ class ViewsValidation:
         except:
             return self.views_error(
                 405,
-                "Invalid ID, must be an Integer"
+                "ID must be an Integer"
             )

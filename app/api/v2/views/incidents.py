@@ -181,8 +181,11 @@ class IncidentsID(Resource):
                 403, "Failed to delete {} record  ::: {}"
                 .format(incident_type, error))
 
+
+class IncidentsPatch(Resource):
+
     @isAuthenticated
-    def patch(self, incident_type, incident_id):
+    def patch(self, incident_type, incident_id, field):
         """
         method to update an incident by field provided
         """
@@ -195,16 +198,32 @@ class IncidentsID(Resource):
         if ViewsValidation().validate_id(incident_id):
             return ViewsValidation().validate_id(incident_id)
 
+        data = request.get_json(silent=True)
+        # validate received fileds
+        if not data:
+            return ViewsValidation().views_error(
+                400, "Bad Request Format")
+
+        valid_fields = ViewsValidation().check_fields(
+            incident_type, data, field
+        )
+
+        if valid_fields:
+            # found missing fields
+            return valid_fields
+
         try:
             # instanciate incident model incident type
             incident = IncidentsModel(
                 incident_type=incident_type
             )
 
+            # update_incident(self, field, field_data, incident_id)
+
             update_incident = incident.update_incident(
-                field, value)
+                field, data, incident_id)
             if update_incident:
-                # incident query success return incident data
+                # incident update success return incident data
                 return {
                     "status": 200,
                     "data": [{

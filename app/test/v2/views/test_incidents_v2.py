@@ -299,7 +299,7 @@ class TestIncidentsV2(TestCase):
         # invalid endpoint ID
         self.assertEqual(
             result_b["error"],
-            "Invalid ID, must be an Integer"
+            "ID must be an Integer"
         )
 
     def test_delete_intervention(self):
