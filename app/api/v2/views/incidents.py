@@ -121,15 +121,14 @@ class IncidentsID(Resource):
                 incident_type=incident_type
             )
 
-            one_incident = incident.get_single_incident(
+            one_incident = incident.get_incident_by(
                 "incident_id", incident_id)
             if one_incident:
                 # incident query success return incident data
                 return {
                     "status": 200,
-                    "data": [
+                    "data":
                         one_incident
-                    ]
                 }, 200
             else:
                 return ViewsValidation().views_error(

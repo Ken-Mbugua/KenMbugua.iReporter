@@ -356,13 +356,12 @@ class TestIncidentsV2(TestCase):
             incident_id
         )
         result = json.loads(response.data)
-
         # assert red flag title
         self.assertEqual(result["data"][0]["title"], "Traffic Corruption")
         # assert single record returned
-        self.asserEqual(len(result["data"][0]), 1)
+        self.assertEqual(len(result["data"]), 1)
         # assert returned incident_id
-        self.assertEqual(incident_id, result["data"][0]["id"])
+        self.assertEqual(incident_id, result["data"][0]["incident_id"])
 
     def tearDown(self):
         """empty table data after each test"""

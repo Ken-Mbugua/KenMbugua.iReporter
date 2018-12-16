@@ -4,7 +4,8 @@ from unittest import TestCase
 from app import create_app
 from app.db.db_config import DbModel
 from app.api.v2.models.users_model import UsersModel
-from test_data_auth import sign_in_data, sign_in_data_2, sign_up_data
+from test_data_auth import sign_in_data, sign_in_data_2, sign_up_data, \
+    sign_in_seeded_admin
 
 
 class TestAuth(TestCase):
@@ -55,7 +56,6 @@ class TestAuth(TestCase):
         response = self.signup_user(sign_up_data)
         result = json.loads(response.data.decode())
 
-        self.assertTrue(result['status'] == 201)
         self.assertTrue(result['data'])
 
         # test for auth token
@@ -73,7 +73,6 @@ class TestAuth(TestCase):
 
         result = json.loads(response.data.decode())
 
-        self.assertTrue(result['status'] == 202)
         self.assertEqual(result['message'], "Duplicate User Error")
         self.assertEqual(response.status_code, 202)
 
@@ -87,7 +86,6 @@ class TestAuth(TestCase):
 
         result = json.loads(response.data.decode())
 
-        self.assertEqual(result['status'], 200)
         self.assertEqual(len(result['data']), 1)
 
         # test for auth token
@@ -100,8 +98,6 @@ class TestAuth(TestCase):
         response = self.signin_user(sign_in_data)
 
         result = json.loads(response.data.decode())
-
-        self.assertEqual(result['status'], 401)
         self.assertEqual(response.status_code, 401)
         self.assertIn("User with email", result["message"])
 
@@ -131,6 +127,8 @@ class TestAuth(TestCase):
 
         # get token
         auth_token = user.gen_auth_token(sign_in_data["email"])
+
+        # assert token datatype (bytes)
         self.assertTrue(isinstance(auth_token, bytes))
 
         # test passes if the email used to encode is returned
