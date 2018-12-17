@@ -115,7 +115,7 @@ class IncidentsModel(DbModel):
 
         incident = self.get_incident_by(field, value)
 
-        # delete only if status is Draft
+        # delete user incidents only
         if incident:
             query_string = "DELETE from incidents WHERE {} = '{}';".format(
                 field, value
