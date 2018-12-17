@@ -40,19 +40,6 @@ class IncidentsModel(DbModel):
         self.query(query_string, data)
         self.save()
 
-    def get_incident_by_id(self, incident_id):
-        query_string = "SELECT * from incidents WHERE incident_id= %s"
-
-        # query db
-        self.query(query_string, (incident_id,))
-
-        # return queried records (single record)
-        incident = self.find_one()
-
-        if incident:
-            return incident
-        return None
-
     def get_last_incident(self):
         query_string = "SELECT * from incidents " +\
             "ORDER BY created_on DESC LIMIT 1;"
@@ -128,14 +115,51 @@ class IncidentsModel(DbModel):
 
         incident = self.get_incident_by(field, value)
 
-        query_string = "DELETE from incidents WHERE {} = '{}';".format(
-            field, value
-        )
-
-        self.query(query_string)
-        self.save()
-
+        # delete user incidents only
         if incident:
+            query_string = "DELETE from incidents WHERE {} = '{}';".format(
+                field, value
+            )
+
+            self.query(query_string)
+            self.save()
+
             return incident
         else:
             return None
+
+    def update_incident(self, field, field_data, incident_id):
+        """
+        method to update incident based on provided
+        incident_field, field_value and data
+        """
+        # does incident exist?
+        incident = self.get_incident_by("incident_id", incident_id)
+        # UPDATE incidents SET status='Rejected' WHERE id='{}';
+        if incident:
+            query_string = "UPDATE incidents SET " +\
+                "{}='{}' WHERE incident_id='{}';".format(
+                    field, field_data, incident_id,
+                )
+
+            self.query(query_string)
+            self.save()
+
+            updated_incident = self.get_incident_by("incident_id", incident_id)
+
+            return updated_incident
+        else:
+            return None
+
+    def can_update_or_delete(self, incident_id):
+        """
+        method to check incident status
+        return true if incident_status == draft
+        """
+        incident = self.get_incident_by("incident_id", incident_id)
+        print("@INCIDENT@: ", incident)
+        if incident[0]["incident_status"] != "Draft":
+            return False
+
+        else:
+            return True
