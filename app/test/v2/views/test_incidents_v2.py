@@ -176,7 +176,6 @@ class TestIncidentsV2(TestCase):
         response = self.add_incident(
             "interventionz", incident2)
         result = json.loads(response.data)
-        print("RESULT::", result)
         self.assertEqual(response.status_code, 405)
         self.assertEqual(
             result["error"],
@@ -400,7 +399,6 @@ class TestIncidentsV2(TestCase):
             comment_data,
         )
         result = json.loads(response.data)
-        print("RESULT::", result)
         # assert updated redflag comment
         self.assertEqual(result["data"][0]["comment"], comment_data["comment"])
         # assert success message
@@ -427,7 +425,6 @@ class TestIncidentsV2(TestCase):
             location_data,
         )
         result = json.loads(response.data)
-        print("LOC_RESULT::", result)
         # assert updated redflag lcation
         self.assertEqual(
             result["data"][0]["location"],
