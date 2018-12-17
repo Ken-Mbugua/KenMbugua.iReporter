@@ -99,7 +99,11 @@ class TestAuth(TestCase):
 
         result = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 401)
-        self.assertIn("User with email", result["message"])
+        self.assertEqual(
+            "User with email {} not found".format(
+                sign_in_data["email"]),
+            result["message"]
+        )
 
     def test_password_is_valid(self):
         pass
@@ -115,7 +119,7 @@ class TestAuth(TestCase):
         # get token
         auth_token = user.gen_auth_token(sign_in_data["email"])
 
-        # test for token
+        # test for token datatype (bytes)
         self.assertTrue(isinstance(auth_token, bytes))
 
     def test_decode_auth_token(self):

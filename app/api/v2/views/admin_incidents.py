@@ -7,9 +7,13 @@ from app.api.v2.auth_decorators.auth_decorator import isAdmin, isAuthenticated
 
 
 class IncidentsAdmin(Resource):
-
+    """
+    resource to handle admin fuctionality
+    :edit an incident status
+    """
+    @isAdmin
     @isAuthenticated
-    def patch(self, incident_type, incident_id, field):
+    def patch(self, incident_type, incident_id):
         """
         method to update an incident by field provided
         """
@@ -17,10 +21,6 @@ class IncidentsAdmin(Resource):
         if incident_type not in ["redflags", "interventions"]:
             return ViewsValidation().views_error(
                 405, "Invalid Endpoint {} ".format(incident_type)
-            )
-        if field not in ["comment", "location", "status"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(field)
             )
 
         if ViewsValidation().validate_id(incident_id):
@@ -33,7 +33,7 @@ class IncidentsAdmin(Resource):
                 400, "Bad Request Format")
 
         valid_fields = ViewsValidation().check_fields(
-            incident_type, data, field
+            incident_type, data, "status"
         )
 
         if valid_fields:
@@ -46,21 +46,14 @@ class IncidentsAdmin(Resource):
                 incident_type=incident_type
             )
 
-            # update_incident(self, field, field_data, incident_id)
-            can_update = incident.can_update_or_delete(incident_id)
-            if not can_update:
-                return ViewsValidation().views_error(
-                    403, "Patch Failed,"
-                    " Record is no Longer Drafted".format(incident_type))
-
             update_incident = incident.update_incident(
-                field, data[field], incident_id)
+                "incident_status", data["incident_status"], incident_id)
 
             if update_incident:
                 # incident update success return incident data
                 return {
                     "status": "success",
-                    "message": "Updated {} {}".format(incident_type, field),
+                    "message": "Updated {} status".format(incident_type),
                     "data": [
                         update_incident[0],
                     ]

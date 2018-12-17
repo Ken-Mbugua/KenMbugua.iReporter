@@ -79,8 +79,10 @@ class AuthSignIn(Resource):
             if user.password_is_valid(data["password"]):
                 # login success: get user details
                 user_details = user.get_user_details(data["email"])
+
                 # generete token
-                auth_token = user.gen_auth_token(data["email"])
+                role = email[7]  # get user role
+                auth_token = user.gen_auth_token(data["email"], role)
                 user_details.update({"token": auth_token.decode()})
 
                 return {  # user login success return token and suser data
@@ -95,5 +97,5 @@ class AuthSignIn(Resource):
                     401, "Invalid Login credentials", "message")
         else:
             return ViewsValidation().views_error(
-                401, "User with email {} not found ".format(data["email"]),
+                401, "User with email {} not found".format(data["email"]),
                 "message")

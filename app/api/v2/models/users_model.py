@@ -10,7 +10,7 @@ class UsersModel(DbModel):
 
     def __init__(self, username=None, firstname=None, email=None,
                  phone_number=None, password=None,
-                 isAdmin=False, date_created=None):
+                 is_admin=False, date_created=None):
 
         self.firstname = firstname
         self.username = username
@@ -18,7 +18,7 @@ class UsersModel(DbModel):
         self.password = "user34" if password is None else password
         self.password_hash = generate_password_hash(
             self.password).decode("utf-8")
-        self.isAdmin = isAdmin
+        self.is_admin = is_admin
         self.phone_number = phone_number
         self.date_created = datetime.utcnow()
 
@@ -31,7 +31,7 @@ class UsersModel(DbModel):
             "phone_number, password_hash, is_admin) VALUES (%s,%s,%s,%s,%s)"
 
         data = (self.email, self.username,
-                self.phone_number, self.password_hash, self.isAdmin,)
+                self.phone_number, self.password_hash, self.is_admin,)
 
         # run query then commit record
         self.query(query_string, data)
@@ -75,14 +75,15 @@ class UsersModel(DbModel):
         else:
             return None
 
-    def gen_auth_token(self, user_email):
+    def gen_auth_token(self, user_email, role=None):
         try:
             payload = {
                 'exp': datetime.utcnow() + timedelta(days=0, minutes=25),
                 'isa': "{}".format(datetime.utcnow()),
                 'email': user_email,
-                'role': self.isAdmin
+                'role': self.is_admin if role is None else role
             }
+
             return jwt.encode(
                 payload,
                 current_app.config['SECRET_KEY'],

@@ -295,11 +295,11 @@ class TestIncidentsV2(TestCase):
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            result["data"][0]["message"],
+            result["message"],
             "Deleted redflags record"
         )
         self.assertEqual(
-            result["data"][0]["id"],
+            result["data"][0]["incident_id"],
             incident_id_a
         )
 
@@ -342,11 +342,11 @@ class TestIncidentsV2(TestCase):
         result = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            result["data"][0]["message"],
+            result["message"],
             "Deleted interventions record"
         )
         self.assertEqual(
-            result["data"][0]["id"],
+            result["data"][0]["incident_id"],
             incident_id_a
         )
 

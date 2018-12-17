@@ -17,12 +17,14 @@ def isAdmin(j):
 
         if not access_token:
             return {"message": "Please provide a token"}, 401
-        if subject.get('invalid-error', None):
+        if subject.get('invalid-error'):
             return {"message": subject["invalid-error"]}, 401
-        if subject.get('expired-error', None):
+        if subject.get('expired-error'):
             return {"message": subject["expired-error"]}, 401
-        if not subject.get('role', None):
-            return {"message": "You are a peasant"}, 401
+        if not subject.get('role'):
+            print("GET_ROLE::", subject.get('role'))
+            return {"status": 401, "message": "Access Denied, "
+                    "Insuficient Rights"}, 401
 
         return j(*args, **kwargs)
 
