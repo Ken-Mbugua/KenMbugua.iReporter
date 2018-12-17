@@ -75,11 +75,25 @@ class TestIncidentsV2(TestCase):
         )
         return new_incident
 
+    def get_single_incident(self, incident_type, incident_id):
+        """
+        method query single incident, based on incident_id
+        """
+        token = self.get_token("signin")
+
+        single_incident = self.app.get(
+            "/api/v2/{}/{}".format(incident_type, incident_id),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": "Bearer "+token
+            }
+        )
+        return single_incident
+
     def get_all_incidents(self, incident_type):
         """
         method to add new incident, based on incident type
         """
-
         # login to get token
         token = self.get_token("signin")
 
@@ -236,7 +250,7 @@ class TestIncidentsV2(TestCase):
             result["data"][2]["comment"],
             "This is some next level tribalism"
         )
-        self.assertEqual(result["data"][0]["title"], "Traffice Corruption")
+        self.assertEqual(result["data"][0]["title"], "Traffic Corruption")
         self.assertEqual(result["data"][0]["incident_type"], "redflags")
         # should return two records
         self.assertEqual(len(result["data"]), 3)
@@ -323,10 +337,32 @@ class TestIncidentsV2(TestCase):
         result_get_all = self.get_all_incidents("interventions")
         response_get_all = json.loads(result_get_all.data)
 
-        print("RESUT_GET_ALL::", response_get_all)
         self.assertEqual(len(response_get_all["data"]), 1)
+
+    def test_get_single_redflag(self):
+        """
+        method to test single redflag
+        incident_type: redflag
+        """
+        # add mock data to databse: 2 redflag records
+        res_redflag_a = self.add_incident("redflags", incident1)
+        res_redflag_b = self.add_incident("redflags", incident3, True)
+
+        result_b = json.loads(res_redflag_a.data)
+        incident_id = result_b["data"][0]["id"]
+
+        response = self.get_single_incident(
+            "redflags",
+            incident_id
+        )
+        result = json.loads(response.data)
+        # assert red flag title
+        self.assertEqual(result["data"][0]["title"], "Traffic Corruption")
+        # assert single record returned
+        self.assertEqual(len(result["data"]), 1)
+        # assert returned incident_id
+        self.assertEqual(incident_id, result["data"][0]["incident_id"])
 
     def tearDown(self):
         """empty table data after each test"""
         self.db.truncate_tables()
-        print("DB_TRUNCATED!!")

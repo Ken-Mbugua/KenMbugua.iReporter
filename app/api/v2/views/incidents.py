@@ -101,8 +101,44 @@ class Incidents(Resource):
 class IncidentsID(Resource):
     """class to operate on incidents based on incident id"""
 
-    def __init__(self):
-        pass
+    @isAuthenticated
+    def get(self, incident_type, incident_id):
+        """
+        method to get an incident from database
+        """
+
+        if incident_type not in ["redflags", "interventions"]:
+            return ViewsValidation().views_error(
+                405, "Invalid Endpoint {} ".format(incident_type)
+            )
+
+        if ViewsValidation().validate_id(incident_id):
+            return ViewsValidation().validate_id(incident_id)
+
+        try:
+            # instanciate incident model incident type
+            incident = IncidentsModel(
+                incident_type=incident_type
+            )
+
+            one_incident = incident.get_incident_by(
+                "incident_id", incident_id)
+            if one_incident:
+                # incident query success return incident data
+                return {
+                    "status": 200,
+                    "data":
+                        one_incident
+                }, 200
+            else:
+                return ViewsValidation().views_error(
+                    404, "No {} record found".format(incident_type))
+
+        except Exception as error:
+
+            return ViewsValidation().views_error(
+                403, "Failed to get {} record  ::: {}"
+                .format(incident_type, error))
 
     @isAuthenticated
     def delete(self, incident_type, incident_id):
