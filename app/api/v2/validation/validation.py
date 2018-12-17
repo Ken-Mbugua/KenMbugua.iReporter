@@ -30,7 +30,8 @@ class ViewsValidation:
 
         # auth fields validation
         if(resource_type == "signup"):
-            fields = ['username', 'email', 'password', 'phone_number']
+            fields = ['username', 'email',
+                      'password', 'phone_number', 'is_admin']
         if(resource_type == "login"):
             fields = ['email', 'password']
         if (resource_type == ""):

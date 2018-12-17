@@ -157,9 +157,11 @@ class IncidentsModel(DbModel):
         return true if incident_status == draft
         """
         incident = self.get_incident_by("incident_id", incident_id)
-        print("@INCIDENT@: ", incident)
-        if incident[0]["incident_status"] != "Draft":
-            return False
 
+        if incident:
+            if incident[0]["incident_status"] != "Draft":
+                return False
+            else:
+                return True
         else:
             return True

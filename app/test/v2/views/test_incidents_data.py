@@ -2,7 +2,7 @@
 incident1 = {
     "title": "Traffic Corruption",
     "description": "Offices taking bribes",
-    "incident_status": "Rejected",
+    "incident_status": "Draft",
     "location": "-34444400, 3444499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
@@ -40,7 +40,7 @@ incident3 = {
     "title": "Nepotism",
     "description": "Retiring mebers of staff were requires to submit their " +
     " next of kin C.Vs for an assured employment, no interviews or anything",
-    "incident_status": "Under Investigation",
+    "incident_status": "Draft",
     "location": "-34444400, 4344499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",

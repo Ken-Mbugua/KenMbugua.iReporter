@@ -4,7 +4,8 @@ sign_up_data = {
     "email": "user799@gmail.com",
     "password": "user_799#",
     "phone_number": "0958576262",
-    "username": "de_jong"
+    "username": "de_jong",
+    "is_admin": "False"
 }
 
 sign_in_data = {
