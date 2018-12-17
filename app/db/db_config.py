@@ -73,7 +73,7 @@ class DbModel():
         for query in queries:
             self.query(query)  # execute queries
             self.save()  # commit changes to db
-        self.close()
+        # self.close()
 
     def drop(self, tbl_name):
         """drop table by name"""
@@ -160,3 +160,4 @@ class DbModel():
 
         self.query(create_admin)
         self.save()
+        self.close()

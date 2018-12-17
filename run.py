@@ -16,8 +16,8 @@ app = create_app(CONFIG_NAME)
 
 db = DbModel(app)
 
-# seed an admin user
-db.seed_admin_user()
-
 # create db tables if not exists
 db.create_tables()
+
+# seed an admin user
+db.seed_admin_user()
