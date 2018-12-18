@@ -81,7 +81,8 @@ class ViewsValidation:
         """
         method to validate email, via reg expressions
         """
-        if re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", user_email):
+
+        if re.match(r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", user_email):
             return "Invalid Email Format"
         if user_email == "":
             return "email cannot be blank"
@@ -91,7 +92,7 @@ class ViewsValidation:
         """
         method to validate phone_number, via reg expressions
         """
-        if re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", phone_number):
+        if re.match(r"^([\s\d]+)$", phone_number):
             return "Invalid PhoneNumber Format"
         if phone_number == "":
             return "phone_number cannot be blank."
@@ -126,17 +127,38 @@ class ViewsValidation:
         if is_admin == "":
             return "is_admin can only take in true of false"
 
-    def check_fields_data(self, field_data):
+    def check_user_fields_data(self, field_data):
         """
         validate all fields and return an errors object
         """
+        # vaidator list to store all validation functions
+
+        validator_fuctions = [
+            self.check_email, self.check_phone_number,
+            self.check_password, self.check_role
+        ]
+
         # errors dict to store any errors if found
         errors = {}
         error = False
 
-        for field in field_data:
-
-            error = True
+        for field, value in field_data.items():
+            if field == "email":
+                if validator_fuctions[0](value):
+                    errors[field] = validator_fuctions[0](value)
+                    error = True
+            if field == "phone_number":
+                if validator_fuctions[1](value):
+                    errors[field] = validator_fuctions[1](value)
+                    error = True
+            if field == "password":
+                if validator_fuctions[2](value):
+                    errors[field] = validator_fuctions[2](value)
+                    error = True
+            if field == "is_admin":
+                if validator_fuctions[3](value):
+                    errors[field] = validator_fuctions[3](value)
+                    error = True
 
         if error:
             return errors

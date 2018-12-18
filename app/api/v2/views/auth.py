@@ -5,6 +5,8 @@ from app.api.v2.models.users_model import UsersModel
 from app.api.v2.validation.validation import ViewsValidation
 from app.api.v2.auth_decorators.auth_decorator import isAdmin
 
+# check_user_fields_data
+
 
 class AuthSignUp(Resource):
 
@@ -31,7 +33,7 @@ class AuthSignUp(Resource):
         if email:
             # duplicate user  error
             return ViewsValidation().views_error(
-                202, "Duplicate User Error", "message")
+                409, "Duplicate User Error", "message")
 
         # create user
         response = user.create_user()
