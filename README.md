@@ -17,15 +17,17 @@ All this while providing some degree of anonimity.
 
 - #### Available Resource Endpoints
 
+>  KEY: <incident_type> = interventions or redflags 
+
 | Method | Endpoint                                            | Usage                                          |
 | ------ | --------------------------------------------------- | ---------------------------------------------- |
-| POST   | `[hostname]/api/v1/incident`                        | Create a red-flag or an intervention.          |
-| GET    | `[hostname]/api/v1/incident`                        | Get all red-flags or interventions.            |
-| GET    | `[hostname]/api/v1/incident/<incident_id>`          | Get a red-flad or an intervention.             |
-| PATCH  | `[hostname]/api/v1/incident/<incident_id>/location` | Update Location of a red-flag or intervention. |
-| PATCH  | `[hostname]/api/v1/incident/<incident_id>/comment`  | Update Comment of a red-flag or intervention.  |
-| DELETE | `[hostname]/api/v1/incident/<incident_id>`          | Delete a single red-flag or intervention.      |
-| PATCH  | `[hostname]/api/v1/incident/<incident_id>`          | Update a red-flag or intervention.             |
+| POST   | `[hostname]/api/v2/<incident_type>`                        | Create a red-flag or an intervention.          |
+| GET    | `[hostname]/api/v2/<incident_type>`                        | Get all red-flags or interventions.            |
+| GET    | `[hostname]/api/v2/<incident_type>/<incident_id>`          | Get a red-flad or an intervention.             |
+| PATCH  | `[hostname]/api/v2/<incident_type>/location` | Update Location of a red-flag or intervention. |
+| PATCH  | `[hostname]/api/v2/<incident_type>/comment`  | Update Comment of a red-flag or intervention.  |
+| DELETE | `[hostname]/api/v2/<incident_type>/<incident_id>`          | Delete a single red-flag or intervention.      |
+| PATCH  | `[hostname]/api/v2/<incident_type>/<incident_id>`          | Update a red-flag or intervention.             |
 
 ## instuctions [installing iReporter]
 
@@ -84,105 +86,66 @@ flask run
 
 The app should be accessiable via : http://127.0.0.1:5000/
 
-## Screenshots
+## Mini Documentation
 
 > to use heroku replace `http://127.0.0.1:5000` with `https://km-ireporter-api.herokuapp.com`
 
-`**creating a new incident:** http://127.0.0.1:5000/api/v1/incidents`
+>  KEY: <incident_type> = interventions or redflags 
 
-![post man](Assets/create_incident.png)
+**creating a new incident:** `[hostname]/api/v2/<incident_type>`
 
 -request body:
 
 ```
 {
-  "title": "Traffice Corruption",
+    "title": "Traffice Corruption",
     "description": "Offices taking bribes",
-    "type": "RedFlag",
-    "status": "Rejected",
-    "location": "-34444400, 3444499900",
-    "location2": "-34444400, 3444499900",
+    "location": "-34.444400, 34.44499900",
     "image": [
-                {
-                    "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
-                    "filesize": "2045kb"
-                },
-                {
-                    "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
-                    "filesize": "2045kb"
-                }
+          "dir": "var/www/uploads/incidents/img/USR-232455.jpeg",
+          "dir": "var/www/uploads/incidents/img/USR-232455.jpeg"
     ],
-    "video": [
-                {
-                    "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
-                    "filesize": "340098245Kb"
-                },{
-                    "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
-                    "filesize": "340098245Kb"
-                }
+    "video": [     
+           "dir": "var/www/uploads/readflags/video/USR-232455.mp4",
+           "dir": "var/www/uploads/readflags/video/USR-232455.mp4"
     ],
-    "comment": "This is all fake, they will deny alll charges!"
+    "comment": "This is all fake, they will deny all charges!"
 
 }
 ```
 
-`deleting an incident:** http://127.0.0.1:5000/api/v1/incidents/incident_id`
+**deleting an incident:** `[[hostname]/api/v2/<incident_type>/incident_id`
 
-![post man](Assets/delete_incident.png)
+**get one incident:** `[hostname]/api/v2/<incident_type>/incident_id`
 
-`**get one incident:** http://127.0.0.1:5000/api/v1/incidents/incident_id`
+**get all incidents:** `[hostname]/api/v2/<incident_type>`
 
-![post man](Assets/get_single_incident.png)
-
-`**get all incidents:** http://127.0.0.1:5000/api/v1/incidents`
-
-![post man](Assets/getall.png)
-
-`**update an incident's location:** http://127.0.0.1:5000/api/v1/incident_id/location`
-
-![post man](Assets/edit_location.png)
+**update an incident's location:** `[hostname]/api/v2/<incident_type>/incident_id/location`
 
 - request body:
   ```
   {
-  		    "location": "-9.5566025, -35.776295"
+  		"location": "-9.5566025, -35.776295"
   }
   ```
 
-`**update an incident's comment:** http://127.0.0.1:5000/api/v1/incident_id/comment`
-
-![post man](Assets/edit_comment.png)
+**update an incident's comment:** `[hostname]/api/v2/<incident_type>/incident_id/comment`
 
 - request body:
   ```
   {
-  		    "comment":"As far as am concerned This is all fake news"
+  	  "comment":"As far as am concerned This is all fake news"
   }
   ```
-
-`**update any incident field:** http://127.0.0.1:5000/api/v1/incidents/incident_id`
-
-![post man](Assets/edit_all.png)
+  
+  **update an incident's status:** `[hostname]/api/v2/<incident_type>/incident_id/comment`
 
 - request body:
   ```
   {
-  	"title": "Pesa Laundring",
-  	"description": "Kenya's 12th biggest gambling company is surely involved",
-  	"status": "Under Inverstigation",
-  	"createdBy": 15,
-  	"video": [
-                {
-                    "dir": "var/www/uploads/incidents/video/USR-232455.mp4",
-                    "filesize": "940098245Kb"
-                },
-                {
-                    "dir": "var/www/uploads/incidents/video/USR-232455.mp4",
-                    "filesize": "740098245Kb"
-                }
-    ]
+  	  "incident_status":"Under Investigation"
   }
-  ```
+  ``
 
 ## Running the tests
 
@@ -217,11 +180,3 @@ pycodestyle app --count
 - **Ken Mbugua** - _Initial work_ - [Ken-Mbugua](https://github.com/Ken-MbuguaiReporter)
 
 See also the list of [contributors](https://github.com/Ken-MbuguaiReporter/KenMbuguaiReporter/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-- Hat tip to anyone whose code was used
