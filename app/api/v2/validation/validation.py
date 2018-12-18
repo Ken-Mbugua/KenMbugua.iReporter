@@ -92,6 +92,7 @@ class ViewsValidation:
         """
         method to validate phone_number, via reg expressions
         """
+        phone_number = phone_number.strip()
         if not re.match(r"^([\s\d]+)$", phone_number):
             return "Invalid PhoneNumber Format, numbers only"
         return False
@@ -100,6 +101,7 @@ class ViewsValidation:
         """
         method to validate username, via reg expressions
         """
+        username = username.strip()
         if not re.match(r"[a-z A-Z0-9\_\"]+$", username):
             return "Invalid username Format, underscore,"
             " letters and numbers only"
@@ -109,6 +111,7 @@ class ViewsValidation:
         """
         method to validate password, via reg expressions
         """
+        password = password.strip()
         if not re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", password):
             return "Invalid Password Format, > 8 characters, letters, " +\
                 "numbers and special characters only "
@@ -125,6 +128,7 @@ class ViewsValidation:
 
     # 1. title
     def check_title(self, title):
+        title = title.strip()
         if title == "":
             return "Title cannot be blank."
         else:
@@ -132,6 +136,7 @@ class ViewsValidation:
 
     # 2. description
     def check_description(self, description):
+        description = description.strip()
         if description == "":
             return "Description cannot be blank"
         else:
@@ -139,6 +144,7 @@ class ViewsValidation:
 
     # 3. incident status
     def check_status(self, incident_status):
+        incident_status = incident_status.strip()
         if incident_status not in [
             "Draft", "Under Investigation", "Resolved", "Rejected"
         ]:
@@ -152,6 +158,7 @@ class ViewsValidation:
         """
         method to validate location, via reg expressions
         """
+        location = location.strip()
         if not re.match(r"^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$", location):
             return "Invalid location coordinates ."
         else:
@@ -160,8 +167,9 @@ class ViewsValidation:
     # 6. video
     def check_video_url(self, video_urls):
         """
-        method to validate video and image extension, via reg expressions
+        method to validate file path and image file extension, via reg expressions
         """
+        video_urls = video_urls.strip()
         # loop through video path list
         for video_url in video_urls:
             # extract file name (abcde.mp4) from file path
@@ -174,7 +182,10 @@ class ViewsValidation:
 
     # 5. image
     def check_image_url(self, image_urls):
-
+        """
+        method to validate file path and video file extension, via reg expressions
+        """
+        image_urls = image_urls.strip()
         # loop through video path list
         for image_url in image_urls:
             # extract file name (abcde.jpeg) from file path
@@ -190,6 +201,7 @@ class ViewsValidation:
         """
         method to validate comments, via reg expressions
         """
+        comment = comment.strip()
         if not re.match(r"^[a-zA-Z\d\-_\s,.;:\"']+$", comment):
             return "Invalid comments format."
         return False
@@ -208,63 +220,22 @@ class ViewsValidation:
             self.check_comments
         ]
 
+        fields = [
+            "email", "phone_number", "password",
+            "is_admin", "username", "title", "description",
+            "incident_status", "location", "image", "video", "comment"
+        ]
+
         # errors dict to store any errors if found
         errors = {}
         error = False
 
         for field, value in field_data.items():
-            if field == "email":
-                if validator_fuctions[0](value):
-                    errors[field] = validator_fuctions[0](value)
-
-                    error = True
-            if field == "phone_number":
-                if validator_fuctions[1](value):
-                    errors[field] = validator_fuctions[1](value)
-
-                    error = True
-            if field == "password":
-                if validator_fuctions[2](value):
-                    errors[field] = validator_fuctions[2](value)
-
-                    error = True
-            if field == "is_admin":
-                if validator_fuctions[3](value):
-                    errors[field] = validator_fuctions[3](value)
-
-                    error = True
-            if field == "username":
-                if validator_fuctions[4](value):
-                    errors[field] = validator_fuctions[4](value)
-                    error = True
-            if field == "title":
-                if validator_fuctions[5](value):
-                    errors[field] = validator_fuctions[5](value)
-                    error = True
-            if field == "description":
-                if validator_fuctions[6](value):
-                    errors[field] = validator_fuctions[6](value)
-                    error = True
-            if field == "incident_status":
-                if validator_fuctions[7](value):
-                    errors[field] = validator_fuctions[7](value)
-                    error = True
-            if field == "location":
-                if validator_fuctions[8](value):
-                    errors[field] = validator_fuctions[8](value)
-                    error = True
-            if field == "image":
-                if validator_fuctions[9](value):
-                    errors[field] = validator_fuctions[9](value)
-                    error = True
-            if field == "video":
-                if validator_fuctions[10](value):
-                    errors[field] = validator_fuctions[10](value)
-                    error = True
-            if field == "comment":
-                if validator_fuctions[11](value):
-                    errors[field] = validator_fuctions[11](value)
-                    error = True
+            for index in range(len(validator_fuctions)):
+                if field == fields[index]:
+                    if validator_fuctions[index](value):
+                        errors[field] = validator_fuctions[index](value)
+                        error = True
 
         if error:
             return self.views_error(
