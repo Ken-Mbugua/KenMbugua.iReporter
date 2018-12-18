@@ -178,5 +178,3 @@ pycodestyle app --count
 ## Authors
 
 - **Ken Mbugua** - _Initial work_ - [Ken-Mbugua](https://github.com/Ken-MbuguaiReporter)
-
-See also the list of [contributors](https://github.com/Ken-MbuguaiReporter/KenMbuguaiReporter/contributors) who participated in this project.
