@@ -1,4 +1,4 @@
-from flask import jsonify
+import re
 
 
 class ViewsValidation:
@@ -76,17 +76,67 @@ class ViewsValidation:
                 405,
                 "ID must be an Integer"
             )
-    def validate_email(self, user_email):
-        pass
 
-    def validate_phone_number(self, phone_number):
-        pass
+    def check_email(self, user_email):
+        """
+        method to validate email, via reg expressions
+        """
+        if re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", user_email):
+            return "Invalid Email Format"
+        if user_email == "":
+            return "email cannot be blank"
+        return False
 
-    def validate_password(self, password):
-        pass
+    def check_phone_number(self, phone_number):
+        """
+        method to validate phone_number, via reg expressions
+        """
+        if re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", phone_number):
+            return "Invalid PhoneNumber Format"
+        if phone_number == "":
+            return "phone_number cannot be blank."
+        return False
 
-    def validate_video_or_image_url(self, url):
-        pass
+    def check_password(self, password):
+        """
+        method to validate password, via reg expressions
+        """
+        if re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", password):
+            return "Invalid Password Format."
+        if password == "":
+            return "password cannot be blank."
+        return False
 
-    def validate_fields_data(self, field_data):
-        pass
+    def check_video_or_image_url(self, url):
+        """
+        method to validate video, password url, via reg expressions
+        """
+        if re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv)$", url):
+            return "Invalid Image Extension only [mp4,mkv,mov] allowed."
+        if url == "":
+            return "Invalid Video/Image url cannot be blank."
+        return False
+
+    def check_role(self, is_admin):
+        """
+        method to validate video, password url, via reg expressions
+        """
+        if is_admin not in [True, False]:
+            return False
+        if is_admin == "":
+            return "is_admin can only take in true of false"
+
+    def check_fields_data(self, field_data):
+        """
+        validate all fields and return an errors object
+        """
+        # errors dict to store any errors if found
+        errors = {}
+        error = False
+
+        for field in field_data:
+
+            error = True
+
+        if error:
+            return errors
