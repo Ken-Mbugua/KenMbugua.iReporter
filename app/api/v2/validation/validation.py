@@ -76,3 +76,17 @@ class ViewsValidation:
                 405,
                 "ID must be an Integer"
             )
+    def validate_email(self, user_email):
+        pass
+
+    def validate_phone_number(self, phone_number):
+        pass
+
+    def validate_password(self, password):
+        pass
+
+    def validate_video_or_image_url(self, url):
+        pass
+
+    def validate_fields_data(self, field_data):
+        pass
