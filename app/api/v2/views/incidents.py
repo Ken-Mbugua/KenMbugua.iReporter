@@ -126,13 +126,11 @@ class IncidentsID(Resource):
         method to get an incident from database
         """
 
-        if incident_type not in ["redflags", "interventions"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type)
-            )
+        endpoint_validate = ViewsValidation().validate_endpoint(
+            incident_type, incident_id)
 
-        if ViewsValidation().validate_id(incident_id):
-            return ViewsValidation().validate_id(incident_id)
+        if endpoint_validate:
+            return endpoint_validate
 
         try:
             # get user details from auth token
@@ -173,13 +171,11 @@ class IncidentsID(Resource):
         method to delete an incident from database
         """
 
-        if incident_type not in ["redflags", "interventions"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type)
-            )
+        endpoint_validate = ViewsValidation().validate_endpoint(
+            incident_type, incident_id)
 
-        if ViewsValidation().validate_id(incident_id):
-            return ViewsValidation().validate_id(incident_id)
+        if endpoint_validate:
+            return endpoint_validate
 
         try:
             # get user details from auth token
@@ -230,18 +226,11 @@ class IncidentsPatch(Resource):
         """
         method to update an incident by field provided
         """
+        endpoint_validate = ViewsValidation().validate_endpoint(
+            incident_type, field, incident_id)
 
-        if incident_type not in ["redflags", "interventions"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type)
-            )
-        if field not in ["comment", "location", "status"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(field)
-            )
-
-        if ViewsValidation().validate_id(incident_id):
-            return ViewsValidation().validate_id(incident_id)
+        if endpoint_validate:
+            return endpoint_validate
 
         data = request.get_json(silent=True)
         # validate received fileds

@@ -79,6 +79,26 @@ class ViewsValidation:
                 "ID must be an Integer"
             )
 
+    def validate_endpoint(self, incident_type, incident_id, field=None):
+        """
+        method to validate:
+        - incidident enpoint
+        - field
+        - endpoint_id
+        """
+        error = False
+
+        if incident_type not in ["redflags", "interventions"]:
+            return self.views_error(
+                405, "Invalid Endpoint {} ".format(incident_type)
+            )
+        if field not in ["comment", "location", "status"] and None:
+            return self.views_error(
+                405, "Invalid Endpoint {} ".format(field)
+            )
+        if self.validate_id(incident_id):
+            return self.validate_id(incident_id)
+
     # incident_fields data validation
 
     def check_email(self, user_email):
@@ -92,7 +112,7 @@ class ViewsValidation:
         """
         method to validate phone_number, via reg expressions
         """
-        if not re.match(r"^([\S\d]+)$", phone_number):
+        if not re.match(r"^([\s\d]+)$", phone_number):
             return "Invalid PhoneNumber Format, numbers only"
         return False
 
@@ -100,9 +120,9 @@ class ViewsValidation:
         """
         method to validate username, via reg expressions
         """
-        if not re.match(r"[a-z A-Z0-9\_\"]+$", username):
-            return "Invalid username Format, underscore,"
-            " letters and numbers only"
+        if not re.match(r"^[a-zA-Z][\w]{3,}", username):
+            return "Invalid username Format, underscore," +\
+                " letters and numbers only"
         return False
 
     def check_password(self, password):
