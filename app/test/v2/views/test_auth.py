@@ -74,7 +74,7 @@ class TestAuth(TestCase):
         result = json.loads(response.data.decode())
 
         self.assertEqual(result['message'], "Duplicate User Error")
-        self.assertEqual(response.status_code, 202)
+        self.assertEqual(response.status_code, 409)
 
     def test_auth_sign_in(self):
         """ Test for user login endpoint """

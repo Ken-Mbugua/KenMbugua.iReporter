@@ -1,4 +1,4 @@
-from flask import jsonify
+import re
 
 
 class ViewsValidation:
@@ -14,7 +14,6 @@ class ViewsValidation:
             fields = [
                 'title',
                 'description',
-                'incident_status',
                 'image',
                 'video',
                 'comment',
@@ -69,10 +68,206 @@ class ViewsValidation:
         }, status
 
     def validate_id(self, id):
+        """
+        method to validate endpoint id
+        """
         try:
             int(id)
         except:
             return self.views_error(
                 405,
                 "ID must be an Integer"
+            )
+
+    # incident_fields data validation
+
+    def check_email(self, user_email):
+        """
+        method to validate email, via reg expressions
+        """
+        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", user_email):
+            return "Invalid Email Format"
+
+    def check_phone_number(self, phone_number):
+        """
+        method to validate phone_number, via reg expressions
+        """
+        if not re.match(r"^([\s\d]+)$", phone_number):
+            return "Invalid PhoneNumber Format, numbers only"
+        return False
+
+    def check_username(self, username):
+        """
+        method to validate username, via reg expressions
+        """
+        if not re.match(r"[a-z A-Z0-9\_\"]+$", username):
+            return "Invalid username Format, underscore,"
+            " letters and numbers only"
+        return False
+
+    def check_password(self, password):
+        """
+        method to validate password, via reg expressions
+        """
+        if not re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", password):
+            return "Invalid Password Format, > 8 characters, letters, " +\
+                "numbers and special characters only "
+        return False
+
+    def check_role(self, is_admin):
+        """
+        method to validate video, password url, via reg expressions
+        """
+        if is_admin not in ["True", "False"]:
+            return "is_admin can only take in 'True' of 'False'"
+
+    # incident_fields data validation
+
+    # 1. title
+    def check_title(self, title):
+        if title == "":
+            return "Title cannot be blank."
+        else:
+            return False
+
+    # 2. description
+    def check_description(self, description):
+        if description == "":
+            return "Description cannot be blank"
+        else:
+            return False
+
+    # 3. incident status
+    def check_status(self, incident_status):
+        if incident_status not in [
+            "Draft", "Under Investigation", "Resolved", "Rejected"
+        ]:
+            return "Invalid Status, [ Draft, Under Investigation," +\
+                " Resolved, Rejected] only."
+        else:
+            return False
+
+    # 4. location
+    def check_location(self, location):
+        """
+        method to validate location, via reg expressions
+        """
+        if not re.match(r"^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$", location):
+            return "Invalid location coordinates ."
+        else:
+            return False
+
+    # 6. video
+    def check_video_url(self, video_urls):
+        """
+        method to validate video and image extension, via reg expressions
+        """
+        # loop through video path list
+        for video_url in video_urls:
+            # extract file name (abcde.mp4) from file path
+            file_name = video_url.split("/")[-1]
+            if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv|.3gp)$", file_name):
+                return "Invalid Video Extension, " +\
+                    "only [ .mp4, .mkv, .mov, .3gp ] allowed."
+            else:
+                return False
+
+    # 5. image
+    def check_image_url(self, image_urls):
+
+        # loop through video path list
+        for image_url in image_urls:
+            # extract file name (abcde.jpeg) from file path
+            file_name = image_url.split("/")[-1]
+            if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.jpg|.png|.jpeg|.gif)$", file_name):
+                return "Invalid Image Extension, " +\
+                    " only [.jpg, .png, .jpeg ] allowed."
+            else:
+                return False
+
+    # 7. comment
+    def check_comments(self, comment):
+        """
+        method to validate comments, via reg expressions
+        """
+        if not re.match(r"^[a-zA-Z\d\-_\s,.;:\"']+$", comment):
+            return "Invalid comments format."
+        return False
+
+    def check_fields_data(self, field_data):
+        """
+        validate all fields and return an errors object
+        """
+        # vaidator list to store all validation functions
+
+        validator_fuctions = [
+            self.check_email, self.check_phone_number,
+            self.check_password, self.check_role, self.check_username,
+            self.check_title, self.check_description, self.check_status,
+            self.check_location, self.check_image_url, self.check_video_url,
+            self.check_comments
+        ]
+
+        # errors dict to store any errors if found
+        errors = {}
+        error = False
+
+        for field, value in field_data.items():
+            if field == "email":
+                if validator_fuctions[0](value):
+                    errors[field] = validator_fuctions[0](value)
+
+                    error = True
+            if field == "phone_number":
+                if validator_fuctions[1](value):
+                    errors[field] = validator_fuctions[1](value)
+
+                    error = True
+            if field == "password":
+                if validator_fuctions[2](value):
+                    errors[field] = validator_fuctions[2](value)
+
+                    error = True
+            if field == "is_admin":
+                if validator_fuctions[3](value):
+                    errors[field] = validator_fuctions[3](value)
+
+                    error = True
+            if field == "username":
+                if validator_fuctions[4](value):
+                    errors[field] = validator_fuctions[4](value)
+                    error = True
+            if field == "title":
+                if validator_fuctions[5](value):
+                    errors[field] = validator_fuctions[5](value)
+                    error = True
+            if field == "description":
+                if validator_fuctions[6](value):
+                    errors[field] = validator_fuctions[6](value)
+                    error = True
+            if field == "incident_status":
+                if validator_fuctions[7](value):
+                    errors[field] = validator_fuctions[7](value)
+                    error = True
+            if field == "location":
+                if validator_fuctions[8](value):
+                    errors[field] = validator_fuctions[8](value)
+                    error = True
+            if field == "image":
+                if validator_fuctions[9](value):
+                    errors[field] = validator_fuctions[9](value)
+                    error = True
+            if field == "video":
+                if validator_fuctions[10](value):
+                    errors[field] = validator_fuctions[10](value)
+                    error = True
+            if field == "comment":
+                if validator_fuctions[11](value):
+                    errors[field] = validator_fuctions[11](value)
+                    error = True
+
+        if error:
+            return self.views_error(
+                400,
+                errors
             )

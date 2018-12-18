@@ -204,7 +204,6 @@ class TestIncidentsV2(TestCase):
         """
         response = self.add_incident("redflags", incident1)
         result = json.loads(response.data)
-        print("RESULT::", result)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(
             result["data"][0]["message"],
@@ -234,7 +233,7 @@ class TestIncidentsV2(TestCase):
         )
         self.assertEqual(
             result["data"][1]["comment"],
-            "How many buildings should collapse for us to learn?"
+            "How many buildings should collapse for us to learn"
         )
         self.assertEqual(result["data"][0]["title"], "Manhole Hazard")
         self.assertEqual(

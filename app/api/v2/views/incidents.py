@@ -15,7 +15,8 @@ class Incidents(Resource):
         """
         if incident_type not in ["redflags", "interventions"]:
             return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type))
+                405, "Invalid Endpoint {} ".format(incident_type)
+            )
 
         data = request.get_json(silent=True)
         # validate received fileds
@@ -28,6 +29,12 @@ class Incidents(Resource):
             # found missing fields
             return valid_fields
 
+        # validate all fields
+        valid_field_data = ViewsValidation().check_fields_data(data)
+        if valid_field_data:
+            # found invalid data in fields
+            return valid_field_data
+
         try:
             # decode token to obtain email then user_id
             auth_header = request.headers.get('Authorization')
@@ -39,14 +46,18 @@ class Incidents(Resource):
                 user_id = UsersModel().get_user_by_email(user_email)[0]
 
                 # instanciate incident model and pass incident data
-                incident = IncidentsModel(**data, created_by=user_id,
-                                          incident_type=incident_type)
+                incident = IncidentsModel(
+                    **data,
+                    created_by=user_id,
+                    incident_type=incident_type
+                )
 
                 # insert incident in db
                 incident.create_incident()
             else:
                 ViewsValidation().views_error(
-                    401, "Provide a valid token", "error")
+                    401, "Provide a valid token", "error"
+                )
 
             incident_details = incident.get_last_incident()
             return {  # incident creation success return incident data
@@ -89,7 +100,8 @@ class Incidents(Resource):
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "No {} records found".format(incident_type))
+                    404, "Fetch Failed, {} "
+                    "Records not Found".format(incident_type))
 
         except Exception as error:
 
@@ -132,7 +144,8 @@ class IncidentsID(Resource):
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "No {} record found".format(incident_type))
+                    404, "Fetch Failed, {} "
+                    "Record not Found".format(incident_type))
 
         except Exception as error:
 
@@ -179,7 +192,8 @@ class IncidentsID(Resource):
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "No {} record found".format(incident_type))
+                    404, "Deletion Failed, {} "
+                    "Record not Found".format(incident_type))
 
         except Exception as error:
 
@@ -222,6 +236,12 @@ class IncidentsPatch(Resource):
             # found missing fields
             return valid_fields
 
+        # validate all fields
+        valid_field_data = ViewsValidation().check_fields_data(data)
+        if valid_field_data:
+            # found invalid data in fields
+            return valid_field_data
+
         try:
             # instanciate incident model incident type
             incident = IncidentsModel(
@@ -249,8 +269,8 @@ class IncidentsPatch(Resource):
                 }, 200
             else:
                 return ViewsValidation().views_error(
-                    404, "Patch Failed, {}"
-                    " Record Found".format(incident_type))
+                    404, "Patch Failed, {} "
+                    " Record not Found".format(incident_type))
 
         except Exception as error:
 

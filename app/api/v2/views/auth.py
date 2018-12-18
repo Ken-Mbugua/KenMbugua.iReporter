@@ -23,6 +23,12 @@ class AuthSignUp(Resource):
             # found missing fields
             return valid_fields
 
+        # validate all fields
+        valid_field_data = ViewsValidation().check_fields_data(data)
+        if valid_field_data:
+            # found invalid data in fields
+            return valid_field_data
+
         # instanciate Users model and pass request data
         user = UsersModel(**data)
 
@@ -31,7 +37,7 @@ class AuthSignUp(Resource):
         if email:
             # duplicate user  error
             return ViewsValidation().views_error(
-                202, "Duplicate User Error", "message")
+                409, "Duplicate User Error", "message")
 
         # create user
         response = user.create_user()
@@ -68,6 +74,12 @@ class AuthSignIn(Resource):
         if valid_fields:
             # found missing fields
             return valid_fields
+
+        # validate all fields
+        valid_field_data = ViewsValidation().check_fields_data(data)
+        if valid_field_data:
+            # found invalid data in fields
+            return valid_field_data
 
         # instanciate Users model and pass request data
         user = UsersModel(**data)

@@ -40,6 +40,12 @@ class IncidentsAdmin(Resource):
             # found missing fields
             return valid_fields
 
+        # validate all fields
+        valid_field_data = ViewsValidation().check_fields_data(data)
+        if valid_field_data:
+            # found invalid data in fields
+            return valid_field_data
+
         try:
             # instanciate incident model incident type
             incident = IncidentsModel(
@@ -47,7 +53,8 @@ class IncidentsAdmin(Resource):
             )
 
             update_incident = incident.update_incident(
-                "incident_status", data["incident_status"], incident_id)
+                "incident_status", data["incident_status"], incident_id
+            )
 
             if update_incident:
                 # incident update success return incident data
