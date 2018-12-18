@@ -84,9 +84,16 @@ class Incidents(Resource):
             return ViewsValidation().views_error(
                 405, "Invalid Endpoint {}".format(incident_type))
         try:
+            # get user details from auth token
+            auth_token_data = UsersModel().get_user_details_from_token(request)
+
+            if auth_token_data:
+                user_id = auth_token_data["user_id"]
+
             # instanciate incident model incident type
             incident = IncidentsModel(
-                incident_type=incident_type
+                incident_type=incident_type,
+                created_by=user_id
             )
 
             all_incidents = incident.get_incident_by(
@@ -119,18 +126,23 @@ class IncidentsID(Resource):
         method to get an incident from database
         """
 
-        if incident_type not in ["redflags", "interventions"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type)
-            )
+        endpoint_validate = ViewsValidation().validate_endpoint(
+            incident_type, incident_id)
 
-        if ViewsValidation().validate_id(incident_id):
-            return ViewsValidation().validate_id(incident_id)
+        if endpoint_validate:
+            return endpoint_validate
 
         try:
+            # get user details from auth token
+            auth_token_data = UsersModel().get_user_details_from_token(request)
+
+            if auth_token_data:
+                user_id = auth_token_data["user_id"]
+
             # instanciate incident model incident type
             incident = IncidentsModel(
-                incident_type=incident_type
+                incident_type=incident_type,
+                created_by=user_id
             )
 
             one_incident = incident.get_incident_by(
@@ -159,18 +171,23 @@ class IncidentsID(Resource):
         method to delete an incident from database
         """
 
-        if incident_type not in ["redflags", "interventions"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type)
-            )
+        endpoint_validate = ViewsValidation().validate_endpoint(
+            incident_type, incident_id)
 
-        if ViewsValidation().validate_id(incident_id):
-            return ViewsValidation().validate_id(incident_id)
+        if endpoint_validate:
+            return endpoint_validate
 
         try:
+            # get user details from auth token
+            auth_token_data = UsersModel().get_user_details_from_token(request)
+
+            if auth_token_data:
+                user_id = auth_token_data["user_id"]
+
             # instanciate incident model incident type
             incident = IncidentsModel(
-                incident_type=incident_type
+                incident_type=incident_type,
+                created_by=user_id
             )
             can_delete = incident.can_update_or_delete(incident_id)
             if not can_delete:
@@ -209,18 +226,11 @@ class IncidentsPatch(Resource):
         """
         method to update an incident by field provided
         """
+        endpoint_validate = ViewsValidation().validate_endpoint(
+            incident_type, incident_id, field)
 
-        if incident_type not in ["redflags", "interventions"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type)
-            )
-        if field not in ["comment", "location", "status"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(field)
-            )
-
-        if ViewsValidation().validate_id(incident_id):
-            return ViewsValidation().validate_id(incident_id)
+        if endpoint_validate:
+            return endpoint_validate
 
         data = request.get_json(silent=True)
         # validate received fileds
@@ -243,9 +253,16 @@ class IncidentsPatch(Resource):
             return valid_field_data
 
         try:
+            # get user details from auth token
+            auth_token_data = UsersModel().get_user_details_from_token(request)
+
+            if auth_token_data:
+                user_id = auth_token_data["user_id"]
+
             # instanciate incident model incident type
             incident = IncidentsModel(
-                incident_type=incident_type
+                incident_type=incident_type,
+                created_by=user_id
             )
 
             # update_incident(self, field, field_data, incident_id)
@@ -256,7 +273,8 @@ class IncidentsPatch(Resource):
                     " Record is no Longer Drafted".format(incident_type))
 
             update_incident = incident.update_incident(
-                field, data[field], incident_id)
+                field, data[field], incident_id
+            )
 
             if update_incident:
                 # incident update success return incident data

@@ -58,6 +58,7 @@ class UsersModel(DbModel):
         # print("USER::::", user)
         if user:
             return dict(
+                is_admin=user[7],
                 user=dict(
                     username=user[1],
                     email=user[2],
@@ -113,3 +114,28 @@ class UsersModel(DbModel):
             return {"expired-error": "Token expired. Please log in again."}
         except jwt.InvalidTokenError:
             return {"invalid-error": "Invalid token. Please log in again."}
+
+    def get_user_details_from_token(self, request):
+        """decode auth_token to obtain user data also user_id"""
+
+        # decode token to obtain email then user_id
+        auth_header = request.headers.get('Authorization')
+        if auth_header:
+            auth_token = auth_header.split(" ")[1]
+            # get email
+            user_email = self.decode_auth_token(
+                auth_token)["email"]
+            # get role
+            user_role = self.decode_auth_token(
+                auth_token)["role"]
+            # get user_id
+            user_id = self.get_user_by_email(user_email)[0]
+
+            return {
+                "user_id": user_id,
+                "user_email": user_email,
+                "role": user_role
+            }
+
+        else:
+            return None

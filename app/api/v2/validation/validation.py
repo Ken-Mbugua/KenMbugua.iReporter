@@ -79,6 +79,26 @@ class ViewsValidation:
                 "ID must be an Integer"
             )
 
+    def validate_endpoint(self, incident_type, incident_id, field=None):
+        """
+        method to validate:
+        - incidident enpoint
+        - field
+        - endpoint_id
+        """
+        error = False
+
+        if incident_type not in ["redflags", "interventions"]:
+            return self.views_error(
+                405, "Invalid Endpoint {} ".format(incident_type)
+            )
+        if field not in ["comment", "location", "status"] and None:
+            return self.views_error(
+                405, "Invalid Endpoint {} ".format(field)
+            )
+        if self.validate_id(incident_id):
+            return self.validate_id(incident_id)
+
     # incident_fields data validation
 
     def check_email(self, user_email):
@@ -100,9 +120,9 @@ class ViewsValidation:
         """
         method to validate username, via reg expressions
         """
-        if not re.match(r"[a-z A-Z0-9\_\"]+$", username):
-            return "Invalid username Format, underscore,"
-            " letters and numbers only"
+        if not re.match(r"^[a-zA-Z][\w]{3,}", username):
+            return "Invalid username Format, underscore," +\
+                " letters and numbers only"
         return False
 
     def check_password(self, password):
@@ -160,7 +180,8 @@ class ViewsValidation:
     # 6. video
     def check_video_url(self, video_urls):
         """
-        method to validate video and image extension, via reg expressions
+        method to validate file path and image file extension,
+        via reg expressions
         """
         # loop through video path list
         for video_url in video_urls:
@@ -174,7 +195,10 @@ class ViewsValidation:
 
     # 5. image
     def check_image_url(self, image_urls):
-
+        """
+        method to validate file path and video file extension,
+        via reg expressions
+        """
         # loop through video path list
         for image_url in image_urls:
             # extract file name (abcde.jpeg) from file path
@@ -200,7 +224,7 @@ class ViewsValidation:
         """
         # vaidator list to store all validation functions
 
-        validator_fuctions = [
+        validator_functions = [
             self.check_email, self.check_phone_number,
             self.check_password, self.check_role, self.check_username,
             self.check_title, self.check_description, self.check_status,
@@ -208,63 +232,22 @@ class ViewsValidation:
             self.check_comments
         ]
 
+        fields = [
+            "email", "phone_number", "password",
+            "is_admin", "username", "title", "description",
+            "incident_status", "location", "image", "video", "comment"
+        ]
+
         # errors dict to store any errors if found
         errors = {}
         error = False
 
         for field, value in field_data.items():
-            if field == "email":
-                if validator_fuctions[0](value):
-                    errors[field] = validator_fuctions[0](value)
-
-                    error = True
-            if field == "phone_number":
-                if validator_fuctions[1](value):
-                    errors[field] = validator_fuctions[1](value)
-
-                    error = True
-            if field == "password":
-                if validator_fuctions[2](value):
-                    errors[field] = validator_fuctions[2](value)
-
-                    error = True
-            if field == "is_admin":
-                if validator_fuctions[3](value):
-                    errors[field] = validator_fuctions[3](value)
-
-                    error = True
-            if field == "username":
-                if validator_fuctions[4](value):
-                    errors[field] = validator_fuctions[4](value)
-                    error = True
-            if field == "title":
-                if validator_fuctions[5](value):
-                    errors[field] = validator_fuctions[5](value)
-                    error = True
-            if field == "description":
-                if validator_fuctions[6](value):
-                    errors[field] = validator_fuctions[6](value)
-                    error = True
-            if field == "incident_status":
-                if validator_fuctions[7](value):
-                    errors[field] = validator_fuctions[7](value)
-                    error = True
-            if field == "location":
-                if validator_fuctions[8](value):
-                    errors[field] = validator_fuctions[8](value)
-                    error = True
-            if field == "image":
-                if validator_fuctions[9](value):
-                    errors[field] = validator_fuctions[9](value)
-                    error = True
-            if field == "video":
-                if validator_fuctions[10](value):
-                    errors[field] = validator_fuctions[10](value)
-                    error = True
-            if field == "comment":
-                if validator_fuctions[11](value):
-                    errors[field] = validator_fuctions[11](value)
-                    error = True
+            for index in range(len(validator_functions)):
+                if field == fields[index]:
+                    if validator_functions[index](value):
+                        errors[field] = validator_functions[index](value)
+                        error = True
 
         if error:
             return self.views_error(

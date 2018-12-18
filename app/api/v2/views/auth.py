@@ -44,13 +44,12 @@ class AuthSignUp(Resource):
 
         if response:
             user_details = user.get_user_details(data["email"])
+
             # generate token
-            auth_token = user.gen_auth_token(data["email"])
-
-            # user.decode_auth_token(auth_token)["role"]
-            # returns role or email
-
+            role = user_details["is_admin"]  # get user role
+            auth_token = user.gen_auth_token(data["email"], role)
             user_details.update({"token": auth_token.decode()})
+            user_details.pop("is_admin")
             return {  # user creation success return user data
                 "status": 201,
                 "data": [
@@ -96,7 +95,7 @@ class AuthSignIn(Resource):
                 role = email[7]  # get user role
                 auth_token = user.gen_auth_token(data["email"], role)
                 user_details.update({"token": auth_token.decode()})
-
+                user_details.pop("is_admin")
                 return {  # user login success return token and suser data
                     "status": 200,
                     "data": [
