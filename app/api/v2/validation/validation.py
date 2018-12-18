@@ -81,7 +81,7 @@ class ViewsValidation:
         """
         method to validate email, via reg expressions
         """
-        if re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", user_email):
+        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", user_email):
             return "Invalid Email Format"
         if user_email == "":
             return "email cannot be blank"
@@ -91,7 +91,7 @@ class ViewsValidation:
         """
         method to validate phone_number, via reg expressions
         """
-        if re.match(r"^([\s\d]+)$", phone_number):
+        if not re.match(r"^([\s\d]+)$", phone_number):
             return "Invalid PhoneNumber Format, numbers only"
         if phone_number == "":
             return "phone_number cannot be blank."
@@ -101,8 +101,8 @@ class ViewsValidation:
         """
         method to validate username, via reg expressions
         """
-        if re.match(r"^([\s\d]+)$", username):
-            return "Invalid username Format, letters and numbers only"
+        if not re.match(r"[a-z A-Z0-9\_\"]+$", username):
+            return "Invalid username Format, underscore, letters and numbers only"
         if username == "":
             return "username cannot be blank."
         return False
@@ -111,8 +111,8 @@ class ViewsValidation:
         """
         method to validate password, via reg expressions
         """
-        if re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", password):
-            return "Invalid Password Format, > 8 characters, letters and numbers only "
+        if not re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", password):
+            return "Invalid Password Format, > 8 characters, letters, numbers and special character only "
         if password == "":
             return "password cannot be blank."
         return False
@@ -121,7 +121,7 @@ class ViewsValidation:
         """
         method to validate video, password url, via reg expressions
         """
-        if re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv)$", url):
+        if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv)$", url):
             return "Invalid Image Extension only [mp4,mkv,mov] allowed."
         if url == "":
             return "Invalid Video/Image url cannot be blank."
@@ -131,9 +131,7 @@ class ViewsValidation:
         """
         method to validate video, password url, via reg expressions
         """
-        if is_admin not in [True, False]:
-            return False
-        if is_admin == "":
+        if is_admin not in ["True", "False"]:
             return "is_admin can only take in true of false"
 
     def check_fields_data(self, field_data):
@@ -151,26 +149,33 @@ class ViewsValidation:
         errors = {}
         error = False
 
+        print("Fields_Data::", field_data)
+
         for field, value in field_data.items():
             if field == "email":
                 if validator_fuctions[0](value):
                     errors[field] = validator_fuctions[0](value)
+                    print("Email::", value)
                     error = True
             if field == "phone_number":
                 if validator_fuctions[1](value):
                     errors[field] = validator_fuctions[1](value)
+                    print("Phonenumber::", value)
                     error = True
             if field == "password":
                 if validator_fuctions[2](value):
                     errors[field] = validator_fuctions[2](value)
+                    print("Password::", value)
                     error = True
             if field == "is_admin":
                 if validator_fuctions[3](value):
                     errors[field] = validator_fuctions[3](value)
+                    print("Admin::", value)
                     error = True
             if field == "username":
                 if validator_fuctions[4](value):
                     errors[field] = validator_fuctions[4](value)
+                    print("Username::", value)
                     error = True
 
         if error:
