@@ -69,6 +69,9 @@ class ViewsValidation:
         }, status
 
     def validate_id(self, id):
+        """
+        method to validate endpoint id
+        """
         try:
             int(id)
         except:
@@ -77,15 +80,14 @@ class ViewsValidation:
                 "ID must be an Integer"
             )
 
+    # incident_fields data validation
+
     def check_email(self, user_email):
         """
         method to validate email, via reg expressions
         """
         if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", user_email):
             return "Invalid Email Format"
-        if user_email == "":
-            return "email cannot be blank"
-        return False
 
     def check_phone_number(self, phone_number):
         """
@@ -93,8 +95,6 @@ class ViewsValidation:
         """
         if not re.match(r"^([\s\d]+)$", phone_number):
             return "Invalid PhoneNumber Format, numbers only"
-        if phone_number == "":
-            return "phone_number cannot be blank."
         return False
 
     def check_username(self, username):
@@ -103,8 +103,6 @@ class ViewsValidation:
         """
         if not re.match(r"[a-z A-Z0-9\_\"]+$", username):
             return "Invalid username Format, underscore, letters and numbers only"
-        if username == "":
-            return "username cannot be blank."
         return False
 
     def check_password(self, password):
@@ -113,18 +111,6 @@ class ViewsValidation:
         """
         if not re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", password):
             return "Invalid Password Format, > 8 characters, letters, numbers and special character only "
-        if password == "":
-            return "password cannot be blank."
-        return False
-
-    def check_video_or_image_url(self, url):
-        """
-        method to validate video, password url, via reg expressions
-        """
-        if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv)$", url):
-            return "Invalid Image Extension only [mp4,mkv,mov] allowed."
-        if url == "":
-            return "Invalid Video/Image url cannot be blank."
         return False
 
     def check_role(self, is_admin):
@@ -132,7 +118,41 @@ class ViewsValidation:
         method to validate video, password url, via reg expressions
         """
         if is_admin not in ["True", "False"]:
-            return "is_admin can only take in true of false"
+            return "is_admin can only take in 'True' of 'False'"
+
+    # incident_fields data validation
+
+    # 1. title
+    # 2. description
+
+    # 4. location
+    def validate_location(self, location):
+        """
+        method to validate location, via reg expressions
+        """
+
+        if not re.match(r"^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$", location):
+            return "Invalid Video/Image url cannot be blank."
+        else:
+            return False
+
+    # 5. image # 6. video
+    def check_video_or_image_url(self, url):
+        """
+        method to validate video, password url, via reg expressions
+        """
+        if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv)$", url):
+            return "Invalid Image Extension only [mp4,mkv,mov] allowed."
+        return False
+
+    # 7. comment
+    def validate_comments(self, comment):
+        """
+        method to validate comments, via reg expressions
+        """
+        if re.match(r"^[a-zA-Z\d\-_\s,.;:\"']+$", comment):
+            return True
+        return False
 
     def check_fields_data(self, field_data):
         """
