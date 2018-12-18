@@ -26,7 +26,7 @@ class AuthSignUp(Resource):
         # validate all fields
         valid_field_data = ViewsValidation().check_fields_data(data)
         if valid_field_data:
-            # found invalid fields
+            # found invalid data in fields
             return valid_field_data
 
         # instanciate Users model and pass request data
@@ -74,6 +74,12 @@ class AuthSignIn(Resource):
         if valid_fields:
             # found missing fields
             return valid_fields
+
+        # validate all fields
+        valid_field_data = ViewsValidation().check_fields_data(data)
+        if valid_field_data:
+            # found invalid data in fields
+            return valid_field_data
 
         # instanciate Users model and pass request data
         user = UsersModel(**data)
