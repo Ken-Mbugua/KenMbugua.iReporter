@@ -138,9 +138,10 @@ class IncidentsModel(DbModel):
         method to update incident based on provided
         incident_field, field_value and data
         """
+
         # does incident exist?
         incident = self.get_incident_by("incident_id", incident_id)
-        # UPDATE incidents SET status='Rejected' WHERE id='{}';
+
         if incident:
             query_string = "UPDATE incidents SET " +\
                 "{}='{}' WHERE incident_id='{}';".format(
