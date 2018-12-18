@@ -57,6 +57,7 @@ class UsersModel(DbModel):
         # print("USER::::", user)
         if user:
             return dict(
+                is_admin=user[7],
                 user=dict(
                     username=user[1],
                     email=user[2],
