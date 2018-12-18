@@ -13,12 +13,12 @@ class IncidentsModel(DbModel):
 
         self.title = '' if title is None else title
         self.description = '' if description is None else description
-        self.incident_type = (
-            "Draft" if incident_type is None else incident_type
-        )
+        self.incident_type = incident_type
         self.location = '' if location is None else location
         self.comment = '' if comment is None else comment
-        self.incident_status = incident_status
+        self.incident_status = (
+            "Draft" if incident_status is None else incident_status
+        )
         self.created_by = created_by
         self.image = [] if image is None else image
         self.video = [] if video is None else video
