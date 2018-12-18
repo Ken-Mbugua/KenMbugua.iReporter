@@ -398,6 +398,7 @@ class TestIncidentsV2(TestCase):
             comment_data,
         )
         result = json.loads(response.data)
+        print("RESULT!!", result)
         # assert updated redflag comment
         self.assertEqual(result["data"][0]["comment"], comment_data["comment"])
         # assert success message

@@ -227,7 +227,7 @@ class IncidentsPatch(Resource):
         method to update an incident by field provided
         """
         endpoint_validate = ViewsValidation().validate_endpoint(
-            incident_type, field, incident_id)
+            incident_type, incident_id, field)
 
         if endpoint_validate:
             return endpoint_validate
