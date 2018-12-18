@@ -2,8 +2,7 @@
 incident1 = {
     "title": "Traffic Corruption",
     "description": "Offices taking bribes",
-    "incident_status": "Draft",
-    "location": "-34444400, 3444499900",
+    "location": "-34.444400, 34.44499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
         "var/www/uploads/incidents/img/USR-232455.jpeg"
@@ -22,8 +21,7 @@ incident1 = {
 incident2 = {
     "title": "Manhole Hazard",
     "description": "Manhole open around hurlingam mall",
-    "incident_status": "Rejected",
-    "location": "-34444400, 3444499900",
+    "location": "-34.444400, 34.44499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
         "var/www/uploads/incidents/img/USR-232455.jpeg",
@@ -40,8 +38,7 @@ incident3 = {
     "title": "Nepotism",
     "description": "Retiring mebers of staff were requires to submit their " +
     " next of kin C.Vs for an assured employment, no interviews or anything",
-    "incident_status": "Draft",
-    "location": "-34444400, 4344499900",
+    "location": "-34.444400, 43.44499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
         "var/www/uploads/incidents/img/USR-232455.jpeg"
@@ -58,8 +55,7 @@ incident4 = {
     "title": "Building Collpase Hazard",
     "description": "A Residential Six floor flat pipeline area is " +
     " stil under construction and occupied upto the fourth floor",
-    "location": "-34444400, 4344499900",
-    "incident_status": "Draft",
+    "location": "-34.444400, 43.44499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
         "var/www/uploads/incidents/img/USR-232455.jpeg"
@@ -69,7 +65,7 @@ incident4 = {
         "var/www/uploads/readflags/video/USR-232455.mp4",
         "var/www/uploads/readflags/video/USR-232455.mp4",
     ],
-    "comment": "How many buildings should collapse for us to learn?"
+    "comment": "How many buildings should collapse for us to learn"
 }
 
 
@@ -78,8 +74,7 @@ incident5 = {
     "description": "The area MCA (grinko ward) was filmed inciting a " +
     " group of young men and women that he would never have a person" +
     " from tribe B into the county assembly.",
-    "incident_status": "Under Investigation",
-    "location": "-34444400, 4344499900",
+    "location": "-34.444400, 43.44499900",
     "image": [
         "var/www/uploads/incidents/img/USR-232455.jpeg",
         "var/www/uploads/incidents/img/USR-232455.jpeg"
@@ -95,8 +90,7 @@ incident5 = {
 incident2_invalid_field = {
     "title": "Manhole Hazard",
     "description": "Manhole open around hurlingam mall",
-    "incident_status": "Rejected",
-    "location": "-34444400, 3444499900",
+    "location": "-34.444400, 34.44499900",
     "my_field": "efwfwfwf",
     "responder": "Username3456",
     "image": [
@@ -114,7 +108,6 @@ incident2_invalid_field = {
 incident_no_media_intervention = {
     "title": "Manhole Hazard",
     "description": "Manhole open around hirlingum mall",
-    "incident_status": "Rejected",
     "location": "-34444400, 3444499900",
     "comment": "ignore it or cover it up, out of sight out of mind"
 }
@@ -122,8 +115,7 @@ incident_no_media_intervention = {
 incident_no_media_redflag = {
     "title": "Manhole Hazard",
     "description": "Manhole open around hirlingum mall",
-    "incident_status": "Rejected",
-    "location": "-34444400, 3444499900",
+    "location": "-34.444400, 34.44499900",
     "comment": "ignore it or cover it up, out of sight out of mind"
 }
 

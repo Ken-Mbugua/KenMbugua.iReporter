@@ -166,7 +166,6 @@ class ViewsValidation:
         for video_url in video_urls:
             # extract file name (abcde.mp4) from file path
             file_name = video_url.split("/")[-1]
-            print("Split Path Video::", file_name)
             if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv|.3gp)$", file_name):
                 return "Invalid Video Extension, " +\
                     "only [ .mp4, .mkv, .mov, .3gp ] allowed."
@@ -213,8 +212,6 @@ class ViewsValidation:
         errors = {}
         error = False
 
-        print("Fields_Data::", field_data)
-
         for field, value in field_data.items():
             if field == "email":
                 if validator_fuctions[0](value):
@@ -243,37 +240,30 @@ class ViewsValidation:
             if field == "title":
                 if validator_fuctions[5](value):
                     errors[field] = validator_fuctions[5](value)
-                    print("title::", value)
                     error = True
             if field == "description":
                 if validator_fuctions[6](value):
                     errors[field] = validator_fuctions[6](value)
-                    print("description::", value)
                     error = True
             if field == "incident_status":
                 if validator_fuctions[7](value):
                     errors[field] = validator_fuctions[7](value)
-                    print("status::", value)
                     error = True
             if field == "location":
                 if validator_fuctions[8](value):
                     errors[field] = validator_fuctions[8](value)
-                    print("location::", value)
                     error = True
             if field == "image":
                 if validator_fuctions[9](value):
                     errors[field] = validator_fuctions[9](value)
-                    print("image::", value)
                     error = True
             if field == "video":
                 if validator_fuctions[10](value):
                     errors[field] = validator_fuctions[10](value)
-                    print("video::", value)
                     error = True
             if field == "comment":
                 if validator_fuctions[11](value):
                     errors[field] = validator_fuctions[11](value)
-                    print("comments::", value)
                     error = True
 
         if error:
