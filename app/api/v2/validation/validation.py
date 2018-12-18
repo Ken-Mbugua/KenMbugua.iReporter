@@ -14,7 +14,6 @@ class ViewsValidation:
             fields = [
                 'title',
                 'description',
-                'incident_status',
                 'image',
                 'video',
                 'comment',
@@ -111,8 +110,8 @@ class ViewsValidation:
         method to validate password, via reg expressions
         """
         if not re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", password):
-            return "Invalid Password Format, > 8 characters, letters, "
-            "numbers and special character only "
+            return "Invalid Password Format, > 8 characters, letters, " +\
+                "numbers and special characters only "
         return False
 
     def check_role(self, is_admin):
@@ -143,8 +142,8 @@ class ViewsValidation:
         if incident_status not in [
             "Draft", "Under Investigation", "Resolved", "Rejected"
         ]:
-            return "Invalid Status, Draft, Under Investigation,"
-            " Resolved, Rejected only."
+            return "Invalid Status, [ Draft, Under Investigation," +\
+                " Resolved, Rejected] only."
         else:
             return False
 
@@ -153,20 +152,39 @@ class ViewsValidation:
         """
         method to validate location, via reg expressions
         """
-
         if not re.match(r"^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$", location):
             return "Invalid location coordinates ."
         else:
             return False
 
-    # 5. image # 6. video
-    def check_video_or_image_url(self, url):
+    # 6. video
+    def check_video_url(self, video_urls):
         """
         method to validate video and image extension, via reg expressions
         """
-        if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv|.3gp)$", url):
-            return "Invalid Image Extension only [ mp4,mkv,mov,3gp ] allowed."
-        return False
+        # loop through video path list
+        for video_url in video_urls:
+            # extract file name (abcde.mp4) from file path
+            file_name = video_url.split("/")[-1]
+            print("Split Path Video::", file_name)
+            if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.mp4|.mov|.mkv|.3gp)$", file_name):
+                return "Invalid Video Extension, " +\
+                    "only [ .mp4, .mkv, .mov, .3gp ] allowed."
+            else:
+                return False
+
+    # 5. image
+    def check_image_url(self, image_urls):
+
+        # loop through video path list
+        for image_url in image_urls:
+            # extract file name (abcde.jpeg) from file path
+            file_name = image_url.split("/")[-1]
+            if not re.match(r"([a-zA-Z0-9\s_\\.\-\(\):])+(.jpg|.png|.jpeg|.gif)$", file_name):
+                return "Invalid Image Extension, " +\
+                    " only [.jpg, .png, .jpeg ] allowed."
+            else:
+                return False
 
     # 7. comment
     def check_comments(self, comment):
@@ -174,7 +192,7 @@ class ViewsValidation:
         method to validate comments, via reg expressions
         """
         if not re.match(r"^[a-zA-Z\d\-_\s,.;:\"']+$", comment):
-            return True
+            return "Invalid comments format."
         return False
 
     def check_fields_data(self, field_data):
@@ -187,7 +205,7 @@ class ViewsValidation:
             self.check_email, self.check_phone_number,
             self.check_password, self.check_role, self.check_username,
             self.check_title, self.check_description, self.check_status,
-            self.check_location, self.check_video_or_image_url,
+            self.check_location, self.check_image_url, self.check_video_url,
             self.check_comments
         ]
 
@@ -221,7 +239,6 @@ class ViewsValidation:
             if field == "username":
                 if validator_fuctions[4](value):
                     errors[field] = validator_fuctions[4](value)
-
                     error = True
             if field == "title":
                 if validator_fuctions[5](value):
@@ -249,13 +266,13 @@ class ViewsValidation:
                     print("image::", value)
                     error = True
             if field == "video":
-                if validator_fuctions[9](value):
-                    errors[field] = validator_fuctions[9](value)
-                    print("video::", value)
-                    error = True
-            if field == "comments":
                 if validator_fuctions[10](value):
                     errors[field] = validator_fuctions[10](value)
+                    print("video::", value)
+                    error = True
+            if field == "comment":
+                if validator_fuctions[11](value):
+                    errors[field] = validator_fuctions[11](value)
                     print("comments::", value)
                     error = True
 

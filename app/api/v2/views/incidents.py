@@ -15,7 +15,8 @@ class Incidents(Resource):
         """
         if incident_type not in ["redflags", "interventions"]:
             return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type))
+                405, "Invalid Endpoint {} ".format(incident_type)
+            )
 
         data = request.get_json(silent=True)
         # validate received fileds

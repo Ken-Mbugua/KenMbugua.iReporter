@@ -53,7 +53,8 @@ class IncidentsAdmin(Resource):
             )
 
             update_incident = incident.update_incident(
-                "incident_status", data["incident_status"], incident_id)
+                "incident_status", data["incident_status"], incident_id
+            )
 
             if update_incident:
                 # incident update success return incident data
