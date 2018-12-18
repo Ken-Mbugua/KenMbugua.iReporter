@@ -84,9 +84,16 @@ class Incidents(Resource):
             return ViewsValidation().views_error(
                 405, "Invalid Endpoint {}".format(incident_type))
         try:
+            # get user details from auth token
+            auth_token_data = UsersModel().get_user_details_from_token(request)
+
+            if auth_token_data:
+                user_id = auth_token_data["user_id"]
+
             # instanciate incident model incident type
             incident = IncidentsModel(
-                incident_type=incident_type
+                incident_type=incident_type,
+                created_by=user_id
             )
 
             all_incidents = incident.get_incident_by(
@@ -128,9 +135,16 @@ class IncidentsID(Resource):
             return ViewsValidation().validate_id(incident_id)
 
         try:
+            # get user details from auth token
+            auth_token_data = UsersModel().get_user_details_from_token(request)
+
+            if auth_token_data:
+                user_id = auth_token_data["user_id"]
+
             # instanciate incident model incident type
             incident = IncidentsModel(
-                incident_type=incident_type
+                incident_type=incident_type,
+                created_by=user_id
             )
 
             one_incident = incident.get_incident_by(
@@ -168,9 +182,16 @@ class IncidentsID(Resource):
             return ViewsValidation().validate_id(incident_id)
 
         try:
+            # get user details from auth token
+            auth_token_data = UsersModel().get_user_details_from_token(request)
+
+            if auth_token_data:
+                user_id = auth_token_data["user_id"]
+
             # instanciate incident model incident type
             incident = IncidentsModel(
-                incident_type=incident_type
+                incident_type=incident_type,
+                created_by=user_id
             )
             can_delete = incident.can_update_or_delete(incident_id)
             if not can_delete:

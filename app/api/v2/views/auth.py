@@ -95,7 +95,7 @@ class AuthSignIn(Resource):
                 role = email[7]  # get user role
                 auth_token = user.gen_auth_token(data["email"], role)
                 user_details.update({"token": auth_token.decode()})
-
+                user_details.pop("is_admin")
                 return {  # user login success return token and suser data
                     "status": 200,
                     "data": [
