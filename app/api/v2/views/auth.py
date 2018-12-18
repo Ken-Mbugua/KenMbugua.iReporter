@@ -5,8 +5,6 @@ from app.api.v2.models.users_model import UsersModel
 from app.api.v2.validation.validation import ViewsValidation
 from app.api.v2.auth_decorators.auth_decorator import isAdmin
 
-# check_user_fields_data
-
 
 class AuthSignUp(Resource):
 
@@ -24,6 +22,12 @@ class AuthSignUp(Resource):
         if valid_fields:
             # found missing fields
             return valid_fields
+
+        # validate all fields
+        valid_field_data = ViewsValidation().check_fields_data(data)
+        if valid_field_data:
+            # found invalid fields
+            return valid_field_data
 
         # instanciate Users model and pass request data
         user = UsersModel(**data)

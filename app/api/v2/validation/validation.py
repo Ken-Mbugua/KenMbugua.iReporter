@@ -81,8 +81,7 @@ class ViewsValidation:
         """
         method to validate email, via reg expressions
         """
-
-        if re.match(r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", user_email):
+        if re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", user_email):
             return "Invalid Email Format"
         if user_email == "":
             return "email cannot be blank"
@@ -93,9 +92,19 @@ class ViewsValidation:
         method to validate phone_number, via reg expressions
         """
         if re.match(r"^([\s\d]+)$", phone_number):
-            return "Invalid PhoneNumber Format"
+            return "Invalid PhoneNumber Format, numbers only"
         if phone_number == "":
             return "phone_number cannot be blank."
+        return False
+
+    def check_username(self, username):
+        """
+        method to validate username, via reg expressions
+        """
+        if re.match(r"^([\s\d]+)$", username):
+            return "Invalid username Format, letters and numbers only"
+        if username == "":
+            return "username cannot be blank."
         return False
 
     def check_password(self, password):
@@ -103,7 +112,7 @@ class ViewsValidation:
         method to validate password, via reg expressions
         """
         if re.match(r"(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})", password):
-            return "Invalid Password Format."
+            return "Invalid Password Format, > 8 characters, letters and numbers only "
         if password == "":
             return "password cannot be blank."
         return False
@@ -127,7 +136,7 @@ class ViewsValidation:
         if is_admin == "":
             return "is_admin can only take in true of false"
 
-    def check_user_fields_data(self, field_data):
+    def check_fields_data(self, field_data):
         """
         validate all fields and return an errors object
         """
@@ -135,7 +144,7 @@ class ViewsValidation:
 
         validator_fuctions = [
             self.check_email, self.check_phone_number,
-            self.check_password, self.check_role
+            self.check_password, self.check_role, self.check_username
         ]
 
         # errors dict to store any errors if found
@@ -159,6 +168,13 @@ class ViewsValidation:
                 if validator_fuctions[3](value):
                     errors[field] = validator_fuctions[3](value)
                     error = True
+            if field == "username":
+                if validator_fuctions[4](value):
+                    errors[field] = validator_fuctions[4](value)
+                    error = True
 
         if error:
-            return errors
+            return self.views_error(
+                400,
+                errors
+            )
