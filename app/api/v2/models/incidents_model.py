@@ -83,13 +83,17 @@ class IncidentsModel(DbModel):
             return incidents_list
         return None
 
-    def get_incident_by(self, field, value):
+    def get_incident_by(self, field, value, role=None):
         """method return incident based on field and data provided"""
 
-        query_string = "SELECT * from incidents WHERE {}=%s ".format(field) +\
-            " AND created_by=%s;"
+        if role:  # admin user found: update any record
+            query_string = "SELECT * from incidents WHERE {}=%s ".format(field)
+            data = (value,)
 
-        data = (value, self.created_by,)
+        else:  # normal user found: update your records only
+            query_string = "SELECT * from incidents WHERE {}".format(field) +\
+                "=%s AND created_by=%s;"
+            data = (value, self.created_by,)
 
         self.query(query_string, data)
 
@@ -133,24 +137,30 @@ class IncidentsModel(DbModel):
         else:
             return None
 
-    def update_incident(self, field, field_data, incident_id):
+    def update_incident(self, field, field_data, incident_id, role=None):
         """
         method to update incident based on provided
         incident_field, field_value and data
         """
 
         # does incident exist?
-        incident = self.get_incident_by("incident_id", incident_id)
+        incident = self.get_incident_by("incident_id", incident_id, role)
 
         if incident:
-            query_string = "UPDATE incidents SET " +\
-                "{}='{}' WHERE incident_id='{}';".format(
-                    field, field_data, incident_id)
+            if role:  # admin user found: update any record
+                query_string = "UPDATE incidents SET " +\
+                    "{}='{}' WHERE incident_id='{}';".format(
+                        field, field_data, incident_id)
+            else:  # normal user found: update your records only
+                query_string = "UPDATE incidents SET " +\
+                    "{}='{}' WHERE incident_id='{}' AND created_by={};".format(
+                        field, field_data, incident_id, self.created_by)
 
             self.query(query_string)
             self.save()
 
-            updated_incident = self.get_incident_by("incident_id", incident_id)
+            updated_incident = self.get_incident_by(
+                "incident_id", incident_id, role)
 
             return updated_incident
         else:
