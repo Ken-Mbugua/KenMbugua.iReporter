@@ -89,6 +89,7 @@ class Incidents(Resource):
 
             if auth_token_data:
                 user_id = auth_token_data["user_id"]
+                role = auth_token_data["role"]
 
             # instanciate incident model incident type
             incident = IncidentsModel(
@@ -97,7 +98,7 @@ class Incidents(Resource):
             )
 
             all_incidents = incident.get_incident_by(
-                "incident_type", incident_type)
+                "incident_type", incident_type, role)
             if all_incidents:
                 return {  # incident creation success return incident data
                     "status": 200,
@@ -258,6 +259,7 @@ class IncidentsPatch(Resource):
 
             if auth_token_data:
                 user_id = auth_token_data["user_id"]
+                role = auth_token_data["role"]
 
             # instanciate incident model incident type
             incident = IncidentsModel(
@@ -273,9 +275,9 @@ class IncidentsPatch(Resource):
                     " Record is no Longer Drafted".format(incident_type))
 
             update_incident = incident.update_incident(
-                field, data[field], incident_id
+                field, data[field], incident_id, role
             )
-
+            print("MY_ROLEE!!", role)
             if update_incident:
                 # incident update success return incident data
                 return {
