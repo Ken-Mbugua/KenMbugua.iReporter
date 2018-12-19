@@ -277,7 +277,7 @@ class IncidentsPatch(Resource):
             update_incident = incident.update_incident(
                 field, data[field], incident_id, role
             )
-            print("MY_ROLEE!!", role)
+
             if update_incident:
                 # incident update success return incident data
                 return {
