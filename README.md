@@ -86,7 +86,13 @@ flask run
 
 The app should be accessiable via : http://127.0.0.1:5000/
 
-## Mini Documentation
+## Documentation
+
+### Postman documentation 
+- [postman docs](https://documenter.getpostman.com/view/6062310/RzfgpVC4)
+
+
+### minified documentation
 
 > to use heroku replace `http://127.0.0.1:5000` with `https://km-ireporter-api.herokuapp.com`
 
