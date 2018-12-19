@@ -18,13 +18,11 @@ class IncidentsAdmin(Resource):
         method to update an incident by field provided
         """
 
-        if incident_type not in ["redflags", "interventions"]:
-            return ViewsValidation().views_error(
-                405, "Invalid Endpoint {} ".format(incident_type)
-            )
+        endpoint_validate = ViewsValidation().validate_endpoint(
+            incident_type, incident_id)
 
-        if ViewsValidation().validate_id(incident_id):
-            return ViewsValidation().validate_id(incident_id)
+        if endpoint_validate:
+            return endpoint_validate
 
         data = request.get_json(silent=True)
         # validate received fileds
@@ -47,13 +45,22 @@ class IncidentsAdmin(Resource):
             return valid_field_data
 
         try:
+
+            # get user details from auth token
+            auth_token_data = UsersModel().get_user_details_from_token(request)
+
+            if auth_token_data:
+                user_id = auth_token_data["user_id"]
+                role = auth_token_data["role"]
+
             # instanciate incident model incident type
             incident = IncidentsModel(
-                incident_type=incident_type
+                incident_type=incident_type,
+                created_by=user_id
             )
 
             update_incident = incident.update_incident(
-                "incident_status", data["incident_status"], incident_id
+                "incident_status", data["incident_status"], incident_id, role
             )
 
             if update_incident:

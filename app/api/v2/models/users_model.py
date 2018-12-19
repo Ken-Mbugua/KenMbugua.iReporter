@@ -39,7 +39,6 @@ class UsersModel(DbModel):
 
         return {"message": "record saved successsfully"}
 
-
     def get_user_by_email(self, user_email):
 
         query = "SELECT * from users WHERE email= %s"
